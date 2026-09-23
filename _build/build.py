@@ -100,6 +100,20 @@ def resolve_link(href, depth):
     return href
 
 
+def slugify(text):
+    """'My Post: 5 Ideas!' -> 'my-post-5-ideas'.
+
+    Pages CMS names new files from the title automatically; this is the safety
+    net for anything hand-written or edited, so a URL never contains spaces,
+    capitals or punctuation.
+    """
+    import unicodedata
+    s = unicodedata.normalize("NFKD", str(text))
+    s = s.encode("ascii", "ignore").decode("ascii")
+    s = re.sub(r"[^a-zA-Z0-9]+", "-", s).strip("-").lower()
+    return re.sub(r"-{2,}", "-", s)[:80] or "post"
+
+
 def load_posts():
     """Read content/posts/*.md and render each one into site HTML."""
     folder = os.path.join(CONTENT, "posts")
@@ -114,11 +128,14 @@ def load_posts():
         if not fm.get("title") or not fm.get("date"):
             print(f"  ! skipping content/posts/{fn} — it has no title/date frontmatter")
             continue
-        slug = str(fm.get("slug") or fn[:-3])
+        slug = slugify(fm.get("slug") or fn[:-3])
         cat = str(fm.get("category") or "living-room")
         if cat not in CAT:
             raise SystemExit(f"{fn}: unknown category '{cat}'. "
                              f"Valid values: {', '.join(sorted(CAT))}")
+        if slug in SLUG_CAT:
+            raise SystemExit(f"{fn}: slug '{slug}' is already used by another post. "
+                             f"Give one of them a different filename or slug.")
         SLUG_CAT[slug] = cat
         staged.append((slug, cat, fm, body_md))
 
@@ -273,6 +290,7 @@ def card(p, depth=0, cls_art="c4x3", searchable=True):
   <span class="chip">{c["name"]}</span>
   <h3><a href="{post_url(p['slug'], depth)}">{p['title']}</a></h3>
   <p>{short(p['dek'])}</p>
+  <div class="btnrow cardbtn"><a class="btn sm ghost" href="{post_url(p['slug'], depth)}">View post</a></div>
   <div class="meta"><span>{d(p['date'])}</span><i></i><span>{read_label(p)}</span></div>
  </div></article>"""
 
@@ -347,7 +365,7 @@ def page_home():
    <h2><a href="{post_url(feat['slug'])}">{feat['title']}</a></h2>
    <p>{feat['dek']}</p>
    <div class="meta"><span>{d(feat['date'])}</span><i></i><span>{read_label(feat)}</span></div>
-   <div class="btnrow"><a class="btn sm" href="{post_url(feat['slug'])}">Read the guide</a></div>
+   <div class="btnrow"><a class="btn sm" href="{post_url(feat['slug'])}">View post</a></div>
   </div>
  </article>
 </div></section>
@@ -406,7 +424,7 @@ def page_blog():
                      f'<h3><a href="{post_url(p["slug"])}">{p["title"]}</a></h3>'
                      f'<p>{p["dek"]}</p><div class="meta"><span>{d(p["date"])}</span><i></i>'
                      f'<span>{read_label(p)}</span></div>'
-                     f'<div class="btnrow"><a class="btn sm" href="{post_url(p["slug"])}">Read the guide</a></div></div></article>')
+                     f'<div class="btnrow"><a class="btn sm" href="{post_url(p["slug"])}">View post</a></div></div></article>')
         elif posts:
             inner = f'<div class="grid">{"".join(card(p) for p in posts)}</div>'
         else:
@@ -556,12 +574,12 @@ def page_start_here():
     ]
     cards = ""
     for slug, title, kicker, sub in picks:
-        p_ = POST_BY_SLUG[slug]; c_ = CAT[p_["cat"]]
-        cards += (f'<article class="card">{art(c_["motif"], c_["tone"], "c3x2")}'
+        p_ = POST_BY_SLUG[slug]
+        cards += (f'<article class="card">{cover_html(p_, 0, "c3x2")}'
                   f'<div class="body"><span class="chip">{kicker}</span>'
                   f'<h3><a href="{post_url(slug)}">{title}</a></h3><p>{sub}</p>'
-                  f'<div class="meta"><span>{read_label(p_)}</span><i></i>'
-                  f'<a href="{post_url(slug)}">Read →</a></div></div></article>')
+                  f'<div class="btnrow cardbtn"><a class="btn sm ghost" href="{post_url(slug)}">View post</a></div>'
+                  f'<div class="meta"><span>{read_label(p_)}</span></div></div></article>')
     body = f"""
 <section class="section tight"><div class="container narrow">
  <p class="eyebrow">Start here</p>

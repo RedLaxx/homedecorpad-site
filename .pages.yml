@@ -12,11 +12,17 @@ content:
     type: collection
     path: content/posts
     format: yaml-frontmatter
-    filename: "{primary}.md"
+    # The file name (and therefore the URL) is generated from the post title.
+    # "My Post: 5 Ideas!" becomes my-post-5-ideas.md. The box appears when you
+    # create a post, is pre-filled for you, and is hidden when editing later so
+    # the address of a published post cannot change by accident.
+    filename:
+      template: "{primary}.md"
+      field: create
     exclude:
       - README.md
     view:
-      primary: slug
+      primary: title
       sort: date
       order: desc
       fields: [title, date, category, draft]
@@ -29,10 +35,14 @@ content:
         options:
           maxlength: 100
       - name: slug
-        label: URL slug
+        label: URL slug (optional — leave empty)
         type: string
-        required: true
-        description: Lowercase words with hyphens. This becomes the file name and the address, e.g. small-entryway-ideas. Changing it after publishing breaks existing links.
+        description: |
+          Leave this empty. The address is generated from the title automatically
+          when you create the post, e.g. "5 Small Entryway Ideas" becomes
+          /blog/living-room/5-small-entryway-ideas.html
+          Only fill it in if you want this post to live at a different address.
+          Changing it later is safe — the old address gets a redirect.
         pattern: "^[a-z0-9-]+$"
         options:
           maxlength: 80
