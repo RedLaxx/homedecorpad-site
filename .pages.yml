@@ -149,6 +149,12 @@ content:
           :::shop Title  then a  | Item | Detail | Price |  table, then  :::   a shopping list
           :::ad   an ad slot (one is added automatically, use this for a second)
           A "## Frequently asked questions" section with ### question headings becomes an accordion with FAQ markup for Google.
+    actions:
+      - name: view-post
+        label: View post
+        workflow: view-post.yml
+        scope: entry
+        confirm: false
 
   - name: legal
     label: Legal pages
