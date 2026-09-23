@@ -20,6 +20,7 @@ related:
   - amazon-home-finds-look-expensive
 draft: false
 slug: 5-ikea-hacks-for-a-custom-looking-living-room
+hero_image: /assets/uploads/10. Kitchen Decor & Dining Room Ideas.jpg
 ---
 The best hacks are not the most complicated ones. They are the ones that fix the specific thing that makes flat-pack furniture look flat-packed: its proportions, its legs, and the fact that it is empty. Here are five that work in a rental and cost very little.
 
