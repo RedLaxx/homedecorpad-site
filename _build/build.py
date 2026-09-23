@@ -1232,13 +1232,19 @@ def check_links():
     """Fail the build if a generated page links to something that does not exist."""
     import glob
     files = sorted(glob.glob(os.path.join(ROOT, "**", "*.html"), recursive=True))
+    # preview.html / bookmarklet.html are JS-driven tools with dynamic URLs — skip them
+    skip_names = {"preview.html", "bookmarklet.html"}
+    files = [f for f in files if os.path.basename(f) not in skip_names]
     anchors = {f: set(re.findall(r'id="([^"]+)"', open(f, encoding="utf-8").read())) for f in files}
     broken, warnings = [], []
     import urllib.parse
     for f in files:
         for m in re.finditer(r'(?:href|src)="([^"]+)"', open(f, encoding="utf-8").read()):
             u = _html.unescape(m.group(1))
-            if not u or u.startswith(("http", "mailto:", "data:", "#", "tel:")):
+            if not u or u.startswith(("http", "mailto:", "data:", "#", "tel:", "javascript:")):
+                continue
+            # skip JS-templated URLs like '+liveUrl+' or '{{...}}'
+            if "{{" in u or "}}" in u or "'+ " in u or " +'" in u or u.startswith("'+") or u.endswith("+'") or ("+" in u and "liveUrl" in u):
                 continue
             u = urllib.parse.unquote(u)          # %20 in uploaded filenames
             path, _, frag = u.partition("#")

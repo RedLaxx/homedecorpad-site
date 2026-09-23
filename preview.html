@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Preview — HomeDecorPad</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+:root{--bg:#FBF8F3;--paper:#fff;--line:#E9DFD0;--terra:#B5533C;--terra-d:#95402D;--ink:#2B2622;--muted:#6F645B;--oat:#F1E8DB;--serif:"DM Serif Display",Georgia,serif;--sans:Poppins,system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7}
+a{color:var(--terra-d)}a:hover{color:var(--terra)}
+.container{max-width:840px;margin:0 auto;padding:0 22px}
+.header{position:sticky;top:0;z-index:10;background:rgba(251,248,243,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 0}
+.hdr{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{font-family:var(--serif);font-size:22px;color:var(--ink);text-decoration:none}
+.btn{display:inline-block;background:var(--terra);color:#fff;border:1.5px solid var(--terra);border-radius:999px;padding:10px 18px;font-size:14px;font-weight:600;text-decoration:none}
+.btn:hover{background:var(--terra-d);border-color:var(--terra-d);color:#fff}
+.btn.ghost{background:transparent;color:var(--ink);border-color:#E4D8C7}
+.btn.ghost:hover{border-color:var(--terra);color:var(--terra-d)}
+.badge{display:inline-block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;background:#FBF0EA;color:var(--terra-d);padding:6px 12px;border-radius:999px;font-weight:600}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 24px;box-shadow:0 10px 30px rgba(70,50,30,.06);margin:18px 0}
+.muted{color:var(--muted);font-size:14px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.25;margin:.2em 0 .4em}
+h1{font-size:clamp(28px,4vw,38px)}h2{font-size:clamp(22px,3vw,28px);margin-top:1.6em}
+img{max-width:100%;height:auto;border-radius:12px}
+pre{overflow:auto;background:#fff;border:1px solid var(--line);padding:14px;border-radius:10px}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.92em;background:var(--oat);padding:2px 6px;border-radius:6px}
+.callout{background:var(--oat);border-left:4px solid var(--terra);border-radius:0 12px 12px 0;padding:16px 20px;margin:22px 0}
+.shop{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:22px 0}
+.post-hero{border-radius:16px;overflow:hidden;border:1px solid var(--line);aspect-ratio:3/2;background:var(--oat);display:flex;align-items:center;justify-content:center;color:var(--muted)}
+#status{padding:18px 0}
+.spinner{width:22px;height:22px;border:3px solid var(--line);border-top-color:var(--terra);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<header class="header"><div class="container hdr">
+  <a class="brand" href="index.html">HomeDecorPad</a>
+  <span id="crumb" class="muted"></span>
+  <span style="margin-left:auto;display:flex;gap:10px;flex-wrap:wrap">
+    <a id="btnLive" class="btn" href="#" target="_blank" rel="noopener" style="display:none">View live page</a>
+    <a id="btnEdit" class="btn ghost" href="#" target="_blank" rel="noopener">Edit in Pages CMS</a>
+  </span>
+</div></header>
+
+<main class="container">
+  <div id="status"><span class="spinner"></span> <span id="statusText">Loading preview…</span></div>
+  <div id="banner" class="card" style="display:none"></div>
+  <article id="article" style="display:none">
+    <p id="kicker" class="badge"></p>
+    <h1 id="title"></h1>
+    <p id="dek" class="muted" style="font-size:18px;color:#4A423B"></p>
+    <div id="hero" class="post-hero" style="margin:18px 0 24px"></div>
+    <div id="body"></div>
+  </article>
+  <div id="raw" class="card" style="display:none"><h3 style="margin-top:0">Raw file</h3><pre id="rawText" style="white-space:pre-wrap"></pre></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script>
+(function(){
+  const qs = new URLSearchParams(location.search);
+  let path = qs.get('path') || qs.get('p') || '';
+  // support hash: #content/posts/foo.md
+  if (!path && location.hash) path = decodeURIComponent(location.hash.slice(1));
+  if (!path) {
+    document.getElementById('status').innerHTML = '<div class="card"><h2 style="margin-top:0">No post specified</h2><p class="muted">Open this page from Pages CMS with <code>?path=content/posts/your-post.md</code><br><br>Bookmarklet (drag to bookmarks bar, then click while editing a post):<br><code style="display:block;margin-top:8px;white-space:pre-wrap;word-break:break-all" id="bmCode"></code></p><p><a class="btn ghost" href="blog.html">Browse posts</a></p></div>';
+    const bm = `javascript:(function(){let p='';try{const m=location.pathname.match(/\\/edit\\/(.+)$/);if(m)p=decodeURIComponent(m[1]);}catch(e){}if(!p){const t=document.documentElement.innerHTML.match(/content\\/posts\\/[^\"'\\s]+\\.md/);if(t)p=t[0];}if(!p||!p.includes('content/posts')){alert('Open a post in Pages CMS first');return;}if(p.indexOf('content/')>0)p=p.substring(p.indexOf('content/'));const u='https://redlaxx.github.io/homedecorpad-site/preview.html?path='+encodeURIComponent(p)+'&t='+Date.now();window.open(u,'_blank');})();`;
+    const el = document.getElementById('bmCode');
+    if (el) el.textContent = bm;
+    return;
+  }
+  // normalize
+  path = path.replace(/^\/+/, '');
+  if (path.indexOf('content/')>0) path = path.substring(path.indexOf('content/'));
+  document.getElementById('crumb').textContent = path;
+  document.getElementById('btnEdit').href = 'https://app.pagescms.org/RedLaxx/homedecorpad-site/main/collection/posts/edit/' + encodeURIComponent(path);
+
+  function slugify(s){
+    return s.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').replace(/-{2,}/g,'-').slice(0,80)||'post';
+  }
+  function parseFrontmatter(raw){
+    const m = raw.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
+    if (!m) return [{}, raw];
+    const fmText = m[1], body = m[2];
+    const fm = {};
+    // very small yaml parser for our fields
+    let currentKey = null, currentVal = '';
+    const lines = fmText.split('\n');
+    for (let line of lines){
+      const kv = line.match(/^([A-Za-z0-9_\-./]+):\s*(.*)$/);
+      if (kv){
+        if (currentKey) fm[currentKey] = currentVal.trim();
+        currentKey = kv[1];
+        currentVal = kv[2];
+        // handle folded?
+        if (currentVal === '|' || currentVal === '>' ) currentVal = '';
+      } else if (currentKey && (line.startsWith('  ') || line.startsWith('\t'))){
+        currentVal += '\n' + line.trim();
+      } else if (currentKey && line.trim()===''){
+        currentVal += '\n';
+      }
+    }
+    if (currentKey) fm[currentKey] = currentVal.trim();
+    // clean quotes
+    for (let k in fm){
+      let v = fm[k];
+      if (typeof v === 'string'){
+        v = v.replace(/^['\"]|['\"]$/g,'').trim();
+        // list?
+        if (v.startsWith('[') && v.endsWith(']')) {
+          try { fm[k] = JSON.parse(v); continue; } catch(e){}
+        }
+        fm[k] = v;
+      }
+    }
+    return [fm, body];
+  }
+
+  const rawUrl = 'https://raw.githubusercontent.com/RedLaxx/homedecorpad-site/main/' + path + '?t=' + Date.now();
+  fetch(rawUrl).then(r=>{
+    if (!r.ok) throw new Error('Could not fetch '+path+' ('+r.status+') — has it been saved yet?');
+    return r.text();
+  }).then(raw=>{
+    const [fm, bodyMd] = parseFrontmatter(raw);
+    const title = (fm.title || fm.h1 || path.split('/').pop().replace('.md','')).replace(/^['\"]|['\"]$/g,'');
+    const category = (fm.category || 'living-room').trim();
+    const slugRaw = (fm.slug || path.split('/').pop().replace('.md','')).trim();
+    const slug = slugify(slugRaw);
+    const dek = (fm.dek || fm.intro || '').trim();
+    const draft = String(fm.draft).toLowerCase()==='true';
+    const hero = (fm.hero_image || '').trim();
+
+    const liveUrl = 'https://redlaxx.github.io/homedecorpad-site/blog/' + category + '/' + slug + '.html';
+
+    // try live page
+    fetch(liveUrl, {method:'HEAD', cache:'no-store'}).then(rr=>{
+      const liveExists = rr.ok;
+      const btnLive = document.getElementById('btnLive');
+      btnLive.href = liveUrl;
+      btnLive.style.display = 'inline-block';
+      btnLive.textContent = liveExists ? 'View live page' : 'View live (will 404 until published)';
+
+      const banner = document.getElementById('banner');
+      if (liveExists && !draft){
+        // if published and not draft, redirect after 0.6s unless user wants preview
+        banner.style.display = 'block';
+        banner.innerHTML = '<p style="margin:0"><b>Published</b> — this post is live at <a href="'+liveUrl+'" target="_blank">'+liveUrl+'</a><br><span class="muted">Showing preview below. You will be redirected in 1.5s… <a href="#" id="cancelRedirect">Stay here</a></span></p>';
+        let cancelled = false;
+        document.getElementById('cancelRedirect').onclick = (e)=>{e.preventDefault(); cancelled=true; banner.innerHTML='<p style="margin:0"><b>Published</b> — <a href="'+liveUrl+'" target="_blank">Open live page</a> — preview below</p>';};
+        setTimeout(()=>{ if(!cancelled) location.href = liveUrl; }, 1500);
+      } else if (draft){
+        banner.style.display = 'block';
+        banner.innerHTML = '<p style="margin:0"><b>Draft preview</b> — this post is marked as draft, so it will not appear on the live site until you untick <code>Draft</code> in Pages CMS and save. Live URL when published: <a href="'+liveUrl+'" target="_blank">'+liveUrl+'</a></p>';
+      } else {
+        banner.style.display = 'block';
+        banner.innerHTML = '<p style="margin:0"><b>Preview</b> — showing the latest saved version from GitHub. The live page builds in ~1-2 minutes after you save in Pages CMS.<br>Live URL: <a href="'+liveUrl+'" target="_blank">'+liveUrl+'</a></p>';
+      }
+    }).catch(()=>{});
+
+    document.getElementById('status').style.display='none';
+    document.getElementById('article').style.display='block';
+    document.getElementById('title').textContent = title;
+    document.getElementById('kicker').textContent = category.replace(/-/g,' ');
+    document.getElementById('dek').textContent = dek;
+    document.title = title + ' — Preview — HomeDecorPad';
+
+    const heroEl = document.getElementById('hero');
+    if (hero){
+      const src = hero.replace(/^\//,'');
+      heroEl.innerHTML = '<img src="'+src+'" alt="" style="width:100%;height:100%;object-fit:cover">';
+    } else {
+      heroEl.textContent = 'No hero photo — illustration will be used on cards';
+      heroEl.style.padding='40px';
+    }
+
+    // render markdown
+    let md = bodyMd;
+    // handle our custom ::: blocks as simple divs for preview
+    md = md.replace(/^:::([a-z]+)(.*)$/gm, (m, type, rest)=>{
+      const t = type.toLowerCase();
+      if (t==='callout') return '\n<div class="callout"><strong>'+rest.trim()+'</strong>\n';
+      if (t==='shop') return '\n<div class="shop"><h3>'+rest.trim()+'</h3>\n';
+      if (t==='steps') return '\n<div class="shop"><h3>'+rest.trim()+'</h3><ol>\n';
+      if (t==='ad') return '\n<div class="card" style="border-style:dashed"><em>Ad slot</em></div>\n';
+      return '\n<div class="'+t+'">\n';
+    });
+    md = md.replace(/^:::$/gm, '\n</div>\n');
+
+    // fix image paths: /assets/... -> https://.../assets/...
+    md = md.replace(/!\[([^\]]*)\]\((\/assets\/[^)]+)\)/g, (m, alt, p)=>`![${alt}](https://redlaxx.github.io/homedecorpad-site${p})`);
+    md = md.replace(/!\[([^\]]*)\]\(<(\/assets\/[^>]+)>\)/g, (m, alt, p)=>`![${alt}](https://redlaxx.github.io/homedecorpad-site${p})`);
+
+    try {
+      const html = marked.parse(md);
+      document.getElementById('body').innerHTML = html;
+    } catch(e){
+      document.getElementById('body').innerHTML = '<pre>'+e.message+'</pre><pre>'+bodyMd.slice(0,5000)+'</pre>';
+    }
+
+    document.getElementById('raw').style.display='block';
+    document.getElementById('rawText').textContent = raw.slice(0,8000);
+  }).catch(err=>{
+    document.getElementById('status').innerHTML = '<div class="card"><h3 style="margin-top:0">Could not load preview</h3><p>'+err.message+'</p><p class="muted">Make sure you saved the post in Pages CMS and the path is correct:<br><code>'+path+'</code></p><p><a class="btn ghost" href="https://app.pagescms.org/RedLaxx/homedecorpad-site/main/collection/posts">Back to posts</a></p></div>';
+  });
+})();
+</script>
+</body>
+</html>
