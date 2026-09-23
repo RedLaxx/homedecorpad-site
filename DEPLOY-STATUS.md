@@ -10,8 +10,40 @@ _Last updated: 23 September 2026_
 | `https://redlaxx.github.io/HomeDecorPad/` | `RedLaxx/HomeDecorPad` | ✅ live but **out of date** — older build, canonicals still point at the unregistered `homedecorpad.com`, no CMS config. |
 
 Two live copies of the same site make Google pick one and ignore the other. Once you are
-happy with `homedecorpad-site`, delete the other repo (Settings → scroll to the bottom →
-Delete this repository).
+happy with `homedecorpad-site`, delete the other repo:
+
+### How to delete `RedLaxx/HomeDecorPad`
+
+1. Open <https://github.com/RedLaxx/HomeDecorPad/settings> (you must be signed in as the owner).
+2. Scroll to the very bottom of the page to the red **Danger Zone** panel.
+3. Click **Delete this repository**.
+4. A dialog opens. Type the full name exactly as shown — `RedLaxx/HomeDecorPad` — then click
+   **I understand the consequences, delete this repository**.
+5. Confirm with your password or 2FA prompt if GitHub asks.
+6. Done. The repo disappears from your profile and
+   `https://redlaxx.github.io/HomeDecorPad/` starts returning 404 within a minute.
+
+**Before you delete, know what you are removing:** that repo is the older build (canonicals
+still pointed at the unregistered domain, no CMS configuration). Nothing links to its URL —
+neither the new site nor Pinterest — so nothing breaks. A full copy is saved at
+`HomeDecorPad-repo-backup.tar.gz` (46 files) in the workspace if you ever want to look back.
+
+**Softer alternatives if you are not ready to delete:**
+
+| Instead of deleting | How | Effect |
+|---|---|---|
+| Take the site offline only | Repo → Settings → Pages → Source: **None** | URL goes 404, files stay on GitHub |
+| Freeze it read-only | Repo → Settings → Danger Zone → **Archive this repository** | Nobody can push, url archived, files preserved |
+| Leave it | — | Not recommended: Google sees two copies of the same content |
+
+**After deleting, one small tidy-up:** the repository disappears from Pages CMS on its own.
+Make sure the Pages CMS GitHub App still has access to `homedecorpad-site`
+(<https://github.com/settings/installations> → Pages CMS → Configure → Repository access).
+
+**If you would rather I do it for you:** the current fine-grained token cannot delete
+repositories (that needs **Administration: Read and write** on that repo, or a classic token
+with the `delete_repo` scope). Generate one with that permission and I will remove it and
+verify the URL is gone.
 
 ## Content is now managed through Pages CMS
 
