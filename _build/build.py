@@ -20,6 +20,18 @@ BUILD_DATE = datetime.date.today().isoformat()
 TODAY = datetime.date.today().strftime("%d %B %Y")
 
 
+def fmt_date(iso, fallback):
+    """2026-09-23 -> 23 September 2026 (or a safe fallback if malformed)."""
+    try:
+        y, m, dd = (int(x) for x in str(iso)[:10].split("-"))
+        return datetime.date(y, m, dd).strftime("%d %B %Y")
+    except Exception:
+        return fallback
+
+
+LAUNCH_DATE = "23 September 2026"
+
+
 def load_settings():
     """Site-wide settings come from content/site.yml so Pages CMS can edit them."""
     path = os.path.join(CONTENT, "site.yml")
@@ -30,6 +42,8 @@ def load_settings():
 
 
 SETTINGS = load_settings()
+LEGAL_EFFECTIVE = fmt_date(SETTINGS.get("legal_effective_date"), LAUNCH_DATE)
+LEGAL_UPDATED = fmt_date(SETTINGS.get("legal_updated_date"), LAUNCH_DATE)
 theme.BRAND = BRAND = SETTINGS.get("brand") or "HomeDecorPad"
 DOMAIN = (os.environ.get("SITE_DOMAIN") or SETTINGS.get("domain") or "https://homedecorpad.com").rstrip("/")
 theme.DOMAIN = DOMAIN
@@ -744,7 +758,10 @@ PLACEHOLDER = {
     "[BRAND NAME]": BRAND,
     "[DOMAIN]": "homedecorpad.com",
     "[CONTACT EMAIL]": EMAIL,
-    "[EFFECTIVE DATE]": TODAY,
+    "[LAST UPDATED DATE]": LEGAL_UPDATED,
+    "**Effective date:** [EFFECTIVE DATE]": f"**Effective date:** {LEGAL_EFFECTIVE}",
+    "**Last updated:** [EFFECTIVE DATE]": f"**Last updated:** {LEGAL_UPDATED}",
+    "[EFFECTIVE DATE]": LEGAL_EFFECTIVE,
     "[YOUR LEGAL NAME OR REGISTERED BUSINESS NAME]": "the operator of " + BRAND,
     "[OR YOUR PROVIDER]": "",
     "[Mediavine / Raptive and their vendors — ADD WHEN APPLICABLE]":

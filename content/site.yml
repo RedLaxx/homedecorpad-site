@@ -5,6 +5,12 @@
 brand: HomeDecorPad
 domain: https://redlaxx.github.io/homedecorpad-site
 
+# Effective and last-updated dates shown on the Privacy Policy, Cookie Policy,
+# Terms of Use, Disclaimer and Affiliate Disclosure pages.
+# Bump these by hand when you materially change a legal page.
+legal_effective_date: 2026-09-23
+legal_updated_date: 2026-09-23
+
 # Where reader emails and brand enquiries go. Shown in the footer of the
 # legal pages and on the contact page.
 email: hello@homedecorpad.com
