@@ -1,0 +1,208 @@
+# HomeDecorPad — Pages CMS configuration
+# Docs: https://pagescms.org/docs/configuration/
+# Everything editors can change lives in /content. HTML is generated, never edited by hand.
+
+media:
+  input: assets/uploads
+  output: /assets/uploads
+
+content:
+  - name: posts
+    label: Blog posts
+    type: collection
+    path: content/posts
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    exclude:
+      - README.md
+    view:
+      primary: slug
+      sort: date
+      order: desc
+      fields: [title, date, category, draft]
+    fields:
+      - name: title
+        label: SEO title
+        type: string
+        required: true
+        description: Also used as the headline and the browser tab title. Keep it under 60 characters and put the keyword first.
+        options:
+          maxlength: 100
+      - name: slug
+        label: URL slug
+        type: string
+        required: true
+        description: Lowercase words with hyphens. This becomes the file name and the address, e.g. small-entryway-ideas. Changing it after publishing breaks existing links.
+        pattern: "^[a-z0-9-]+$"
+        options:
+          maxlength: 80
+      - name: h1
+        label: Headline (only if it should differ from the SEO title)
+        type: string
+      - name: date
+        label: Publish date
+        type: date
+        required: true
+      - name: category
+        label: Category
+        type: select
+        required: true
+        description: Sets the URL folder, the card artwork and the section on the Decor Ideas page.
+        options:
+          values:
+            - name: living-room
+              label: Living Room
+            - name: bedroom
+              label: Bedroom
+            - name: small-space
+              label: Small Space & Renters
+            - name: get-the-look
+              label: Get the Look for Less
+            - name: finds
+              label: Home Finds & Deals
+            - name: diy
+              label: IKEA Hacks & DIY
+            - name: color
+              label: Color & Paint
+            - name: wall-decor
+              label: Wall Decor & Gallery Walls
+            - name: kitchen-dining
+              label: Kitchen & Dining
+            - name: organization
+              label: Organization & Storage
+      - name: dek
+        label: Summary
+        type: text
+        required: true
+        description: One or two sentences. Used on cards, in Google results and in the pin description.
+        options:
+          maxlength: 300
+      - name: intro
+        label: Intro paragraph
+        type: text
+        description: The lede shown under the headline before the article starts.
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: motif
+        label: Illustration
+        type: select
+        description: The drawn cover artwork used on cards and at the top of the post.
+        options:
+          values:
+            - name: arch
+              label: Arch & console table
+            - name: sofa
+              label: Sofa & artwork
+            - name: shelf
+              label: Shelves & vases
+            - name: swatches
+              label: Paint swatches
+            - name: finds
+              label: Shopping finds
+            - name: hack
+              label: Flat-pack hack
+            - name: nook
+              label: Reading nook
+            - name: fall
+              label: Pumpkins & autumn
+            - name: flat
+              label: Minimal room
+            - name: portrait
+              label: Bed & arch
+            - name: basket
+              label: Basket & plant
+            - name: plain
+              label: Simple object
+      - name: hero_image
+        label: Hero photo (optional)
+        type: image
+        description: Upload a real photo to replace the illustration. Leave empty to use the illustration. Photos you upload yourself perform better than generated art.
+      - name: related
+        label: Related posts (optional)
+        type: string
+        list: true
+        description: Slugs of other posts, e.g. small-apartment-decor-ideas. Shown as "Keep reading" at the bottom.
+      - name: draft
+        label: Draft
+        type: boolean
+        description: Tick to hide this post from the site. Untick to publish.
+      - name: body
+        label: Article body
+        type: rich-text
+        description: |
+          Markdown. Normal headings (## and ###), **bold**, [links](/blog.html) and lists work as usual.
+          Component blocks, each on its own line at the start and end:
+          :::callout Title  ...  :::   a highlighted tip box
+          :::steps  then a numbered list, then  :::   big numbered steps
+          :::shop Title  then a  | Item | Detail | Price |  table, then  :::   a shopping list
+          :::ad   an ad slot (one is added automatically, use this for a second)
+          A "## Frequently asked questions" section with ### question headings becomes an accordion with FAQ markup for Google.
+
+  - name: site
+    label: Site settings
+    type: file
+    path: content/site.yml
+    fields:
+      - name: brand
+        label: Site name
+        type: string
+        required: true
+      - name: domain
+        label: Canonical domain
+        type: string
+        required: true
+        description: The address search engines should index, e.g. https://homedecorpad.com — no trailing slash. Change this when you connect your own domain.
+      - name: email
+        label: Contact email
+        type: string
+        required: true
+      - name: amazon_tag
+        label: Amazon Associates tag
+        type: string
+        description: Your tracking ID, e.g. yourname-20. Leave as-is until Amazon approves you.
+      - name: formspree_id
+        label: Formspree form ID
+        type: string
+        description: From formspree.io. The part after /f/ in your form endpoint.
+      - name: adsense_client
+        label: AdSense publisher ID
+        type: string
+        description: e.g. ca-pub-1234567890123456. Leave empty and ads stay switched off everywhere.
+      - name: ga4_id
+        label: Google Analytics ID
+        type: string
+        description: e.g. G-ABCDE12345. Leave empty and analytics stays switched off.
+      - name: pinterest_verify
+        label: Pinterest verification code
+        type: string
+        description: From Pinterest > Settings > Claimed accounts. Leave empty to omit the meta tag.
+      - name: social
+        label: Social profiles
+        type: object
+        fields:
+          - name: pinterest
+            label: Pinterest URL
+            type: string
+          - name: instagram
+            label: Instagram URL
+            type: string
+          - name: facebook
+            label: Facebook URL
+            type: string
+          - name: youtube
+            label: YouTube URL
+            type: string
+
+settings:
+  content:
+    merge: true
+  commit:
+    identity: user
+    template: "{{path}} updated from Pages CMS"
+
+actions:
+  - name: rebuild
+    label: Rebuild & publish site
+    workflow: build.yml

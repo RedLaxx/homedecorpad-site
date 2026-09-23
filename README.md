@@ -12,6 +12,10 @@ You can upload it to GitHub exactly as it is.
 ## 1. What is in this folder
 
 ```
+content/                 ← EDIT CONTENT HERE (Markdown + site settings)
+  posts/*.md               one file per post, managed in Pages CMS
+  site.yml                 brand, domain, email, Amazon tag, AdSense ID, GA4 ID, socials
+_build/                  the generator (build.py, md.py, theme.py) + workflow-build.yml
 index.html               Home page
 start-here.html          "Start here" hub (positioning + your first projects)
 blog.html                All guides, filterable by room + search
@@ -28,7 +32,6 @@ blog/<category>/<slug>.html    8 posts (~700-900 words each, plus checklists,
                                 shopping tables and FAQ blocks)
 assets/og-*.jpg           Social share images (1 default + 1 per category)
 sitemap.xml  robots.txt  ads.txt  .nojekyll
-_build/                  The generator (optional — see section 7)
 ```
 
 Everything is self-contained: illustrations are inline SVG, CSS is inlined in every page,
@@ -126,9 +129,16 @@ git push -u origin main
 
 ## 5. Editing content
 
-**Text edits** — open the HTML file in any editor (VS Code, or GitHub's own pencil icon).
-Posts live in `blog/<category>/<slug>.html`. The structure is plain HTML with no templating,
-so you can edit a headline, a price or a paragraph directly and commit.
+### With Pages CMS (recommended)
+
+See **`CMS-GUIDE.md`**. Short version: connect the repo at app.pagescms.org, copy
+`_build/workflow-build.yml` to `.github/workflows/build.yml` once, then write posts in the
+browser. Every save rebuilds and republishes the site automatically.
+
+### By hand
+
+**Text edits** — edit `content/posts/<slug>.md`, then run `python3 _build/build.py` and
+commit. Do not edit the files in `blog/` — they are generated output and get overwritten.
 
 **Adding a post without the generator** — copy an existing post file, keep the `<head>`
 block and the surrounding header/footer, replace the `<article>` content, then add a link

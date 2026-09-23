@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 Disallow: /404.html
 
-Sitemap: https://redlaxx.github.io/homedecorpad-site/sitemap.xml
+Sitemap: https://redlaxx.github.io/HomeDecorPad/sitemap.xml

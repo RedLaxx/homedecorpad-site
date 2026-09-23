@@ -1,0 +1,62 @@
+# HomeDecorPad — rebuild the site whenever content changes in Pages CMS.
+#
+# INSTALL: copy this file to  .github/workflows/build.yml  in the repository root.
+# GitHub blocks personal access tokens from creating workflow files, so this one
+# step has to be done in the GitHub web UI (Add file > Create new file), unless
+# your token has the "workflow" scope.
+#
+# WHAT IT DOES
+#   1. runs on every push that touches content/ or the build scripts
+#   2. regenerates the HTML from the Markdown files
+#   3. commits the rebuilt pages back to main, which triggers the GitHub Pages build
+#
+# No [skip ci] in the commit message on purpose: it would also skip the Pages
+# deployment. The paths filter below is what prevents a rebuild loop.
+
+name: Build site from content
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "content/**"
+      - "assets/uploads/**"
+      - "_build/**"
+      - ".pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Pillow (only needed for the share images)
+        run: pip install --quiet pillow
+        continue-on-error: true
+
+      - name: Build the site
+        run: python3 _build/build.py
+
+      - name: Commit and push the rebuilt pages
+        run: |
+          git config user.name  "HomeDecorPad build bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing to publish."
+          else
+            git commit -m "Rebuild site from content (${{ github.sha }})"
+            git push
+          fi
