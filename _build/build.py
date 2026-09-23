@@ -6,7 +6,7 @@ Writes a complete static site into the repo root: HTML pages, sitemap,
 robots.txt, ads.txt, .nojekyll, assets and README.
 No third-party build tools required to deploy.
 """
-import os, re, sys, json, shutil, datetime, html as _html
+import os, re, sys, json, glob, shutil, datetime, html as _html
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -196,14 +196,39 @@ def rewrite_links(block, depth):
     return block.replace("#room-guides", "#categories")
 
 
+def asset_url(path, depth=0):
+    """Turn a content path like /assets/uploads/my photo.jpg into a correct URL.
+
+    Uploaded filenames often contain spaces; browsers tolerate them but the
+    encoded form is what belongs in the HTML (and what the link checker expects).
+    """
+    rel = str(path or "").lstrip("/")
+    if not rel:
+        return ""
+    prefix = "../" * depth
+    if rel.startswith(("http://", "https://")):
+        prefix = ""
+    return prefix + _encode_asset(rel)
+
+
+def _encode_asset(u):
+    for ch, enc in ((" ", "%20"), ("(", "%28"), (")", "%29")):
+        u = u.replace(ch, enc)
+    return u
+
+
+def cover_html(p, depth=0, cls_art="c4x3"):
+    """Card artwork: an uploaded hero photo when the editor set one, else the illustration."""
+    if p.get("hero_image"):
+        return (f'<div class="cover {cls_art}"><img src="{asset_url(p["hero_image"], depth)}" alt="" '
+                f'style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>')
+    return art(p["motif"], CAT[p["cat"]]["tone"], cls_art)
+
+
 def card(p, depth=0, cls_art="c4x3", searchable=True):
     c = CAT[p["cat"]]
     data = f' data-cat="{p["cat"]}" data-text="{_html.escape((p["title"]+" "+p["dek"]+" "+" ".join(p["tags"])).lower(), quote=True)}"' if searchable else ""
-    if p.get("hero_image"):
-        cover = (f'<div class="cover {cls_art}"><img src="{"../" * depth}{p["hero_image"].lstrip("/")}" alt="" '
-                 f'style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>')
-    else:
-        cover = art(p["motif"], c["tone"], cls_art)
+    cover = cover_html(p, depth, cls_art)
     return f"""<article class="card"{data}>
  {cover}
  <div class="body">
@@ -278,7 +303,7 @@ def page_home():
 <section class="section" id="categories"><div class="container">
  <div class="sec-head"><div><p class="eyebrow">Featured</p><h2>This week's idea</h2></div></div>
  <article class="feature">
-  {art(CAT[feat['cat']]['motif'], CAT[feat['cat']]['tone'], 'c3x2')}
+  {cover_html(feat, 0, 'c3x2')}
   <div class="body">
    <span class="chip">{CAT[feat['cat']]['name']}</span>
    <h2><a href="{post_url(feat['slug'])}">{feat['title']}</a></h2>
@@ -338,7 +363,7 @@ def page_blog():
         posts = [p for p in POSTS if p["cat"] == c["slug"]]
         if len(posts) == 1:
             p = posts[0]
-            inner = (f'<article class="feature catwide">{art(c["motif"], c["tone"], "c3x2")}'
+            inner = (f'<article class="feature catwide">{cover_html(p, 0, "c3x2")}'
                      f'<div class="body"><span class="chip">{c["name"]}</span>'
                      f'<h3><a href="{post_url(p["slug"])}">{p["title"]}</a></h3>'
                      f'<p>{p["dek"]}</p><div class="meta"><span>{d(p["date"])}</span><i></i>'
@@ -417,7 +442,7 @@ def page_post(p):
     depth = 2  # /blog/<cat>/<slug>.html
     c = CAT[p["cat"]]
     body_html = p["body"]
-    hero = (f'<img src="{"../" * depth}{p["hero_image"].lstrip("/")}" '
+    hero = (f'<img src="{asset_url(p["hero_image"], depth)}" '
             f'alt="{_html.escape(p["title"], quote=True)}" style="width:100%;height:100%;object-fit:cover">') \
         if p.get("hero_image") else art_raw(p["motif"], c["tone"])
     pin_title = p["title"][:100]
@@ -1039,17 +1064,127 @@ POST_BY_SLUG = {p["slug"]: p for p in POSTS}
 REL = {p["slug"]: p.get("related", []) for p in POSTS}
 
 
+REDIRECTS_FILE = os.path.join(CONTENT, "redirects.yml")
+
+
+def load_redirects():
+    """Old URL -> new URL, kept in content/redirects.yml so renames never 404.
+
+    Pinterest pins and Google results point at exact URLs. When a post's slug
+    changes, the old address keeps working instead of dropping the traffic.
+    """
+    if not os.path.exists(REDIRECTS_FILE):
+        return {}
+    data, _ = md_engine.parse_frontmatter("---\n" + open(REDIRECTS_FILE, encoding="utf-8").read() + "\n---")
+    return {k: str(v).strip() for k, v in data.items()
+            if isinstance(v, str) and v.strip() and not k.startswith("_")}
+
+
+def save_redirects(mapping):
+    lines = ["# Renamed pages: old path -> new path.",
+             "# The build writes a redirect at each old path, so existing links keep working.",
+             ""]
+    lines += [f"{k}: {v}" for k, v in sorted(mapping.items())]
+    with open(REDIRECTS_FILE, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+
+
+def redirect_stub(rel_old, rel_new):
+    up = "../" * (rel_old.count("/"))
+    return f"""<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Moved</title>
+<link rel="canonical" href="{DOMAIN}/{rel_new}">
+<meta name="robots" content="noindex,follow">
+<meta http-equiv="refresh" content="0; url={up}{rel_new}">
+</head><body style="font-family:Georgia,serif;padding:40px;line-height:1.6">
+<p>This page moved to <a href="{up}{rel_new}">{DOMAIN}/{rel_new}</a>.</p>
+</body></html>
+"""
+
+
+def write_redirects(generated):
+    redirects = load_redirects()
+    n = 0
+    for old, new in redirects.items():
+        if old in generated or not os.path.exists(os.path.join(ROOT, new)):
+            continue
+        write(old, redirect_stub(old, new))
+        n += 1
+    if n:
+        print(f"  redirects: {n} old URL(s) pointing at current pages")
+
+
+def retire_stale_pages(generated):
+    """Handle posts whose URL changed (a renamed slug, or a new slug from Pages CMS).
+
+    Without this, renaming a post leaves the old HTML file on the site as a
+    duplicate page — which is exactly what happened on the live site when the
+    CMS wrote a new slug. Any blog page we did not generate this run is either
+    turned into a redirect stub (when a current post shares its headline, i.e. it
+    was renamed) or deleted.
+    """
+    titles = {}
+    for p in POSTS:
+        clean = _html.unescape(re.sub(r"<[^>]+>", "", p["h1"]))
+        titles[re.sub(r"\s+", " ", clean).strip().lower()] = p
+
+    removed, redirected = [], []
+    known_redirects = load_redirects()
+    for old in glob.glob(os.path.join(ROOT, "blog", "*", "*.html")):
+        rel = os.path.relpath(old, ROOT).replace(os.sep, "/")
+        if rel in generated or rel in known_redirects:
+            continue
+        txt = open(old, encoding="utf-8").read()
+        heading = re.search(r"<h1[^>]*>(.*?)</h1>", txt, re.S)
+        key = ""
+        if heading:
+            key = re.sub(r"\s+", " ", _html.unescape(re.sub(r"<[^>]+>", "", heading.group(1)))).strip().lower()
+        target = titles.get(key)
+        if target:
+            new_rel = f'blog/{target["cat"]}/{target["slug"]}.html'
+            redirects = load_redirects()
+            if redirects.get(rel) != new_rel:
+                redirects[rel] = new_rel
+                save_redirects(redirects)
+                print(f"  remembered redirect: {rel} -> {new_rel}")
+            depth_up = "../" * 2
+            write(rel, f"""<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Moved: {_html.escape(target['title'])}</title>
+<link rel="canonical" href="{DOMAIN}/{new_rel}">
+<meta name="robots" content="noindex,follow">
+<meta http-equiv="refresh" content="0; url={depth_up}{new_rel}">
+</head><body style="font-family:Georgia,serif;padding:40px;line-height:1.6">
+<p>This guide moved to <a href="{depth_up}{new_rel}">{_html.escape(target['title'])}</a>.</p>
+</body></html>
+""")
+            redirected.append(f"{rel} -> {new_rel}")
+        else:
+            os.remove(old)
+            removed.append(rel)
+    for d_ in glob.glob(os.path.join(ROOT, "blog", "*")):
+        if os.path.isdir(d_) and not os.listdir(d_):
+            os.rmdir(d_)
+    for r in redirected:
+        print(f"  redirect stub: {r}")
+    for r in removed:
+        print(f"  removed stale page: {r}")
+
+
 def check_links():
     """Fail the build if a generated page links to something that does not exist."""
     import glob
     files = sorted(glob.glob(os.path.join(ROOT, "**", "*.html"), recursive=True))
     anchors = {f: set(re.findall(r'id="([^"]+)"', open(f, encoding="utf-8").read())) for f in files}
     broken = []
+    import urllib.parse
     for f in files:
         for m in re.finditer(r'(?:href|src)="([^"]+)"', open(f, encoding="utf-8").read()):
-            u = m.group(1)
+            u = _html.unescape(m.group(1))
             if not u or u.startswith(("http", "mailto:", "data:", "#", "tel:")):
                 continue
+            u = urllib.parse.unquote(u)          # %20 in uploaded filenames
             path, _, frag = u.partition("#")
             target = os.path.normpath(os.path.join(os.path.dirname(f), path)) if path else f
             if path and not os.path.exists(target):
@@ -1072,6 +1207,9 @@ def main():
         write(path, html)
     write_extras()
     make_og_image()
+    generated = {p for p, _ in pages} | {"404.html"}
+    retire_stale_pages(generated)
+    write_redirects(generated)
     check_links()
     total = len(pages) + 6
     print(f"built {len(pages)} HTML pages (+404), {len(POSTS)} posts, {len(LEGAL_FILES)} legal pages")

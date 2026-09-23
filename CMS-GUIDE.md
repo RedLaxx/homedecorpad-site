@@ -53,7 +53,7 @@ Without this step your edits save to GitHub but the site keeps showing the old H
 | Field | What it does |
 |---|---|
 | **SEO title** | Headline, browser tab and Google title. Keyword first, under 60 characters. |
-| **URL slug** | The address: `homedecorpad.com/blog/living-room/small-entryway-ideas.html`. Lowercase-with-hyphens. Changing it later breaks existing links. |
+| **URL slug** | The address: `homedecorpad.com/blog/living-room/small-entryway-ideas.html`. Lowercase-with-hyphens. Pages CMS fills this in from the title on first save. **If you change it later, the build writes a redirect at the old address automatically** — nothing 404s. |
 | **Headline** | Only if the on-page headline should differ from the SEO title. |
 | **Publish date** | Sorts the site. Future dates are fine — the post appears with that date. |
 | **Category** | Sets the URL folder, the card artwork and the section on the Decor Ideas page. |
@@ -151,10 +151,26 @@ Pick one. The simplest path: **Settings → Pages → Deploy from a branch → `
 on `homedecorpad-site`, connect Pages CMS to that repo, then delete the other one so Google
 doesn't see two copies of the site.
 
-## 8. If something breaks
+## 8. What the build does for you
 
-- **Edits saved but the site is unchanged** → the workflow isn't installed (section 2), or
-  the run failed. Open the **Actions** tab and read the log.
+- **Redirects on rename.** Change a post's slug and the old URL becomes a redirect stub
+  pointing at the new one, instead of leaving a duplicate page behind.
+- **Duplicate cleanup.** Any blog page that is no longer generated is removed, so deleting
+  or renaming posts cannot leave orphans on the site.
+- **Broken-link check.** If a post links to a page that does not exist, the build fails and
+  the run goes red in the Actions tab instead of publishing a 404.
+- **Sanity check on frontmatter.** A post with no title or date is skipped with a warning
+  rather than being published half-built.
+- **Legal dates are settings**, not build dates — rebuilds cannot quietly change the
+  effective date on your policy pages.
+
+## 9. If something breaks
+
+- **Edits saved but the site is unchanged** → open the **Actions** tab and read the log for
+  the *Build site from content* run. A red run means the build stopped deliberately (most
+  often a broken link in the post you just edited).
+- **A post has two URLs** → it should not happen; the build retires pages it no longer
+  generates. If you see it, check the newest build ran after your edit.
 - **The Action fails with a category error** → the Category field has a value that isn't in
   the list. Re-pick it in Pages CMS.
 - **A post vanished** → check the Draft toggle.

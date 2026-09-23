@@ -165,6 +165,11 @@ content:
         type: file
         path: content/legal/affiliate-disclosure.md
 
+  - name: redirects
+    label: Redirects (renamed pages)
+    type: file
+    path: content/redirects.yml
+
   - name: site
     label: Site settings
     type: file

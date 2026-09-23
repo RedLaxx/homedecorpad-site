@@ -114,15 +114,20 @@ def parse_frontmatter(text):
             continue
         if raw.startswith((" ", "\t")) and key:
             stripped = raw.strip()
-            if stripped.startswith("- "):
+            if stripped.startswith(("- ", "-")):
                 data.setdefault(key, [])
                 if isinstance(data[key], list):
                     data[key].append(_scalar(stripped[2:]))
                 i += 1
                 continue
+            # Pages CMS wraps long values onto continuation lines. Fold them back
+            # into the value instead of dropping them, which would truncate it.
+            current = data.get(key)
+            if isinstance(current, str) and not current.endswith(('"', "'")):
+                data[key] = (current + " " + stripped).strip()
             i += 1
             continue
-        m = re.match(r"^([A-Za-z0-9_\-]+):\s*(.*)$", raw)
+        m = re.match(r"^([A-Za-z0-9_\-./]+):\s*(.*)$", raw)   # keys may be URL paths
         if not m:
             i += 1
             continue
@@ -152,7 +157,38 @@ def parse_frontmatter(text):
 
 
 # ---------------------------------------------------------------------- inline
+# ![alt](url) or ![alt](<url with spaces>) — the form Pages CMS writes for uploads
+IMG_RE = re.compile(r"!\[([^\]]*)\]\(\s*(?:<([^>\n]+)>|([^)\s]*))\s*\)")
+
+
+def _encode_url(u):
+    """Percent-encode the characters that break URLs in HTML attributes."""
+    for ch, enc in ((" ", "%20"), ("(", "%28"), (")", "%29"), ("#", "%23"), ("?", "%3F")):
+        u = u.replace(ch, enc)
+    return u
+
+
+def img_html(alt, src, resolve, figure=False):
+    url = _encode_url(resolve(src))
+    tag = (f'<img src="{_html.escape(url, quote=True)}" alt="{_html.escape(alt, quote=True)}" '
+           f'loading="lazy" decoding="async">')
+    if figure and alt.strip():
+        return (f'<figure class="post-figure">{tag}'
+                f'<figcaption>{_html.escape(alt.strip())}</figcaption></figure>')
+    if figure:
+        return f'<figure class="post-figure">{tag}</figure>'
+    return tag
+
+
 def inline(t, resolve):
+    # pull images out first so escaping cannot mangle their URLs
+    stash = []
+
+    def _stash(m):
+        stash.append((m.group(1), m.group(2) or m.group(3)))
+        return f"\x00img{len(stash) - 1}\x00"
+
+    t = IMG_RE.sub(_stash, t)
     t = _html.escape(t, quote=False)
     t = re.sub(r"`([^`]+)`", r"<code>\1</code>", t)
 
@@ -161,6 +197,8 @@ def inline(t, resolve):
         return f'<a href="{_html.escape(resolve(href), quote=True)}">{label}</a>'
 
     t = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", link, t)
+    for n, (alt, src) in enumerate(stash):
+        t = t.replace(f"\x00img{n}\x00", img_html(alt, src, resolve))
     t = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", t)
     t = re.sub(r"(?<![\w*])\*([^*\n]+)\*(?!\*)", r"<em>\1</em>", t)
     t = re.sub(r"(?<![\w_])_([^_\n]+)_(?!_)", r"<em>\1</em>", t)
@@ -192,6 +230,10 @@ def _tokenize(body):
             continue
         if re.match(r"^\s*([-*_])(\s*\1){2,}\s*$", ln):
             blocks.append(("hr", 0, ""))
+            i += 1
+            continue
+        if ln.strip().startswith("![") and IMG_RE.fullmatch(ln.strip()):
+            blocks.append(("image", 0, ln.strip()))
             i += 1
             continue
         if ln.lstrip().startswith("|"):
@@ -283,6 +325,11 @@ def _render_block(kind, arg, payload, resolve):
         return "<hr>"
     if kind == "table":
         return _table(payload, resolve)
+    if kind == "image":
+        m_ = IMG_RE.fullmatch(payload.strip())
+        if m_:
+            return img_html(m_.group(1), m_.group(2) or m_.group(3), resolve, figure=True)
+        return ""
     if kind == "component":
         name, _, rest = arg.partition(" ")
         title = rest.strip()

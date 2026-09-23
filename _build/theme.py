@@ -178,6 +178,10 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 .shop li b a:hover{color:var(--terra-d);border-bottom-style:solid}
 .shop li span.d{display:block;font-size:14.5px;color:var(--muted)}
 .shop li span.p{color:var(--olive);font-weight:600;white-space:nowrap;font-size:14.5px}
+.post-figure{margin:34px 0}
+.post-figure img{width:100%;height:auto;border-radius:14px;border:1px solid var(--line)}
+.post-figure figcaption{font-size:13.5px;color:var(--muted);margin-top:10px;text-align:center}
+.article p img{border-radius:12px;margin:8px 0}
 .pincta{background:linear-gradient(135deg,#F8F0E8,#EFE6D9);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:34px 0;display:flex;gap:16px;align-items:center}
 .pincta svg{width:30px;height:30px;flex:0 0 30px}
 .pincta p{margin:0;font-size:15.5px}
