@@ -7,6 +7,7 @@ robots.txt, ads.txt, .nojekyll, assets and README.
 No third-party build tools required to deploy.
 """
 import os, re, sys, json, glob, shutil, datetime, html as _html
+import urllib.parse as urllib_parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -124,6 +125,7 @@ def load_posts():
     out = []
     for slug, cat, fm, body_md in staged:
         html, faq = md_engine.render(body_md, lambda h, d=2: resolve_link(h, d))
+        html = drop_missing_images(html, slug)
         out.append({
             "slug": slug, "cat": cat,
             "title": str(fm.get("title") or slug),
@@ -196,6 +198,35 @@ def rewrite_links(block, depth):
     return block.replace("#room-guides", "#categories")
 
 
+def drop_missing_images(html, slug):
+    """Remove images whose file is missing from the repo, and say so.
+
+    A deleted upload should never leave a broken image on a live page, and
+    should never block publishing. Pages and links still fail loudly; images
+    degrade quietly back to the illustration.
+    """
+    missing = []
+
+    def repl(m):
+        src = _html.unescape(m.group(1))
+        rel = urllib_parse.unquote(src)
+        while rel.startswith("../"):
+            rel = rel[3:]
+        rel = rel.lstrip("/")
+        if rel.startswith(("http://", "https://", "data:")):
+            return m.group(0)
+        if os.path.exists(os.path.join(ROOT, rel)):
+            return m.group(0)
+        missing.append(rel)
+        return ""
+
+    out = re.sub(r'<img\s+src="([^"]+)"[^>]*>', repl, html)
+    out = re.sub(r"<figure[^>]*>\s*(?:<figcaption>.*?</figcaption>)?\s*</figure>", "", out, flags=re.S)
+    for rel in missing:
+        print(f"  ! {slug}: image missing from the repo, removed from the page — {rel}")
+    return out
+
+
 def asset_url(path, depth=0):
     """Turn a content path like /assets/uploads/my photo.jpg into a correct URL.
 
@@ -217,9 +248,16 @@ def _encode_asset(u):
     return u
 
 
+def hero_available(p):
+    if not p.get("hero_image"):
+        return False
+    rel = urllib_parse.unquote(str(p["hero_image"])).lstrip("/")
+    return os.path.exists(os.path.join(ROOT, rel))
+
+
 def cover_html(p, depth=0, cls_art="c4x3"):
     """Card artwork: an uploaded hero photo when the editor set one, else the illustration."""
-    if p.get("hero_image"):
+    if hero_available(p):
         return (f'<div class="cover {cls_art}"><img src="{asset_url(p["hero_image"], depth)}" alt="" '
                 f'style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>')
     return art(p["motif"], CAT[p["cat"]]["tone"], cls_art)
@@ -444,7 +482,7 @@ def page_post(p):
     body_html = p["body"]
     hero = (f'<img src="{asset_url(p["hero_image"], depth)}" '
             f'alt="{_html.escape(p["title"], quote=True)}" style="width:100%;height:100%;object-fit:cover">') \
-        if p.get("hero_image") else art_raw(p["motif"], c["tone"])
+        if hero_available(p) else art_raw(p["motif"], c["tone"])
     pin_title = p["title"][:100]
     pin_desc = (p["dek"] + " " + " ".join("#" + t.replace(" ", "") for t in p["tags"][:3]))[:480]
     rel = REL.get(p["slug"], [])[:3]
@@ -1177,7 +1215,7 @@ def check_links():
     import glob
     files = sorted(glob.glob(os.path.join(ROOT, "**", "*.html"), recursive=True))
     anchors = {f: set(re.findall(r'id="([^"]+)"', open(f, encoding="utf-8").read())) for f in files}
-    broken = []
+    broken, warnings = [], []
     import urllib.parse
     for f in files:
         for m in re.finditer(r'(?:href|src)="([^"]+)"', open(f, encoding="utf-8").read()):
@@ -1188,9 +1226,14 @@ def check_links():
             path, _, frag = u.partition("#")
             target = os.path.normpath(os.path.join(os.path.dirname(f), path)) if path else f
             if path and not os.path.exists(target):
+                if u.rsplit(".", 1)[-1].lower() in ("jpg", "jpeg", "png", "webp", "gif", "svg", "mp4"):
+                    warnings.append(f"{os.path.relpath(f, ROOT)} -> {u}")
+                    continue
                 broken.append(f"{os.path.relpath(f, ROOT)} -> {u}")
             elif frag and frag not in anchors.get(target, set()):
                 broken.append(f"{os.path.relpath(f, ROOT)} -> {u} (missing anchor)")
+    for w in warnings:
+        print(f"  ! missing image (page still published): {w}")
     if broken:
         print("\n  BROKEN LINKS FOUND — fix the content before publishing:")
         for x in broken:

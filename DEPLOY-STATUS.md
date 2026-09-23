@@ -2,76 +2,84 @@
 
 _Last updated: 23 September 2026_
 
-## Two live copies right now — keep one
+## Two live sites — keep one
 
-| URL | Repo | Status |
+| Live URL | Repo | State |
 |---|---|---|
-| `https://redlaxx.github.io/homedecorpad-site/` | `RedLaxx/homedecorpad-site` | ✅ live, **current build** — correct canonicals, `.nojekyll`, Pages CMS config, all content in Markdown. **Use this one.** |
-| `https://redlaxx.github.io/HomeDecorPad/` | `RedLaxx/HomeDecorPad` | ✅ live but **out of date** — older build, canonicals still point at the unregistered `homedecorpad.com`, no CMS config. |
+| **https://redlaxx.github.io/homedecorpad-site/** | `RedLaxx/homedecorpad-site` | ✅ **current** — CMS-managed content, correct canonicals, automatic rebuilds. **Keep this one.** |
+| https://redlaxx.github.io/homedecorpad/ | `RedLaxx/homedecorpad` | ⚠️ old build, still live. Canonicals point at the unregistered `homedecorpad.com`, so it competes with your real site for search traffic. |
 
-Two live copies of the same site make Google pick one and ignore the other. Once you are
-happy with `homedecorpad-site`, delete the other repo:
+Both are public and serving the same articles. Google will pick one and ignore the other,
+and right now it would pick the broken one. Delete the old repo (next section).
 
-### How to delete `RedLaxx/HomeDecorPad`
+> Note: the old repo was originally named `HomeDecorPad`. It has since been renamed to
+> `homedecorpad`, which moved its URL from `/HomeDecorPad/` to `/homedecorpad/`.
 
-1. Open <https://github.com/RedLaxx/HomeDecorPad/settings> (you must be signed in as the owner).
-2. Scroll to the very bottom of the page to the red **Danger Zone** panel.
+---
+
+## How to delete `RedLaxx/homedecorpad`
+
+1. Open <https://github.com/RedLaxx/homedecorpad/settings> (signed in as the owner).
+2. Scroll to the very bottom of the page — the red **Danger Zone** panel.
 3. Click **Delete this repository**.
-4. A dialog opens. Type the full name exactly as shown — `RedLaxx/HomeDecorPad` — then click
-   **I understand the consequences, delete this repository**.
-5. Confirm with your password or 2FA prompt if GitHub asks.
-6. Done. The repo disappears from your profile and
-   `https://redlaxx.github.io/HomeDecorPad/` starts returning 404 within a minute.
+4. In the dialog, type the name where prompted: `RedLaxx/homedecorpad`
+   (GitHub may only ask for `homedecorpad` — type exactly what it shows).
+5. Click **I understand the consequences, delete this repository**.
+6. Confirm with your password or 2FA if asked.
 
-**Before you delete, know what you are removing:** that repo is the older build (canonicals
-still pointed at the unregistered domain, no CMS configuration). Nothing links to its URL —
-neither the new site nor Pinterest — so nothing breaks. A full copy is saved at
-`HomeDecorPad-repo-backup.tar.gz` (46 files) in the workspace if you ever want to look back.
+Within about a minute, `https://redlaxx.github.io/homedecorpad/` returns 404 and your
+CMS site is the only copy online.
 
-**Softer alternatives if you are not ready to delete:**
+### Softer options if you are not ready to delete
 
-| Instead of deleting | How | Effect |
+| Option | Where | Effect |
 |---|---|---|
-| Take the site offline only | Repo → Settings → Pages → Source: **None** | URL goes 404, files stay on GitHub |
-| Freeze it read-only | Repo → Settings → Danger Zone → **Archive this repository** | Nobody can push, url archived, files preserved |
-| Leave it | — | Not recommended: Google sees two copies of the same content |
+| Take it offline, keep the files | Repo → Settings → Pages → Source: **None** | URL goes 404, repo stays |
+| Freeze it | Repo → Settings → Danger Zone → **Archive this repository** | Read-only, files preserved |
+| Do nothing | — | Not advised: two copies of the same content compete in search |
 
-**After deleting, one small tidy-up:** the repository disappears from Pages CMS on its own.
-Make sure the Pages CMS GitHub App still has access to `homedecorpad-site`
-(<https://github.com/settings/installations> → Pages CMS → Configure → Repository access).
+### Want me to do it instead?
 
-**If you would rather I do it for you:** the current fine-grained token cannot delete
-repositories (that needs **Administration: Read and write** on that repo, or a classic token
-with the `delete_repo` scope). Generate one with that permission and I will remove it and
-verify the URL is gone.
+The token you provided cannot delete repositories. That needs either:
+- a **fine-grained token** with **Administration: Read and write** on `RedLaxx/homedecorpad`, or
+- a **classic token** with the `delete_repo` scope.
 
-## Content is now managed through Pages CMS
+Generate one, and it is a single API call — I will confirm the URL is gone afterwards.
 
-- Posts live in `content/posts/*.md` — Markdown with frontmatter, not HTML.
-- `content/site.yml` holds brand, domain, email, Amazon tag, AdSense ID, GA4 ID,
-  Pinterest code and social links.
-- `_build/build.py` regenerates every HTML page from those files.
-- Guide: **`CMS-GUIDE.md`**
+**Backup:** a full copy of that repo (46 files, including its `.pages.yml` and history
+snapshot) is saved at `HomeDecorPad-repo-backup.tar.gz` in the workspace.
 
-**The one manual step remaining:** the rebuild-on-save workflow.
+---
 
-Copy `_build/workflow-build.yml` to `.github/workflows/build.yml` in the repo
-(Add file → Create new file → paste → commit). GitHub refuses to let a personal access
-token create workflow files without the `workflow` scope, so this cannot be pushed for you.
+## Content is managed through Pages CMS
 
-Without it, Pages CMS saves your edits to `content/` but the live HTML only updates when
-the build runs. With it, publishing is automatic about 30 seconds after you hit Save.
+- Posts: `content/posts/*.md` · legal pages: `content/legal/*.md` · settings: `content/site.yml`
+- Never edit the `.html` files — they are generated and get overwritten.
+- Saves trigger the **Build site from content** workflow, which republishes in ~30 seconds.
+- Full instructions: **`CMS-GUIDE.md`**
+
+### What the build guards against now
+
+| Situation | What happens |
+|---|---|
+| You rename a post (new slug) | Old URL becomes a permanent redirect — no broken Pinterest pins |
+| You delete a post | Its page is removed from the site and the sitemap |
+| A post links to a page that does not exist | The build **fails** and says which link, so nothing broken is published |
+| You delete an uploaded image that a post still uses | Warning only — the image is dropped and the illustration takes its place |
+| A post has no title or date | It is skipped with a warning |
+| Rebuild runs on a different day | Legal dates do not change (they are settings, not build dates) |
+
+---
 
 ## When homedecorpad.com is bought
 
-1. Add the domain in **Settings → Pages → Custom domain**, plus the four `A` records and a
-   `www` CNAME (table in `README.md`).
-2. In Pages CMS → **Site settings**, set `domain` to `https://homedecorpad.com`, save.
-3. Enforce HTTPS, then verify the domain in Pinterest and submit the sitemap in Search Console.
+1. Settings → Pages → Custom domain, plus the `A` records and `www` CNAME in `README.md`.
+2. Pages CMS → **Site settings** → set `domain` to `https://homedecorpad.com`, save.
+3. Enforce HTTPS, verify the domain in Pinterest, submit the sitemap in Search Console.
 
 ## Still outstanding before the AdSense application
 
-- Add the workflow file (above), then publish 5–10 more posts — 8 is the minimum, 15+ is safer.
-- Turn on Google's own GDPR message in AdSense (free CMP) for EEA traffic.
-- Fill in `amazon_tag`, `formspree_id`, `adsense_client`, `ga4_id` and the social URLs in
-  Pages CMS → Site settings. Until `adsense_client` is set, no ad code loads at all.
+- Publish more posts — 8 is the minimum, 15+ is safer.
+- Turn on Google's GDPR message in AdSense (free CMP) for EEA traffic.
+- Fill in `amazon_tag`, `formspree_id`, `adsense_client`, `ga4_id`, social URLs in
+  Pages CMS → Site settings. No ad code loads until `adsense_client` is set.
