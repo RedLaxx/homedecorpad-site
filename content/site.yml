@@ -3,7 +3,7 @@
 # After saving, GitHub Actions rebuilds the site automatically.
 
 brand: HomeDecorPad
-domain: https://redlaxx.github.io/HomeDecorPad
+domain: https://redlaxx.github.io/homedecorpad-site
 
 # Where reader emails and brand enquiries go. Shown in the footer of the
 # legal pages and on the contact page.
