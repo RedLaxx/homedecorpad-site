@@ -140,6 +140,31 @@ content:
           :::ad   an ad slot (one is added automatically, use this for a second)
           A "## Frequently asked questions" section with ### question headings becomes an accordion with FAQ markup for Google.
 
+  - name: legal
+    label: Legal pages
+    type: group
+    items:
+      - name: privacy
+        label: Privacy Policy
+        type: file
+        path: content/legal/privacy-policy.md
+      - name: cookies
+        label: Cookie Policy
+        type: file
+        path: content/legal/cookie-policy.md
+      - name: terms
+        label: Terms of Use
+        type: file
+        path: content/legal/terms-of-use.md
+      - name: disclaimer
+        label: Disclaimer
+        type: file
+        path: content/legal/disclaimer.md
+      - name: affiliate
+        label: Affiliate & Advertising Disclosure
+        type: file
+        path: content/legal/affiliate-disclosure.md
+
   - name: site
     label: Site settings
     type: file

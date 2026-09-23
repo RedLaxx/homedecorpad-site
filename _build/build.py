@@ -872,15 +872,21 @@ LEGAL_FILES = [
     ("disclaimer.html", "disclaimer.md", "Disclaimer"),
     ("affiliate-disclosure.html", "affiliate-disclosure.md", "Affiliate & Advertising Disclosure"),
 ]
-LEGAL_DIR = os.path.join(ROOT, "..", "home-decor-blog", "legal")
-if not os.path.isdir(LEGAL_DIR):
-    LEGAL_DIR = os.path.join(os.path.dirname(ROOT), "home-decor-blog", "legal")
+# Legal pages are content: they ship inside the repo so the build works anywhere.
+LEGAL_DIR = os.path.join(CONTENT, "legal")
+if not os.path.isdir(LEGAL_DIR):                     # convenience for local working copies
+    alt = os.path.join(os.path.dirname(ROOT), "home-decor-blog", "legal")
+    if os.path.isdir(alt):
+        LEGAL_DIR = alt
 
 
 def legal_pages():
     pages = []
     for out_name, src_name, label in LEGAL_FILES:
         src = os.path.join(LEGAL_DIR, src_name)
+        if not os.path.exists(src):
+            raise SystemExit(f"Missing legal source file: {src}\n"
+                             f"Expected the legal Markdown in content/legal/")
         md = open(src, encoding="utf-8").read()
         for k, v in PLACEHOLDER.items():
             md = md.replace(k, v)
