@@ -1,0 +1,6 @@
+# HomeDecorPad
+User-agent: *
+Allow: /
+Disallow: /404.html
+
+Sitemap: https://redlaxx.github.io/HomeDecorPad/sitemap.xml

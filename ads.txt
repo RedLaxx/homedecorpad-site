@@ -1,0 +1,4 @@
+# HomeDecorPad — Authorized Digital Sellers
+# After AdSense approves your site, open AdSense > Account > ads.txt and replace
+# the line below with the exact line AdSense shows you (it keeps the pub- number).
+google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
