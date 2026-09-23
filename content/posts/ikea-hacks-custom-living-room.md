@@ -2,8 +2,12 @@
 title: 5 IKEA Hacks for a Custom-Looking Living Room (No Power Tools Needed)
 date: 2026-09-22
 category: diy
-dek: Five renter-friendly IKEA hacks — a floating media bench, a styled bookcase, an ottoman upgrade, a curtain trick and the legs swap that changes everything.
-intro: IKEA hacks go wrong when they involve a saw. These five do not. Each one uses a standard piece, one accessory, and about an hour of your time — and each one looks like it came from a custom furniture shop.
+dek: Five renter-friendly IKEA hacks — a floating media bench, a styled
+  bookcase, an ottoman upgrade, a curtain trick and the legs swap that changes
+  everything.
+intro: IKEA hacks go wrong when they involve a saw. These five do not. Each one
+  uses a standard piece, one accessory, and about an hour of your time — and
+  each one looks like it came from a custom furniture shop.
 tags:
   - ikea hacks
   - DIY
@@ -15,8 +19,8 @@ related:
   - small-apartment-decor-ideas
   - amazon-home-finds-look-expensive
 draft: false
+slug: 5-ikea-hacks-for-a-custom-looking-living-room
 ---
-
 The best hacks are not the most complicated ones. They are the ones that fix the specific thing that makes flat-pack furniture look flat-packed: its proportions, its legs, and the fact that it is empty. Here are five that work in a rental and cost very little.
 
 ## 1. The legs swap
@@ -50,24 +54,29 @@ Pair a cheap ceiling-mounted rail with the longest, cheapest linen-look panels y
 
 :::shop The hack kit
 *Affiliate links — see our [disclosure](/affiliate-disclosure.html).*
+
+
 | Item | Detail | Price |
-| --- | --- | --- |
+| --------------------------------------------- | ------------------------------------------------------- | ------ |
 | Tapered wood furniture legs, 6–8 in, set of 4 | Oak or walnut, screw-in, with adaptor plates if needed. | $18–30 |
 | Ceiling curtain rail + rings, 4–8 ft | Buy the length that clears both sides of the window. | $20–35 |
 | Linen-look panels, 96 in, 2-pack | Oat or warm white; longer lengths read more expensive. | $35–55 |
 | Woven basket, 16 in | The organic element every shelf and floor corner needs. | $20–28 |
 | Small wooden furniture feet, set of 4 | For the ottoman upgrade. | $10–14 |
 | Wall-mounting rail / French cleat | For the floating bench — fix into studs. | $12–18 |
-:::
+| ::: |  |  |
+
 
 ## Making flat-pack look custom
 
 :::steps
+
 1. **Fix the legs first.** Proportion is what the eye reads as “expensive.”
 2. **Then clear the clutter.** Remove anything on the piece that is not deliberate.
 3. **Add one texture and one organic element** — a woven basket, a plant, a wood bowl.
 4. **Repeat one colour from the rest of the room.** Flat-pack furniture often arrives with no context; give it one.
 5. **Hide the fasteners.** Cover exposed cam locks with small wood plugs, or turn the piece so they face the wall.
+
 :::
 
 ## Frequently asked questions
