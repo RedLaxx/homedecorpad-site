@@ -15,7 +15,7 @@ tags:
   - Home Decor
 featured_image: /assets/uploads/Corner Sofa Ideas for Small Living Rooms 9
   Layouts That Don't Feel Cramped Featured.jpg
-draft: true
+draft: false
 ---
 # Corner Sofa Ideas for Small Living Rooms: 9 Layouts That Don't Feel Cramped
 
@@ -38,6 +38,8 @@ These apply to every layout below, so it's worth getting them right first.
 
 ## 1. The classic corner tuck
 
+![](</assets/uploads/Layout 1 The Classic Corner Tuck.jpeg>)
+
 The simplest layout is also the most reliable. Push a compact L-shaped sofa into a corner so its two sides run along two walls, and let everything else open out from there.
 
 Most corners are dead space because nobody walks through them. Putting your biggest piece of furniture there frees the middle of the floor for a rug, a coffee table, and a clear path. You can also seat four or five people using less usable floor than a standard sofa plus two chairs would take. This layout suits square or slightly rectangular rooms with one obvious corner facing the TV wall or a window.
@@ -46,6 +48,8 @@ Keep the sofa a couple of inches off the wall so it doesn't look jammed in. A sl
 
 ## 2. The chaise-end layout
 
+![](</assets/uploads/Layout 2 The Chaise-End Layout.jpg>)
+
 If you like to stretch out, a compact L-shaped sofa with a chaise is the one to pick. Put the long side against your longest wall and point the chaise toward the middle of the room, ideally at the TV or the window.
 
 The chaise works as a built-in footrest, so you can skip the recliner or the extra ottoman. Pointing it along the longest open direction of the room also creates a clear lounging lane that leaves the rest of the floor open. It's a good fit for narrow or rectangular rooms, and for anyone who spends evenings watching TV or reading.
@@ -53,6 +57,8 @@ The chaise works as a built-in footrest, so you can skip the recliner or the ext
 A small side table at the end of the chaise holds drinks, and a soft throw over the arm makes it look lived in. A neutral or light-toned rug under the chaise end helps mark out the seating zone. Watch the other end, though. If the chaise pokes into a doorway path, you'll be squeezing past it every day, so tape it out first and make sure you can walk by comfortably.
 
 ## 3. The floating-look corner
+
+
 
 When a room is tiny, visual weight matters as much as actual size. A corner sofa on raised, tapered legs with a low back looks lighter than a heavy skirted style, even when the footprint is identical. Seeing floor under the sofa lets the eye travel through the room instead of stopping at a solid block, and a low back keeps sightlines open, so the room reads as bigger. This works well in rooms with low ceilings, dark floors, or little natural light, where a bulky sofa would feel heavy.
 
