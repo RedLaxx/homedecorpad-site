@@ -12,7 +12,7 @@ import urllib.parse as urllib_parse
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import theme
-from theme import (CSS, head, footer, consent, comments_section, art, art_raw, ICON, header, TONES)
+from theme import (CSS, head, footer, consent, comments_section, art, art_raw, ICON, header, TONES, share_bar)
 import md as md_engine
 
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
@@ -968,12 +968,14 @@ def page_post(p):
   <h1>{p['h1']}</h1>
   <p class="lede">{p['intro']}</p>
   <div class="meta"><span>By the {BRAND} team</span><i></i><span>{d(p['date'])}</span><i></i><span>{read_label(p)}</span></div>
+  {share_bar(p, depth, "top")}
  </div>
  <div class="container narrow">
   <div class="post-hero">{hero}<div class="tag"><span>{c['name']} &middot; {BRAND}</span></div></div>
  </div>
  <div class="container narrow article">
   {body_html}
+  {share_bar(p, depth, "bottom")}
   <div class="pincta">{ICON['pin']}<p><b>Save this idea for later</b>Pin the graphic below to your {c['name'].lower()} board so you can find it when you are ready to shop.</p></div>
   <details class="prosebox" style="margin:0 0 30px">
    <summary style="cursor:pointer;font-family:var(--serif);font-size:19px">Copy-and-paste pin title &amp; description</summary>

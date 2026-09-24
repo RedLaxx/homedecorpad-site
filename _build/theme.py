@@ -251,6 +251,24 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 .author p{margin:0;font-size:14.5px;color:var(--muted)}
 .author b{display:block;font-family:var(--serif);font-size:18px;color:var(--ink)}
 .share{margin:30px 0 0;padding-top:20px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.share-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:18px 0;margin:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.share-bar.top{margin-top:0;padding-top:0;border-top:0}
+.share-bar.bottom{margin-top:38px;margin-bottom:10px}
+.share-bar .share-label{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-right:6px}
+.share-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:999px;font-size:13.5px;font-weight:600;border:1.5px solid var(--line);background:#fff;color:var(--ink);text-decoration:none;transition:all .15s;cursor:pointer;line-height:1}
+.share-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(60,40,20,.12);border-color:var(--ink)}
+.share-btn.pin{background:#E60023;color:#fff;border-color:#E60023}
+.share-btn.pin:hover{background:#C4001E;border-color:#C4001E;box-shadow:0 6px 18px rgba(230,0,35,.22)}
+.share-btn.fb{background:#1877F2;color:#fff;border-color:#1877F2}
+.share-btn.fb:hover{background:#166fe5}
+.share-btn.x{background:#111;color:#fff;border-color:#111}
+.share-btn.x:hover{background:#000}
+.share-btn.wa{background:#25D366;color:#fff;border-color:#25D366}
+.share-btn.wa:hover{background:#1fb855}
+.share-btn.mail{background:#fff;color:var(--ink)}
+.share-btn.copy{background:#fff;color:var(--ink)}
+.share-btn svg{width:16px;height:16px;flex:0 0 16px}
+.share-btn.copied{background:var(--ink);color:#fff;border-color:var(--ink)}
 .steps{counter-reset:s;list-style:none;padding:0}
 .steps li{counter-increment:s;position:relative;padding-left:56px;margin:0 0 26px}
 .steps li::before{content:counter(s);position:absolute;left:0;top:-2px;width:38px;height:38px;border-radius:50%;background:var(--oat);color:var(--terra-d);font-family:var(--serif);font-size:19px;display:flex;align-items:center;justify-content:center}
@@ -753,7 +771,11 @@ ICON = {
     "instagram": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none"/></svg>',
     "facebook": '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.2c0-.9.3-1.5 1.6-1.5h1.3V5c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1V11H7.6v3H10v7z"/></svg>',
     "youtube": '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 8.1s-.2-1.4-.8-2c-.7-.8-1.5-.8-1.9-.9C16.9 5 12 5 12 5h0s-4.9 0-6.9.2c-.4.1-1.2.1-1.9.9-.6.6-.8 2-.8 2S2.2 9.7 2.2 11.4v1.6c0 1.6.2 3.3.2 3.3s.2 1.4.8 2c.7.8 1.7.7 2.1.8 1.6.1 6.7.2 6.7.2s4.9 0 6.9-.2c.4-.1 1.2-.1 1.9-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.6c0-1.6-.2-3.2-.2-3.2zM10.1 14.6V8.9l5.2 2.9z"/></svg>',
-    "mail": '<svg viewBox="0 0 24 24" fill="none" stroke="#B5533C" stroke-width="1.9"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg>',
+    "mail": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg>',
+    "x": '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3h3.1l-6.8 7.8L23 21h-6.2l-4.8-6.3L6.5 21H3.4l7.3-8.3L3 3h6.4l4.3 5.7L18.9 3zm-1.1 16.2h1.7L8.4 4.8H6.5l11.3 14.4z"/></svg>',
+    "whatsapp": '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.1 4.9A9.9 9.9 0 0 0 12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.2-1.3A9.9 9.9 0 0 0 12 22c5.5 0 10-4.5 10-10 0-2.7-1-5.1-2.9-7.1zM12 20a8 8 0 0 1-4.1-1.1l-.3-.2-3.1.8.8-3-.2-.3A8 8 0 0 1 12 4c4.4 0 8 3.6 8 8s-3.6 8-8 8zm4.6-6c-.2-.1-1.3-.6-1.5-.7-.2-.1-.3-.1-.5.1-.1.2-.6.7-.7.8-.1.1-.3.2-.5.1-.2-.1-1-.4-1.8-1.2-.7-.6-1.1-1.3-1.3-1.5-.1-.2 0-.3.1-.4l.4-.4c.1-.1.1-.2.2-.3 0-.1 0-.2 0-.3 0-.1-.5-1.2-.7-1.6-.2-.4-.3-.3-.5-.3h-.4c-.1 0-.3 0-.5.2-.1.2-.7.7-.7 1.7s.7 2 .8 2.1c.1.2 1.4 2.1 3.4 2.9.5.2.9.3 1.2.4.5.2.9.1 1.2.1.4 0 1.3-.5 1.5-1 .2-.5.2-.9.1-1 0-.1-.2-.1-.4-.2z"/></svg>',
+    "link": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.5 0l3-3a5 5 0 0 0-7.5-7.5l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5 0l-3 3a5 5 0 0 0 7.5 7.5l1.5-1.5"/></svg>',
+    "check2": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>',
 }
 
 NAV = [
@@ -952,6 +974,61 @@ def consent(rel=""):
  <span class="field"><button class="btn sm" type="button" onclick="hdp('all')">Accept all</button>
  <button class="btn sm ghost" type="button" onclick="hdp('essential')">Essential only</button></span>
 </div>"""
+
+
+def share_bar(post, depth=0, variant="top"):
+    """Pinterest-first sharing bar for blog posts — top and bottom. Returns HTML."""
+    import urllib.parse, html as _html
+    p = post or {}
+    cat = p.get("cat","")
+    slug = p.get("slug","")
+    title = p.get("title") or p.get("h1") or ""
+    dek = p.get("dek") or ""
+    # absolute URL clean without .html
+    url = f"{DOMAIN}/blog/{cat}/{slug}" if cat and slug else DOMAIN
+    # image for Pinterest — featured_image or og
+    feat = (p.get("featured_image") or p.get("hero_image") or "").strip()
+    if feat:
+        # feat is like /assets/uploads/hero-...jpg
+        img_url = feat if feat.startswith("http") else f"{DOMAIN}/{feat.lstrip('/')}"
+    else:
+        img_url = f"{DOMAIN}/assets/og-{cat}.jpg" if cat else f"{DOMAIN}/assets/og-default.jpg"
+    # encode for URLs
+    enc_url = urllib.parse.quote(url, safe="")
+    enc_title = urllib.parse.quote(title, safe="")
+    enc_dek = urllib.parse.quote(f"{title} — {dek}"[:300], safe="")
+    enc_img = urllib.parse.quote(img_url, safe="")
+    # Pinterest must be first
+    pin_href = f"https://www.pinterest.com/pin/create/button/?url={enc_url}&media={enc_img}&description={enc_dek}"
+    fb_href = f"https://www.facebook.com/sharer/sharer.php?u={enc_url}"
+    x_href = f"https://twitter.com/intent/tweet?url={enc_url}&text={enc_title}"
+    wa_href = f"https://api.whatsapp.com/send?text={enc_title}%20{enc_url}"
+    mail_href = f"mailto:?subject={enc_title}&body={enc_url}"
+    # label
+    label = "Share this idea:" if variant=="top" else "Liked it? Share it:"
+    return f"""<div class="share-bar {variant}">
+ <span class="share-label">{label}</span>
+ <a class="share-btn pin" href="{pin_href}" target="_blank" rel="noopener" aria-label="Share on Pinterest" title="Pin on Pinterest">{ICON['pinterest']} Pinterest</a>
+ <a class="share-btn fb" href="{fb_href}" target="_blank" rel="noopener" aria-label="Share on Facebook">{ICON['facebook']} Facebook</a>
+ <a class="share-btn x" href="{x_href}" target="_blank" rel="noopener" aria-label="Share on X">{ICON['x']} X</a>
+ <a class="share-btn wa" href="{wa_href}" target="_blank" rel="noopener" aria-label="Share on WhatsApp">{ICON['whatsapp']} WhatsApp</a>
+ <a class="share-btn mail" href="{mail_href}" aria-label="Share via Email">{ICON['mail']} Email</a>
+ <button class="share-btn copy" type="button" onclick="hdpCopy(this, '{_html.escape(url)}')" aria-label="Copy link">{ICON['link']} Copy link</button>
+</div>
+<script>
+function hdpCopy(btn, url){{
+  try{{
+    navigator.clipboard.writeText(url).then(function(){{
+      var orig=btn.innerHTML; btn.innerHTML='{ICON['check2']} Copied!'; btn.classList.add('copied');
+      setTimeout(function(){{ btn.innerHTML=orig; btn.classList.remove('copied'); }}, 1800);
+    }});
+  }}catch(e){{
+    var ta=document.createElement('textarea'); ta.value=url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    var orig=btn.innerHTML; btn.innerHTML='{ICON['check2']} Copied!'; btn.classList.add('copied');
+    setTimeout(function(){{ btn.innerHTML=orig; btn.classList.remove('copied'); }}, 1800);
+  }}
+}}
+</script>"""
 
 
 def comments_section(rel="", post=None, comments=None):

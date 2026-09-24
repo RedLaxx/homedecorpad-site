@@ -239,6 +239,24 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 .author p{margin:0;font-size:14.5px;color:var(--muted)}
 .author b{display:block;font-family:var(--serif);font-size:18px;color:var(--ink)}
 .share{margin:30px 0 0;padding-top:20px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.share-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:18px 0;margin:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.share-bar.top{margin-top:0;padding-top:0;border-top:0}
+.share-bar.bottom{margin-top:38px;margin-bottom:10px}
+.share-bar .share-label{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-right:6px}
+.share-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:999px;font-size:13.5px;font-weight:600;border:1.5px solid var(--line);background:#fff;color:var(--ink);text-decoration:none;transition:all .15s;cursor:pointer;line-height:1}
+.share-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(60,40,20,.12);border-color:var(--ink)}
+.share-btn.pin{background:#E60023;color:#fff;border-color:#E60023}
+.share-btn.pin:hover{background:#C4001E;border-color:#C4001E;box-shadow:0 6px 18px rgba(230,0,35,.22)}
+.share-btn.fb{background:#1877F2;color:#fff;border-color:#1877F2}
+.share-btn.fb:hover{background:#166fe5}
+.share-btn.x{background:#111;color:#fff;border-color:#111}
+.share-btn.x:hover{background:#000}
+.share-btn.wa{background:#25D366;color:#fff;border-color:#25D366}
+.share-btn.wa:hover{background:#1fb855}
+.share-btn.mail{background:#fff;color:var(--ink)}
+.share-btn.copy{background:#fff;color:var(--ink)}
+.share-btn svg{width:16px;height:16px;flex:0 0 16px}
+.share-btn.copied{background:var(--ink);color:#fff;border-color:var(--ink)}
 .steps{counter-reset:s;list-style:none;padding:0}
 .steps li{counter-increment:s;position:relative;padding-left:56px;margin:0 0 26px}
 .steps li::before{content:counter(s);position:absolute;left:0;top:-2px;width:38px;height:38px;border-radius:50%;background:var(--oat);color:var(--terra-d);font-family:var(--serif);font-size:19px;display:flex;align-items:center;justify-content:center}
@@ -338,6 +356,29 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
   <h1>10 Small Apartment Decor Ideas That Make 500 Sq Ft Feel Bigger</h1>
   <p class="lede">Small apartments do not need small furniture. They need fewer decisions — one palette, one rug, one place for everything. These ten moves are the ones that make a 500-square-foot rental feel calm instead of cramped.</p>
   <div class="meta"><span>By the HomeDecorPad team</span><i></i><span>1 September 2026</span><i></i><span>4 min read</span></div>
+  <div class="share-bar top">
+ <span class="share-label">Share this idea:</span>
+ <a class="share-btn pin" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fsmall-space%2Fsmall-apartment-decor-ideas&media=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fassets%2Fuploads%2Fhero-cream-pillows-1500x1000.jpg&description=10%20Small%20Apartment%20Decor%20Ideas%20That%20Make%20500%20Sq%20Ft%20Feel%20Bigger%20%E2%80%94%20Ten%20small%20apartment%20decor%20ideas%20that%20actually%20work%3A%20vertical%20storage%2C%20one%20big%20rug%20instead%20of%20three%20small%20ones%2C%20lighter%20furniture%20legs%2C%20and%20the%20mirror%20rule%20nobody%20follows." target="_blank" rel="noopener" aria-label="Share on Pinterest" title="Pin on Pinterest"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5.1s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.6 2.2-.9 3.4-.2 1 .5 1.9 1.6 1.9 1.9 0 3.2-2.4 3.2-5.3 0-2.2-1.5-3.8-4.2-3.8-3 0-4.9 2.2-4.9 4.7 0 .9.3 1.6.7 2.1.2.2.2.3.1.6l-.2.9c-.1.3-.3.4-.6.2-1.4-.6-2.1-2.2-2.1-4C5.1 8 7.2 5 12.2 5c4.1 0 6.8 2.9 6.8 6 0 4.1-2.3 7.2-5.7 7.2-1.1 0-2.2-.6-2.6-1.3l-.7 2.7c-.3 1-.9 2.1-1.4 2.8A10 10 0 1 0 12 2z"/></svg> Pinterest</a>
+ <a class="share-btn fb" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fsmall-space%2Fsmall-apartment-decor-ideas" target="_blank" rel="noopener" aria-label="Share on Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.2c0-.9.3-1.5 1.6-1.5h1.3V5c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1V11H7.6v3H10v7z"/></svg> Facebook</a>
+ <a class="share-btn x" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fsmall-space%2Fsmall-apartment-decor-ideas&text=10%20Small%20Apartment%20Decor%20Ideas%20That%20Make%20500%20Sq%20Ft%20Feel%20Bigger" target="_blank" rel="noopener" aria-label="Share on X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3h3.1l-6.8 7.8L23 21h-6.2l-4.8-6.3L6.5 21H3.4l7.3-8.3L3 3h6.4l4.3 5.7L18.9 3zm-1.1 16.2h1.7L8.4 4.8H6.5l11.3 14.4z"/></svg> X</a>
+ <a class="share-btn wa" href="https://api.whatsapp.com/send?text=10%20Small%20Apartment%20Decor%20Ideas%20That%20Make%20500%20Sq%20Ft%20Feel%20Bigger%20https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fsmall-space%2Fsmall-apartment-decor-ideas" target="_blank" rel="noopener" aria-label="Share on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.1 4.9A9.9 9.9 0 0 0 12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.2-1.3A9.9 9.9 0 0 0 12 22c5.5 0 10-4.5 10-10 0-2.7-1-5.1-2.9-7.1zM12 20a8 8 0 0 1-4.1-1.1l-.3-.2-3.1.8.8-3-.2-.3A8 8 0 0 1 12 4c4.4 0 8 3.6 8 8s-3.6 8-8 8zm4.6-6c-.2-.1-1.3-.6-1.5-.7-.2-.1-.3-.1-.5.1-.1.2-.6.7-.7.8-.1.1-.3.2-.5.1-.2-.1-1-.4-1.8-1.2-.7-.6-1.1-1.3-1.3-1.5-.1-.2 0-.3.1-.4l.4-.4c.1-.1.1-.2.2-.3 0-.1 0-.2 0-.3 0-.1-.5-1.2-.7-1.6-.2-.4-.3-.3-.5-.3h-.4c-.1 0-.3 0-.5.2-.1.2-.7.7-.7 1.7s.7 2 .8 2.1c.1.2 1.4 2.1 3.4 2.9.5.2.9.3 1.2.4.5.2.9.1 1.2.1.4 0 1.3-.5 1.5-1 .2-.5.2-.9.1-1 0-.1-.2-.1-.4-.2z"/></svg> WhatsApp</a>
+ <a class="share-btn mail" href="mailto:?subject=10%20Small%20Apartment%20Decor%20Ideas%20That%20Make%20500%20Sq%20Ft%20Feel%20Bigger&body=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fsmall-space%2Fsmall-apartment-decor-ideas" aria-label="Share via Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg> Email</a>
+ <button class="share-btn copy" type="button" onclick="hdpCopy(this, 'https://redlaxx.github.io/homedecorpad-site/blog/small-space/small-apartment-decor-ideas')" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.5 0l3-3a5 5 0 0 0-7.5-7.5l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5 0l-3 3a5 5 0 0 0 7.5 7.5l1.5-1.5"/></svg> Copy link</button>
+</div>
+<script>
+function hdpCopy(btn, url){
+  try{
+    navigator.clipboard.writeText(url).then(function(){
+      var orig=btn.innerHTML; btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> Copied!'; btn.classList.add('copied');
+      setTimeout(function(){ btn.innerHTML=orig; btn.classList.remove('copied'); }, 1800);
+    });
+  }catch(e){
+    var ta=document.createElement('textarea'); ta.value=url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    var orig=btn.innerHTML; btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> Copied!'; btn.classList.add('copied');
+    setTimeout(function(){ btn.innerHTML=orig; btn.classList.remove('copied'); }, 1800);
+  }
+}
+</script>
  </div>
  <div class="container narrow">
   <div class="post-hero"><img src="../../assets/uploads/hero-cream-pillows-1500x1000.jpg" alt="10 Small Apartment Decor Ideas That Make 500 Sq Ft Feel Bigger" style="width:100%;height:100%;object-fit:cover"><div class="tag"><span>Small Space & Renters &middot; HomeDecorPad</span></div></div>
@@ -368,6 +409,29 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 <div class="shop"><h3>Shop the small-space starter kit</h3><p class="muted"><em>Affiliate links — see our <a href="../../affiliate-disclosure.html">disclosure</a>.</em></p><ul><li><span><b>Washable area rug, 8×10, low pile</b><span class="d">The unifying move. Warm neutral so it works in every room you move to next.</span></span><span class="p">$90–150</span></li><li><span><b>Wall mirror, 24×36 in, thin frame</b><span class="d">Hang opposite a window, not opposite a wall.</span></span><span class="p">$45–70</span></li><li><span><b>Over-the-door storage rack, slim</b><span class="d">For cleaning supplies, shoes, or pantry overflow.</span></span><span class="p">$25–35</span></li><li><span><b>Storage ottoman with hinged lid</b><span class="d">Acts as coffee table and blanket storage at once.</span></span><span class="p">$50–80</span></li><li><span><b>Ceiling-height curtain panels, oat linen</b><span class="d">96 in; two panels minimum per window.</span></span><span class="p">$35–60 each</span></li><li><span><b>Plug-in wall sconce or clamp lamp</b><span class="d">No wiring required — perfect for renters who need a second light height.</span></span><span class="p">$30–45</span></li></ul></div>
 <div class="ad-slot">Ad slot &mdash; paste your AdSense unit here</div>
 <div class="faq"><details><summary>Should I use white furniture in a small apartment?</summary><p>Not necessarily. Warm white walls with mid-tone furniture creates more depth than all white, which can look flat. Keep the big pieces one tone and let textiles add the contrast.</p></details><details><summary>Is a bed in the middle of a studio a bad idea?</summary><p>It is only bad if the bed is the first thing you see from the door. Angle it, add a screen at the foot, or place it against the wall furthest from the entry and let the living zone take the light.</p></details><details><summary>How do I deal with a tiny kitchen with no storage?</summary><p>Go vertical and layer: a wall rail for utensils, a shelf above the window for jars, and one deep basket for everything that has no home. Clear counters do more than extra cabinets.</p></details></div>
+  <div class="share-bar bottom">
+ <span class="share-label">Liked it? Share it:</span>
+ <a class="share-btn pin" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fsmall-space%2Fsmall-apartment-decor-ideas&media=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fassets%2Fuploads%2Fhero-cream-pillows-1500x1000.jpg&description=10%20Small%20Apartment%20Decor%20Ideas%20That%20Make%20500%20Sq%20Ft%20Feel%20Bigger%20%E2%80%94%20Ten%20small%20apartment%20decor%20ideas%20that%20actually%20work%3A%20vertical%20storage%2C%20one%20big%20rug%20instead%20of%20three%20small%20ones%2C%20lighter%20furniture%20legs%2C%20and%20the%20mirror%20rule%20nobody%20follows." target="_blank" rel="noopener" aria-label="Share on Pinterest" title="Pin on Pinterest"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5.1s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.6 2.2-.9 3.4-.2 1 .5 1.9 1.6 1.9 1.9 0 3.2-2.4 3.2-5.3 0-2.2-1.5-3.8-4.2-3.8-3 0-4.9 2.2-4.9 4.7 0 .9.3 1.6.7 2.1.2.2.2.3.1.6l-.2.9c-.1.3-.3.4-.6.2-1.4-.6-2.1-2.2-2.1-4C5.1 8 7.2 5 12.2 5c4.1 0 6.8 2.9 6.8 6 0 4.1-2.3 7.2-5.7 7.2-1.1 0-2.2-.6-2.6-1.3l-.7 2.7c-.3 1-.9 2.1-1.4 2.8A10 10 0 1 0 12 2z"/></svg> Pinterest</a>
+ <a class="share-btn fb" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fsmall-space%2Fsmall-apartment-decor-ideas" target="_blank" rel="noopener" aria-label="Share on Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.2c0-.9.3-1.5 1.6-1.5h1.3V5c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1V11H7.6v3H10v7z"/></svg> Facebook</a>
+ <a class="share-btn x" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fsmall-space%2Fsmall-apartment-decor-ideas&text=10%20Small%20Apartment%20Decor%20Ideas%20That%20Make%20500%20Sq%20Ft%20Feel%20Bigger" target="_blank" rel="noopener" aria-label="Share on X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3h3.1l-6.8 7.8L23 21h-6.2l-4.8-6.3L6.5 21H3.4l7.3-8.3L3 3h6.4l4.3 5.7L18.9 3zm-1.1 16.2h1.7L8.4 4.8H6.5l11.3 14.4z"/></svg> X</a>
+ <a class="share-btn wa" href="https://api.whatsapp.com/send?text=10%20Small%20Apartment%20Decor%20Ideas%20That%20Make%20500%20Sq%20Ft%20Feel%20Bigger%20https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fsmall-space%2Fsmall-apartment-decor-ideas" target="_blank" rel="noopener" aria-label="Share on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.1 4.9A9.9 9.9 0 0 0 12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.2-1.3A9.9 9.9 0 0 0 12 22c5.5 0 10-4.5 10-10 0-2.7-1-5.1-2.9-7.1zM12 20a8 8 0 0 1-4.1-1.1l-.3-.2-3.1.8.8-3-.2-.3A8 8 0 0 1 12 4c4.4 0 8 3.6 8 8s-3.6 8-8 8zm4.6-6c-.2-.1-1.3-.6-1.5-.7-.2-.1-.3-.1-.5.1-.1.2-.6.7-.7.8-.1.1-.3.2-.5.1-.2-.1-1-.4-1.8-1.2-.7-.6-1.1-1.3-1.3-1.5-.1-.2 0-.3.1-.4l.4-.4c.1-.1.1-.2.2-.3 0-.1 0-.2 0-.3 0-.1-.5-1.2-.7-1.6-.2-.4-.3-.3-.5-.3h-.4c-.1 0-.3 0-.5.2-.1.2-.7.7-.7 1.7s.7 2 .8 2.1c.1.2 1.4 2.1 3.4 2.9.5.2.9.3 1.2.4.5.2.9.1 1.2.1.4 0 1.3-.5 1.5-1 .2-.5.2-.9.1-1 0-.1-.2-.1-.4-.2z"/></svg> WhatsApp</a>
+ <a class="share-btn mail" href="mailto:?subject=10%20Small%20Apartment%20Decor%20Ideas%20That%20Make%20500%20Sq%20Ft%20Feel%20Bigger&body=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fsmall-space%2Fsmall-apartment-decor-ideas" aria-label="Share via Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg> Email</a>
+ <button class="share-btn copy" type="button" onclick="hdpCopy(this, 'https://redlaxx.github.io/homedecorpad-site/blog/small-space/small-apartment-decor-ideas')" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.5 0l3-3a5 5 0 0 0-7.5-7.5l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5 0l-3 3a5 5 0 0 0 7.5 7.5l1.5-1.5"/></svg> Copy link</button>
+</div>
+<script>
+function hdpCopy(btn, url){
+  try{
+    navigator.clipboard.writeText(url).then(function(){
+      var orig=btn.innerHTML; btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> Copied!'; btn.classList.add('copied');
+      setTimeout(function(){ btn.innerHTML=orig; btn.classList.remove('copied'); }, 1800);
+    });
+  }catch(e){
+    var ta=document.createElement('textarea'); ta.value=url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    var orig=btn.innerHTML; btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> Copied!'; btn.classList.add('copied');
+    setTimeout(function(){ btn.innerHTML=orig; btn.classList.remove('copied'); }, 1800);
+  }
+}
+</script>
   <div class="pincta"><svg viewBox="0 0 24 24" fill="none" stroke="#B5533C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l1 7-4 3-4-3z"/><path d="M12 13v8"/></svg><p><b>Save this idea for later</b>Pin the graphic below to your small space & renters board so you can find it when you are ready to shop.</p></div>
   <details class="prosebox" style="margin:0 0 30px">
    <summary style="cursor:pointer;font-family:var(--serif);font-size:19px">Copy-and-paste pin title &amp; description</summary>

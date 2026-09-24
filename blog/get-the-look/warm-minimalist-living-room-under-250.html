@@ -239,6 +239,24 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 .author p{margin:0;font-size:14.5px;color:var(--muted)}
 .author b{display:block;font-family:var(--serif);font-size:18px;color:var(--ink)}
 .share{margin:30px 0 0;padding-top:20px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.share-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:18px 0;margin:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.share-bar.top{margin-top:0;padding-top:0;border-top:0}
+.share-bar.bottom{margin-top:38px;margin-bottom:10px}
+.share-bar .share-label{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-right:6px}
+.share-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:999px;font-size:13.5px;font-weight:600;border:1.5px solid var(--line);background:#fff;color:var(--ink);text-decoration:none;transition:all .15s;cursor:pointer;line-height:1}
+.share-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(60,40,20,.12);border-color:var(--ink)}
+.share-btn.pin{background:#E60023;color:#fff;border-color:#E60023}
+.share-btn.pin:hover{background:#C4001E;border-color:#C4001E;box-shadow:0 6px 18px rgba(230,0,35,.22)}
+.share-btn.fb{background:#1877F2;color:#fff;border-color:#1877F2}
+.share-btn.fb:hover{background:#166fe5}
+.share-btn.x{background:#111;color:#fff;border-color:#111}
+.share-btn.x:hover{background:#000}
+.share-btn.wa{background:#25D366;color:#fff;border-color:#25D366}
+.share-btn.wa:hover{background:#1fb855}
+.share-btn.mail{background:#fff;color:var(--ink)}
+.share-btn.copy{background:#fff;color:var(--ink)}
+.share-btn svg{width:16px;height:16px;flex:0 0 16px}
+.share-btn.copied{background:var(--ink);color:#fff;border-color:var(--ink)}
 .steps{counter-reset:s;list-style:none;padding:0}
 .steps li{counter-increment:s;position:relative;padding-left:56px;margin:0 0 26px}
 .steps li::before{content:counter(s);position:absolute;left:0;top:-2px;width:38px;height:38px;border-radius:50%;background:var(--oat);color:var(--terra-d);font-family:var(--serif);font-size:19px;display:flex;align-items:center;justify-content:center}
@@ -338,6 +356,29 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
   <h1>Get the Look: The Warm Minimalist Living Room for Under $250</h1>
   <p class="lede">Warm minimalist is the look everyone saves on Pinterest and almost nobody explains. It is not beige-and-empty. It is oatmeal texture, one warm wood tone, a terracotta or olive accent, and a whole lot of restraint — which happens to be the cheapest decorating strategy there is. Here is the full recipe, plus a shopping list that totals under $250.</p>
   <div class="meta"><span>By the HomeDecorPad team</span><i></i><span>4 August 2026</span><i></i><span>4 min read</span></div>
+  <div class="share-bar top">
+ <span class="share-label">Share this idea:</span>
+ <a class="share-btn pin" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fget-the-look%2Fwarm-minimalist-living-room-under-250&media=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fassets%2Fuploads%2Fhero-1200x800.jpg&description=Get%20the%20Look%3A%20The%20Warm%20Minimalist%20Living%20Room%20for%20Under%20%24250%20%E2%80%94%20A%20designer-looking%20warm%20minimalist%20living%20room%20for%20under%20%24250.%20The%20six%20anchors%20of%20the%20look%2C%20the%20exact%20shopping%20list%2C%20and%20the%20styling%20details%20that%20make%20cheap%20rooms%20read%20expensive." target="_blank" rel="noopener" aria-label="Share on Pinterest" title="Pin on Pinterest"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5.1s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.6 2.2-.9 3.4-.2 1 .5 1.9 1.6 1.9 1.9 0 3.2-2.4 3.2-5.3 0-2.2-1.5-3.8-4.2-3.8-3 0-4.9 2.2-4.9 4.7 0 .9.3 1.6.7 2.1.2.2.2.3.1.6l-.2.9c-.1.3-.3.4-.6.2-1.4-.6-2.1-2.2-2.1-4C5.1 8 7.2 5 12.2 5c4.1 0 6.8 2.9 6.8 6 0 4.1-2.3 7.2-5.7 7.2-1.1 0-2.2-.6-2.6-1.3l-.7 2.7c-.3 1-.9 2.1-1.4 2.8A10 10 0 1 0 12 2z"/></svg> Pinterest</a>
+ <a class="share-btn fb" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fget-the-look%2Fwarm-minimalist-living-room-under-250" target="_blank" rel="noopener" aria-label="Share on Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.2c0-.9.3-1.5 1.6-1.5h1.3V5c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1V11H7.6v3H10v7z"/></svg> Facebook</a>
+ <a class="share-btn x" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fget-the-look%2Fwarm-minimalist-living-room-under-250&text=Get%20the%20Look%3A%20The%20Warm%20Minimalist%20Living%20Room%20for%20Under%20%24250" target="_blank" rel="noopener" aria-label="Share on X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3h3.1l-6.8 7.8L23 21h-6.2l-4.8-6.3L6.5 21H3.4l7.3-8.3L3 3h6.4l4.3 5.7L18.9 3zm-1.1 16.2h1.7L8.4 4.8H6.5l11.3 14.4z"/></svg> X</a>
+ <a class="share-btn wa" href="https://api.whatsapp.com/send?text=Get%20the%20Look%3A%20The%20Warm%20Minimalist%20Living%20Room%20for%20Under%20%24250%20https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fget-the-look%2Fwarm-minimalist-living-room-under-250" target="_blank" rel="noopener" aria-label="Share on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.1 4.9A9.9 9.9 0 0 0 12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.2-1.3A9.9 9.9 0 0 0 12 22c5.5 0 10-4.5 10-10 0-2.7-1-5.1-2.9-7.1zM12 20a8 8 0 0 1-4.1-1.1l-.3-.2-3.1.8.8-3-.2-.3A8 8 0 0 1 12 4c4.4 0 8 3.6 8 8s-3.6 8-8 8zm4.6-6c-.2-.1-1.3-.6-1.5-.7-.2-.1-.3-.1-.5.1-.1.2-.6.7-.7.8-.1.1-.3.2-.5.1-.2-.1-1-.4-1.8-1.2-.7-.6-1.1-1.3-1.3-1.5-.1-.2 0-.3.1-.4l.4-.4c.1-.1.1-.2.2-.3 0-.1 0-.2 0-.3 0-.1-.5-1.2-.7-1.6-.2-.4-.3-.3-.5-.3h-.4c-.1 0-.3 0-.5.2-.1.2-.7.7-.7 1.7s.7 2 .8 2.1c.1.2 1.4 2.1 3.4 2.9.5.2.9.3 1.2.4.5.2.9.1 1.2.1.4 0 1.3-.5 1.5-1 .2-.5.2-.9.1-1 0-.1-.2-.1-.4-.2z"/></svg> WhatsApp</a>
+ <a class="share-btn mail" href="mailto:?subject=Get%20the%20Look%3A%20The%20Warm%20Minimalist%20Living%20Room%20for%20Under%20%24250&body=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fget-the-look%2Fwarm-minimalist-living-room-under-250" aria-label="Share via Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg> Email</a>
+ <button class="share-btn copy" type="button" onclick="hdpCopy(this, 'https://redlaxx.github.io/homedecorpad-site/blog/get-the-look/warm-minimalist-living-room-under-250')" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.5 0l3-3a5 5 0 0 0-7.5-7.5l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5 0l-3 3a5 5 0 0 0 7.5 7.5l1.5-1.5"/></svg> Copy link</button>
+</div>
+<script>
+function hdpCopy(btn, url){
+  try{
+    navigator.clipboard.writeText(url).then(function(){
+      var orig=btn.innerHTML; btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> Copied!'; btn.classList.add('copied');
+      setTimeout(function(){ btn.innerHTML=orig; btn.classList.remove('copied'); }, 1800);
+    });
+  }catch(e){
+    var ta=document.createElement('textarea'); ta.value=url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    var orig=btn.innerHTML; btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> Copied!'; btn.classList.add('copied');
+    setTimeout(function(){ btn.innerHTML=orig; btn.classList.remove('copied'); }, 1800);
+  }
+}
+</script>
  </div>
  <div class="container narrow">
   <div class="post-hero"><img src="../../assets/uploads/hero-1200x800.jpg" alt="Get the Look: The Warm Minimalist Living Room for Under $250" style="width:100%;height:100%;object-fit:cover"><div class="tag"><span>Get the Look for Less &middot; HomeDecorPad</span></div></div>
@@ -362,6 +403,29 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 <p>Cold bulb temperatures (anything above 3000K), matching wood tones except where you have deliberately chosen one tone, tiny rugs, more than one accent color, and glossy finishes. Any one of these will pull a warm room toward “waiting room.”</p>
 <div class="ad-slot">Ad slot &mdash; paste your AdSense unit here</div>
 <div class="faq"><details><summary>Is warm minimalist the same as boho or Scandi?</summary><p>It sits between them. Boho adds pattern and plant volume; Scandi leans cooler and higher contrast. Warm minimalist keeps boho’s warmth and Scandi’s restraint, then removes the pattern.</p></details><details><summary>What if my sofa is grey?</summary><p>Grey sofas work if you warm everything around them: oatmeal throws, wood, brass, and a cream or camel rug. Add a warm-white wall behind it. Avoid cool white bulbs entirely.</p></details><details><summary>Do I need to repaint?</summary><p>No, but if you are repainting anyway, choose a warm off-white with a yellow-green undertone rather than a cool one. Our <a href="../../blog.html#color">paint color guide</a> covers how to test undertones in your own light.</p></details></div>
+  <div class="share-bar bottom">
+ <span class="share-label">Liked it? Share it:</span>
+ <a class="share-btn pin" href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fget-the-look%2Fwarm-minimalist-living-room-under-250&media=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fassets%2Fuploads%2Fhero-1200x800.jpg&description=Get%20the%20Look%3A%20The%20Warm%20Minimalist%20Living%20Room%20for%20Under%20%24250%20%E2%80%94%20A%20designer-looking%20warm%20minimalist%20living%20room%20for%20under%20%24250.%20The%20six%20anchors%20of%20the%20look%2C%20the%20exact%20shopping%20list%2C%20and%20the%20styling%20details%20that%20make%20cheap%20rooms%20read%20expensive." target="_blank" rel="noopener" aria-label="Share on Pinterest" title="Pin on Pinterest"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5.1s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.6 2.2-.9 3.4-.2 1 .5 1.9 1.6 1.9 1.9 0 3.2-2.4 3.2-5.3 0-2.2-1.5-3.8-4.2-3.8-3 0-4.9 2.2-4.9 4.7 0 .9.3 1.6.7 2.1.2.2.2.3.1.6l-.2.9c-.1.3-.3.4-.6.2-1.4-.6-2.1-2.2-2.1-4C5.1 8 7.2 5 12.2 5c4.1 0 6.8 2.9 6.8 6 0 4.1-2.3 7.2-5.7 7.2-1.1 0-2.2-.6-2.6-1.3l-.7 2.7c-.3 1-.9 2.1-1.4 2.8A10 10 0 1 0 12 2z"/></svg> Pinterest</a>
+ <a class="share-btn fb" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fget-the-look%2Fwarm-minimalist-living-room-under-250" target="_blank" rel="noopener" aria-label="Share on Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.2c0-.9.3-1.5 1.6-1.5h1.3V5c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1V11H7.6v3H10v7z"/></svg> Facebook</a>
+ <a class="share-btn x" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fget-the-look%2Fwarm-minimalist-living-room-under-250&text=Get%20the%20Look%3A%20The%20Warm%20Minimalist%20Living%20Room%20for%20Under%20%24250" target="_blank" rel="noopener" aria-label="Share on X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3h3.1l-6.8 7.8L23 21h-6.2l-4.8-6.3L6.5 21H3.4l7.3-8.3L3 3h6.4l4.3 5.7L18.9 3zm-1.1 16.2h1.7L8.4 4.8H6.5l11.3 14.4z"/></svg> X</a>
+ <a class="share-btn wa" href="https://api.whatsapp.com/send?text=Get%20the%20Look%3A%20The%20Warm%20Minimalist%20Living%20Room%20for%20Under%20%24250%20https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fget-the-look%2Fwarm-minimalist-living-room-under-250" target="_blank" rel="noopener" aria-label="Share on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.1 4.9A9.9 9.9 0 0 0 12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.2-1.3A9.9 9.9 0 0 0 12 22c5.5 0 10-4.5 10-10 0-2.7-1-5.1-2.9-7.1zM12 20a8 8 0 0 1-4.1-1.1l-.3-.2-3.1.8.8-3-.2-.3A8 8 0 0 1 12 4c4.4 0 8 3.6 8 8s-3.6 8-8 8zm4.6-6c-.2-.1-1.3-.6-1.5-.7-.2-.1-.3-.1-.5.1-.1.2-.6.7-.7.8-.1.1-.3.2-.5.1-.2-.1-1-.4-1.8-1.2-.7-.6-1.1-1.3-1.3-1.5-.1-.2 0-.3.1-.4l.4-.4c.1-.1.1-.2.2-.3 0-.1 0-.2 0-.3 0-.1-.5-1.2-.7-1.6-.2-.4-.3-.3-.5-.3h-.4c-.1 0-.3 0-.5.2-.1.2-.7.7-.7 1.7s.7 2 .8 2.1c.1.2 1.4 2.1 3.4 2.9.5.2.9.3 1.2.4.5.2.9.1 1.2.1.4 0 1.3-.5 1.5-1 .2-.5.2-.9.1-1 0-.1-.2-.1-.4-.2z"/></svg> WhatsApp</a>
+ <a class="share-btn mail" href="mailto:?subject=Get%20the%20Look%3A%20The%20Warm%20Minimalist%20Living%20Room%20for%20Under%20%24250&body=https%3A%2F%2Fredlaxx.github.io%2Fhomedecorpad-site%2Fblog%2Fget-the-look%2Fwarm-minimalist-living-room-under-250" aria-label="Share via Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg> Email</a>
+ <button class="share-btn copy" type="button" onclick="hdpCopy(this, 'https://redlaxx.github.io/homedecorpad-site/blog/get-the-look/warm-minimalist-living-room-under-250')" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.5 0l3-3a5 5 0 0 0-7.5-7.5l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5 0l-3 3a5 5 0 0 0 7.5 7.5l1.5-1.5"/></svg> Copy link</button>
+</div>
+<script>
+function hdpCopy(btn, url){
+  try{
+    navigator.clipboard.writeText(url).then(function(){
+      var orig=btn.innerHTML; btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> Copied!'; btn.classList.add('copied');
+      setTimeout(function(){ btn.innerHTML=orig; btn.classList.remove('copied'); }, 1800);
+    });
+  }catch(e){
+    var ta=document.createElement('textarea'); ta.value=url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    var orig=btn.innerHTML; btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> Copied!'; btn.classList.add('copied');
+    setTimeout(function(){ btn.innerHTML=orig; btn.classList.remove('copied'); }, 1800);
+  }
+}
+</script>
   <div class="pincta"><svg viewBox="0 0 24 24" fill="none" stroke="#B5533C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l1 7-4 3-4-3z"/><path d="M12 13v8"/></svg><p><b>Save this idea for later</b>Pin the graphic below to your get the look for less board so you can find it when you are ready to shop.</p></div>
   <details class="prosebox" style="margin:0 0 30px">
    <summary style="cursor:pointer;font-family:var(--serif);font-size:19px">Copy-and-paste pin title &amp; description</summary>
