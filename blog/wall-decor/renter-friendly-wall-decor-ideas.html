@@ -324,26 +324,30 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
  .feature .body,.panel .pad{padding:28px 24px}
  .cta{padding:32px 26px}
  .fgrid{grid-template-columns:1fr 1fr}
- .hdr{gap:12px}
- .nav{gap:14px}
+ .hdr{gap:14px;padding:10px 0}
+ .nav{gap:16px}
  .section{padding:40px 0}
- .container{padding:0 24px}
+ .container{padding:0 28px}
 }
 @media (max-width:620px){
  .fgrid{grid-template-columns:1fr}
- .nav{width:100%;gap:12px}
- .nav a{font-size:12px}
+ .nav{width:100%;gap:14px;justify-content:flex-start}
+ .nav a{font-size:12.5px}
  .hero .art{order:-1}
  .post-hero{border-radius:14px}
- .container{padding:0 20px}
+ .container{padding:0 24px}
  .section{padding:32px 0}
  .section.tight{padding:24px 0}
- .grid{gap:18px;grid-template-columns:1fr}
+ .grid{gap:20px;grid-template-columns:1fr}
  .card{border-radius:14px}
- .hdr{padding:8px 0;min-height:64px}
+ .hdr{padding:14px 0;min-height:68px;gap:16px}
+ .brand{font-size:21px}
+ .site-header{padding:0 2px}
 }
 @media (max-width:400px){
- .container{padding:0 18px}
+ .container{padding:0 22px}
+ .hdr{padding:12px 0}
+ .nav{gap:12px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -354,7 +358,7 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 <header class="site-header">
  <div class="container hdr">
   <a class="brand" href="../../"><svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="11" fill="#B5533C"/><path d="M11 29V20a9 9 0 0 1 18 0v9z" fill="#F7F1E8"/><circle cx="20" cy="18" r="3.6" fill="#C08B48"/><rect x="9" y="30" width="22" height="3" rx="1.5" fill="#6E7B5A"/></svg><span>HomeDecorPad</span></a>
-  <nav class="nav" aria-label="Main"><a href="../../" aria-current="page">Home</a><a href="../../start-here">Start Here</a><a href="../../blog">Decor Ideas</a><a href="../../shop-now" class="btn sm" style="text-transform:none;letter-spacing:0;padding:8px 16px">Shop Now</a><a href="../../shop-my-home" class="pin">Shop My Home</a><a href="../../about">About</a><a href="../../contact">Contact</a><a class="pin" href="https://www.pinterest.com/" target="_blank" rel="noopener">Pinterest</a></nav>
+  <nav class="nav" aria-label="Main"><a href="../../" aria-current="page">Home</a><a href="../../start-here">Start Here</a><a href="../../blog">Decor Ideas</a><a href="../../shop-now" class="btn sm" style="text-transform:none;letter-spacing:0;padding:8px 16px">Shop Now</a><a href="../../shop-my-home" class="pin">Shop My Home</a><a class="pin" href="https://www.pinterest.com/" target="_blank" rel="noopener">Pinterest</a></nav>
  </div>
 </header>
 <main id="main">
