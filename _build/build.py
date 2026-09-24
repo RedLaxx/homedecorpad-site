@@ -524,7 +524,7 @@ def page(path, title, desc, body, depth=0, canonical="", schema="", current="", 
 
 # ----------------------------------------------------------------------- pages
 def _resolve_home_url(u, depth=0):
-    """Resolve home.yml URL that may be /path, post:slug, or full http."""
+    """Resolve home.yml URL that may be /path, post:slug, or full http — cleans /index.html to /"""
     if not u:
         return ""
     u = str(u).strip()
@@ -535,8 +535,15 @@ def _resolve_home_url(u, depth=0):
             return f"blog.html#{u[5:].strip()}"
     if u.startswith(("http://","https://","#","mailto:")):
         return u
-    # strip leading /
-    return u.lstrip("/")
+    # clean /index.html -> /
+    if u in ("/index.html", "index.html", "/"):
+        return "./" if depth==0 else "../"*depth
+    # strip leading / and remove index.html
+    u = u.lstrip("/")
+    u = u.replace("/index.html", "/").replace("index.html", "")
+    if u in ("", "/"):
+        return "./" if depth==0 else "../"*depth
+    return u
 
 def page_home():
     h = HOME_SETTINGS or {}
@@ -940,10 +947,11 @@ def page_post(p):
     pin_desc = (p["dek"] + " " + " ".join("#" + t.replace(" ", "") for t in p["tags"][:3]))[:480]
     rel = REL.get(p["slug"], [])[:3]
     rel_cards = "".join(card(POST_BY_SLUG[s], depth) for s in rel if s in POST_BY_SLUG)
+    home_href = '../'*depth if depth else './'
     body = f"""
 <article>
  <div class="container narrow post-head">
-  <p class="crumb"><a href="{'../'*depth}index.html">Home</a> / <a href="{'../'*depth}blog.html#{c['slug']}">{c['name']}</a></p>
+  <p class="crumb"><a href="{home_href}">Home</a> / <a href="{'../'*depth}blog.html#{c['slug']}">{c['name']}</a></p>
   <span class="chip">{c['name']}</span>
   <h1>{p['h1']}</h1>
   <p class="lede">{p['intro']}</p>
@@ -1365,7 +1373,7 @@ def page_404():
  <h1>That page has moved out</h1>
  <p class="lede">The link is broken or the guide has been renamed. Try one of these instead:</p>
  <div class="btnrow" style="justify-content:center">
-  <a class="btn" href="index.html">Home</a>
+  <a class="btn" href="./">Home</a>
   <a class="btn ghost" href="blog.html">All decor ideas</a>
   <a class="btn ghost" href="start-here.html">Start here</a>
  </div>
