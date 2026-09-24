@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Press Kit — HomeDecorPad</title>
-<meta name="description" content="Press kit for HomeDecorPad — logos, brand boilerplate, audience stats, and contact.">
-<link rel="canonical" href="https://redlaxx.github.io/homedecorpad-site/press-kit">
+<title>Cookie Policy | HomeDecorPad</title>
+<meta name="description" content="Cookie Policy for HomeDecorPad (homedecorpad.com) — written in plain English, covering cookies, data, ads, affiliate links and your choices.">
+<link rel="canonical" href="https://redlaxx.github.io/homedecorpad-site/cookie-policy">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HomeDecorPad">
-<meta property="og:title" content="Press Kit — HomeDecorPad">
-<meta property="og:description" content="Press kit for HomeDecorPad — logos, brand boilerplate, audience stats, and contact.">
-<meta property="og:url" content="https://redlaxx.github.io/homedecorpad-site/press-kit">
+<meta property="og:title" content="Cookie Policy | HomeDecorPad">
+<meta property="og:description" content="Cookie Policy for HomeDecorPad (homedecorpad.com) — written in plain English, covering cookies, data, ads, affiliate links and your choices.">
+<meta property="og:url" content="https://redlaxx.github.io/homedecorpad-site/cookie-policy">
 <meta property="og:image" content="https://redlaxx.github.io/homedecorpad-site/assets/og-default.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Press Kit — HomeDecorPad">
-<meta name="twitter:description" content="Press kit for HomeDecorPad — logos, brand boilerplate, audience stats, and contact.">
+<meta name="twitter:title" content="Cookie Policy | HomeDecorPad">
+<meta name="twitter:description" content="Cookie Policy for HomeDecorPad (homedecorpad.com) — written in plain English, covering cookies, data, ads, affiliate links and your choices.">
 <meta name="twitter:image" content="https://redlaxx.github.io/homedecorpad-site/assets/og-default.jpg">
 <meta name="theme-color" content="#FBF8F3">
 
@@ -27,7 +27,7 @@
 <!-- GOOGLE ADSENSE: add your publisher ID in Pages CMS > Site settings > adsense_client, then rebuild. Ads stay off until you do. -->
 <!-- GOOGLE ANALYTICS 4: add your measurement ID in Pages CMS > Site settings > ga4_id. -->
 
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Press Kit \u2014 HomeDecorPad", "url": "https://redlaxx.github.io/homedecorpad-site/press-kit", "publisher": {"@type": "Organization", "name": "HomeDecorPad"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Cookie Policy", "url": "https://redlaxx.github.io/homedecorpad-site/cookie-policy"}</script>
 <style>
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
@@ -331,38 +331,45 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 </header>
 <main id="main">
 
-<section class="section tight"><div class="container narrow">
- <p class="eyebrow">For press & brands</p>
- <h1>Press Kit</h1>
- <p class="lede">Logos, boilerplate, and how to talk about HomeDecorPad.</p>
-</div></section>
-
-<section class="section"><div class="container narrow article">
- <h2>Boilerplate</h2>
-<p><strong>HomeDecorPad</strong> is a budget-first home decor site for renters and small-space dwellers. We publish practical room ideas, shoppable budget swaps and paint palettes you can recreate this weekend — for real homes with real budgets.</p>
-<p>Based in Lagos, writing for readers in the US, UK, Canada and Australia.</p>
-<h2>Audience</h2>
-<ul><li>Renters, first apartments, small-space dwellers</li><li>US-focused, Pinterest-driven</li><li>Budget-conscious, 25-44</li></ul>
-<div class="ad-slot">Ad slot &mdash; paste your AdSense unit here</div>
-<h2>What we do</h2>
-<ul><li>Sponsored placements (labelled)</li><li>Product features &amp; photography</li><li>Pinterest + affiliate campaigns</li></ul>
-<h2>Contact</h2>
-<p>Email hello@homedecorpad.com or use the contact page.</p>
-<h2>Logos</h2>
-<p>Upload your logos to assets/uploads and link them here.</p>
-<ul><li>Primary logo: /assets/uploads/logo.png</li><li>Icon: /assets/uploads/icon.png</li></ul>
+<section class="container narrow legalhdr">
+ <p class="eyebrow">Legal</p>
+ <h1>Cookie Policy</h1>
+ <p class="muted" style="max-width:68ch">HomeDecorPad (homedecorpad.com). This page is written to be readable, not to hide behind jargon. If anything here is unclear, email <a href="mailto:hello@homedecorpad.com">hello@homedecorpad.com</a>.</p>
+ <div class="pill-row"><a href="privacy-policy">Privacy Policy</a><a href="terms-of-use">Terms of Use</a><a href="disclaimer">Disclaimer</a><a href="affiliate-disclosure">Affiliate & Advertising Disclosure</a><a href="contact">Contact</a></div>
+</section>
+<section class="section" style="padding-top:18px"><div class="container narrow article"><p><strong>Effective date:</strong> 23 September 2026<br><strong>Last updated:</strong> 23 September 2026</p>
+<p>This Cookie Policy explains how HomeDecorPad (homedecorpad.com, the "<strong>Site</strong>") uses cookies and similar technologies, and how you can control them. It should be read together with our <a href="privacy-policy">Privacy Policy</a>.</p>
 <hr>
-<p><em>This is an example custom page. Edit it in Pages CMS → Custom Pages, or delete it and create your own like /collab, /advertise, /press.</em></p>
-</div></section>
-
-<section class="section"><div class="container"><div class="cta">
- <div>
-  <p class="eyebrow" style="color:#E9B8A6">Free weekly email</p>
-  <h2>One good decor idea, every Sunday morning</h2>
-  <p>A single room idea, one budget swap and one thing worth buying this week. No spam, ever — and no more than one email a week.</p>
- </div>
- <div><form class="field" onsubmit="alert('Newsletter is not connected yet — see the README to plug in Kit or MailerLite.');return false;"><input type="email" placeholder="you@email.com" aria-label="Email address" required><button class="btn" type="submit">Send it over</button></form><p class="muted" style="color:#A79C8F;margin:12px 0 0;font-size:13px">By subscribing you agree to our <a href="privacy-policy" style="color:#C9BFB2;text-decoration:underline">Privacy Policy</a>.</p></div>
-</div></div></section>
+<h2>1. What cookies are</h2>
+<p>Cookies are small text files that a website stores on your computer or mobile device when you visit. They let the site remember your actions and preferences (such as your cookie choices) and help site owners, advertisers, and analytics providers understand how the site is used. We also use similar technologies — pixels (tiny images), tags, scripts, and browser local storage — which work in comparable ways. In this Policy we call all of these "cookies."</p>
+<p>Cookies may be <strong>first-party</strong> (set by the Site) or <strong>third-party</strong> (set by another company whose content or service appears on the Site). They may be <strong>session</strong> cookies (deleted when you close your browser) or <strong>persistent</strong> cookies (stored until they expire or you delete them).</p>
+<hr>
+<h2>2. The cookies we use</h2>
+<table><thead><tr><th>Category</th><th>Purpose</th><th>Examples of providers</th><th>Consent required?</th></tr></thead><tbody><tr><td><strong>Strictly necessary</strong></td><td>Make the Site work: security, load balancing, remembering your cookie/privacy choices, spam protection on comments</td><td>Our web host / CDN, our consent-management tool, Akismet, WordPress</td><td>No</td></tr><tr><td><strong>Analytics / performance</strong></td><td>Understand how visitors find and use the Site (pages viewed, time on page, referral source, approximate location, device) so we can improve content</td><td>Google Analytics 4, Pinterest Analytics</td><td>Yes (EEA/UK/CH and other consent regions)</td></tr><tr><td><strong>Advertising</strong></td><td>Serve ads, limit repetition, measure ad performance and, with consent, personalize ads based on your interests across sites</td><td>Google AdSense / Google Ads and its certified vendors; additional ad networks and their vendors, added when applicable</td><td>Yes for personalized ads</td></tr><tr><td><strong>Affiliate tracking</strong></td><td>Credit us with a commission when you buy after clicking one of our affiliate links</td><td>Amazon Associates, Impact, Awin, CJ Affiliate, ShareASale, individual retailers</td><td>Typically set only when you click an affiliate link</td></tr><tr><td><strong>Marketing &amp; measurement</strong></td><td>Measure how Pinterest traffic interacts with the Site and the performance of promoted pins</td><td>Pinterest Tag</td><td>Yes</td></tr><tr><td><strong>Functional / embedded content</strong></td><td>Display embedded pins, videos, and social posts; social-sharing buttons</td><td>Pinterest, YouTube, Instagram, Facebook</td><td>Yes, where they set non-essential cookies</td></tr><tr><td><strong>Email</strong></td><td>Remember that you have already subscribed or dismissed a sign-up form; measure email opens and link clicks</td><td>Kit (formerly ConvertKit)</td><td>Forms: functional; email tracking: covered by newsletter consent</td></tr></tbody></table>
+<p>The specific cookies set by advertising vendors change frequently. A current list of Google's ad-technology providers is available at <a href="https://support.google.com/admanager/answer/9012903">support.google.com/admanager/answer/9012903</a>, and our consent banner lists the vendors active on the Site.</p>
+<hr>
+<h2>3. Advertising cookies — what Google requires us to tell you</h2>
+<p>Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to this website or other websites. Google's use of advertising cookies enables it and its partners to serve ads to you based on your visit to this Site and/or other sites on the Internet. You may opt out of personalized advertising by visiting Google's <a href="https://www.google.com/settings/ads">Ads Settings</a>, or opt out of third-party vendors' use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info/choices">www.aboutads.info/choices</a>.</p>
+<hr>
+<h2>4. How to manage cookies</h2>
+<p><strong>Consent banner / Privacy Settings.</strong> If you are in the EEA, UK, Switzerland, or another region where consent is required, you will see a banner on your first visit where you can accept, reject, or customize non-essential cookies. You can change your choices at any time via the <strong>"Cookie Settings" / "Privacy Settings"</strong> link in the Site footer.</p>
+<p><strong>Do Not Sell or Share (California and other U.S. states).</strong> Use the <strong>"Do Not Sell or Share My Personal Information"</strong> link in the footer to opt out of the sharing of your information for targeted advertising. We also honor <strong>Global Privacy Control (GPC)</strong> browser signals where required.</p>
+<p><strong>Browser settings.</strong> Most browsers let you view, delete, and block cookies:</p>
+<ul><li>Chrome: Settings → Privacy and security → Third-party cookies / Site data</li><li>Safari: Preferences → Privacy</li><li>Firefox: Settings → Privacy &amp; Security</li><li>Edge: Settings → Cookies and site permissions</li></ul>
+<p>Blocking all cookies may stop parts of the Site from working properly.</p>
+<p><strong>Opt-out tools for interest-based advertising:</strong></p>
+<ul><li>Google: <a href="https://www.google.com/settings/ads">Ads Settings</a></li><li>Digital Advertising Alliance (US): <a href="https://www.aboutads.info/choices">aboutads.info/choices</a></li><li>Network Advertising Initiative (US): <a href="https://optout.networkadvertising.org/">optout.networkadvertising.org</a></li><li>Digital Advertising Alliance of Canada: <a href="https://youradchoices.ca/">youradchoices.ca</a></li><li>European Interactive Digital Advertising Alliance: <a href="https://www.youronlinechoices.eu/">youronlinechoices.eu</a></li><li>Google Analytics: <a href="https://tools.google.com/dlpage/gaoptout">opt-out browser add-on</a></li><li>Pinterest: your Pinterest account → <em>Settings → Privacy and data</em></li></ul>
+<p>Opt-outs generally rely on cookies, so if you clear your cookies or use a different browser or device, you may need to opt out again.</p>
+<p><strong>Mobile devices.</strong> You can limit ad tracking in your device settings (iOS: Settings → Privacy &amp; Security → Tracking / Apple Advertising; Android: Settings → Google → Ads).</p>
+<hr>
+<h2>5. Do Not Track</h2>
+<p>Because there is no common industry standard for browser "Do Not Track" signals, the Site does not currently respond to them. We do honor Global Privacy Control signals where the law requires.</p>
+<hr>
+<h2>6. Changes to this Policy</h2>
+<p>We may update this Cookie Policy as the technologies and partners we use change. The "Last updated" date shows the latest revision.</p>
+<hr>
+<h2>7. Contact</h2>
+<p>Questions about cookies on the Site? Email hello@homedecorpad.com or use our <a href="contact">contact page</a>.</p></div></section>
 
 </main>
 <footer class="site-footer">

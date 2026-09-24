@@ -386,7 +386,8 @@ def post_url(slug, depth=0):
     cat = SLUG_CAT.get(slug) or (POST_BY_SLUG.get(slug) or {}).get("cat")
     if not cat:
         raise SystemExit(f'Content links to "post:{slug}" but no published post has that slug.')
-    return f'{"../"*depth}blog/{cat}/{slug}.html'
+    # clean URL without .html — GitHub Pages serves /blog/cat/slug for /blog/cat/slug.html
+    return f'{"../"*depth}blog/{cat}/{slug}'
 
 
 def amz(q):
@@ -396,14 +397,16 @@ def amz(q):
 REWRITE_RE = re.compile(r'href="(?:\.\./)+([a-z0-9\-]+(?:\.html)?)(#[a-z0-9\-]+)?"')
 
 def rewrite_links(block, depth):
-    """Turn the ../..-style links inside article HTML into depth-correct links."""
+    """Turn the ../..-style links inside article HTML into depth-correct links — clean without .html."""
     def rep(m):
         base, frag = m.group(1), m.group(2) or ""
         name = base[:-5] if base.endswith(".html") else base
         if name in POST_BY_SLUG:
             href = post_url(name, depth)
         else:
-            href = "../" * depth + (base if base.endswith(".html") else base + ".html")
+            # strip .html for clean URL
+            clean_base = base[:-5] if base.endswith(".html") else base
+            href = "../" * depth + clean_base
         return f'href="{href}{frag}"'
     block = REWRITE_RE.sub(rep, block)
     return block.replace("#room-guides", "#categories")
@@ -508,7 +511,7 @@ def newsletter(depth=0, dark=True):
   <h2>One good decor idea, every Sunday morning</h2>
   <p>A single room idea, one budget swap and one thing worth buying this week. No spam, ever — and no more than one email a week.</p>
  </div>
- <div>{form}<p class="muted" style="color:#A79C8F;margin:12px 0 0;font-size:13px">By subscribing you agree to our <a href="{('../'*depth)}privacy-policy.html" style="color:#C9BFB2;text-decoration:underline">Privacy Policy</a>.</p></div>
+ <div>{form}<p class="muted" style="color:#A79C8F;margin:12px 0 0;font-size:13px">By subscribing you agree to our <a href="{('../'*depth)}privacy-policy" style="color:#C9BFB2;text-decoration:underline">Privacy Policy</a>.</p></div>
 </div></div></section>"""
 
 
@@ -524,7 +527,7 @@ def page(path, title, desc, body, depth=0, canonical="", schema="", current="", 
 
 # ----------------------------------------------------------------------- pages
 def _resolve_home_url(u, depth=0):
-    """Resolve home.yml URL that may be /path, post:slug, or full http — cleans /index.html to /"""
+    """Resolve home.yml URL that may be /path, post:slug, or full http — cleans /index.html and .html to clean URLs"""
     if not u:
         return ""
     u = str(u).strip()
@@ -532,15 +535,24 @@ def _resolve_home_url(u, depth=0):
         try:
             return post_url(u[5:].strip(), depth)
         except Exception:
-            return f"blog.html#{u[5:].strip()}"
+            return f"blog#{u[5:].strip()}"
     if u.startswith(("http://","https://","#","mailto:")):
         return u
     # clean /index.html -> /
     if u in ("/index.html", "index.html", "/"):
         return "./" if depth==0 else "../"*depth
-    # strip leading / and remove index.html
+    # strip leading / and remove index.html and .html extension
     u = u.lstrip("/")
     u = u.replace("/index.html", "/").replace("index.html", "")
+    # strip .html but keep fragment
+    if "#" in u:
+        base, frag = u.split("#",1)
+        if base.endswith(".html"):
+            base = base[:-5]
+        u = f"{base}#{frag}"
+    else:
+        if u.endswith(".html"):
+            u = u[:-5]
     if u in ("", "/"):
         return "./" if depth==0 else "../"*depth
     return u
@@ -589,8 +601,8 @@ def page_home():
         hero_art = f'<div class="art">{art_raw(hero_motif, 4)}</div>'
 
     btns_cfg = h.get("hero_buttons") or [
-        {"label":"Start here","url":"/start-here.html","style":"primary"},
-        {"label":"Browse all decor ideas","url":"/blog.html","style":"ghost"},
+        {"label":"Start here","url":"/start-here","style":"primary"},
+        {"label":"Browse all decor ideas","url":"/blog","style":"ghost"},
     ]
     btn_html = ""
     for b in btns_cfg:
@@ -726,8 +738,8 @@ def page_home():
     # browse by room
     browse_title = h.get("browse_title") or "Browse by room"
     browse_link_text = h.get("browse_link_text") or "All 10 room guides →"
-    browse_link_url = _resolve_home_url(h.get("browse_link_url") or "/blog.html")
-    chips = "".join(f'<a href="blog.html#{c["slug"]}">{c["name"]}</a>' for c in CATS[:8])
+    browse_link_url = _resolve_home_url(h.get("browse_link_url") or "/blog")
+    chips = "".join(f'<a href="blog#{c["slug"]}">{c["name"]}</a>' for c in CATS[:8])
 
     # featured
     featured_eyebrow = h.get("featured_eyebrow") or "Featured"
@@ -751,7 +763,7 @@ def page_home():
     latest_eyebrow = h.get("latest_eyebrow") or "Latest"
     latest_title = h.get("latest_title") or "Fresh decor ideas"
     latest_link_text = h.get("latest_link_text") or "See everything →"
-    latest_link_url = _resolve_home_url(h.get("latest_link_url") or "/blog.html")
+    latest_link_url = _resolve_home_url(h.get("latest_link_url") or "/blog")
 
     # signature
     sig_eyebrow = h.get("signature_eyebrow") or "Signature series"
@@ -766,7 +778,7 @@ def page_home():
     sig_links_cfg = h.get("signature_links") or [
         {"label":"Cozy bedroom: $150 / $500 / $1,500","url":"post:one-room-three-budgets-cozy-bedroom"},
         {"label":"Warm minimalist living room under $250","url":"post:warm-minimalist-living-room-under-250"},
-        {"label":"All Get the Look for Less guides","url":"/blog.html#get-the-look"},
+        {"label":"All Get the Look for Less guides","url":"/blog#get-the-look"},
     ]
     sig_links_html = ""
     for l in sig_links_cfg:
@@ -781,7 +793,7 @@ def page_home():
     sh_eyebrow = h.get("start_here_eyebrow") or "Start here"
     sh_title = h.get("start_here_title") or "New to the site? Read these first"
     sh_link_text = h.get("start_here_link_text") or "How it works →"
-    sh_link_url = _resolve_home_url(h.get("start_here_link_url") or "/start-here.html")
+    sh_link_url = _resolve_home_url(h.get("start_here_link_url") or "/start-here")
     sh_cards_cfg = h.get("start_here_cards") or [
         {"title":"Fix the room before you shop it","description":"Twelve layout mistakes that make a room feel small — every fix is free.","link_text":"Read the layout guide →","link_url":"post:living-room-layout-mistakes"},
         {"title":"Choose the palette","description":"Eight neutral-anchored colour palettes with proportions that actually work at home.","link_text":"See the palettes →","link_url":"post:home-decor-color-palettes-2027"},
@@ -843,7 +855,7 @@ def page_home():
                          "url": DOMAIN + "/", "description": desc,
                          "publisher": {"@type": "Organization", "name": BRAND}})
     return page("index.html", f"{BRAND} — Home Decor Ideas, Room Makeovers & Looks for Less",
-                desc, body, 0, canonical="index.html", schema=schema)
+                desc, body, 0, canonical="", schema=schema)
 
 
 def page_blog():
@@ -918,8 +930,8 @@ def page_blog():
 """
     desc = cfg.get("description") or "Browse all HomeDecorPad guides: living room and bedroom ideas, small apartment decor, budget swaps, Amazon home finds, IKEA hacks, wall decor and paint palettes."
     schema = json.dumps({"@context": "https://schema.org", "@type": "CollectionPage", "name": "All decor ideas",
-                         "url": DOMAIN + "/blog.html", "publisher": {"@type": "Organization", "name": BRAND}})
-    return page("blog.html", title, desc, body, 0, schema=schema)
+                         "url": DOMAIN + "/blog", "publisher": {"@type": "Organization", "name": BRAND}})
+    return page("blog.html", title, desc, body, 0, canonical="blog", schema=schema)
 
 
 def faq_schema(items):
@@ -951,7 +963,7 @@ def page_post(p):
     body = f"""
 <article>
  <div class="container narrow post-head">
-  <p class="crumb"><a href="{home_href}">Home</a> / <a href="{'../'*depth}blog.html#{c['slug']}">{c['name']}</a></p>
+  <p class="crumb"><a href="{home_href}">Home</a> / <a href="{'../'*depth}blog#{c['slug']}">{c['name']}</a></p>
   <span class="chip">{c['name']}</span>
   <h1>{p['h1']}</h1>
   <p class="lede">{p['intro']}</p>
@@ -972,12 +984,12 @@ def page_post(p):
    <div><b>Written by the {BRAND} team</b>
    <p>We test budget decor ideas in real homes, photograph what works, and tell you what to skip. Based in Lagos, writing for readers in the US, UK, Canada and Australia.</p></div>
   </div>
-  <div class="share">Found this useful? <a href="{'../'*depth}blog.html#{c['slug']}">More {c['name'].lower()} guides →</a> &nbsp;&middot;&nbsp; <a href="{'../'*depth}affiliate-disclosure.html">How we make money</a></div>
+  <div class="share">Found this useful? <a href="{'../'*depth}blog#{c['slug']}">More {c['name'].lower()} guides →</a> &nbsp;&middot;&nbsp; <a href="{'../'*depth}affiliate-disclosure">How we make money</a></div>
  </div>
 </article>
 
 <section class="section"><div class="container">
- <div class="sec-head"><div><p class="eyebrow">Keep reading</p><h2>Related ideas</h2></div><a href="{'../'*depth}blog.html">All guides →</a></div>
+ <div class="sec-head"><div><p class="eyebrow">Keep reading</p><h2>Related ideas</h2></div><a href="{'../'*depth}blog">All guides →</a></div>
  <div class="grid">{rel_cards}</div>
 </div></section>
 
@@ -992,14 +1004,14 @@ def page_post(p):
                 "publisher": {"@type": "Organization", "name": BRAND,
                               "logo": {"@type": "ImageObject", "url": DOMAIN + "/assets/og-default.jpg"}},
                 "image": f"{DOMAIN}/assets/og-{p['cat']}.jpg",
-                "mainEntityOfPage": {"@type": "WebPage", "@id": f"{DOMAIN}/blog/{p['cat']}/{p['slug']}.html"}}]
+                "mainEntityOfPage": {"@type": "WebPage", "@id": f"{DOMAIN}/blog/{p['cat']}/{p['slug']}"}}]
     fs = faq_schema(p["faq"])
     if fs:
         schemas.append(json.loads(fs))
     schema = json.dumps(schemas[0]) if len(schemas) == 1 else json.dumps({"@context": "https://schema.org", "@graph": schemas})
     return page(f"blog/{p['cat']}/{p['slug']}.html",
                 f"{p['title']} | {BRAND}", p["dek"], body, depth,
-                canonical=f"blog/{p['cat']}/{p['slug']}.html", schema=schema, og=f"assets/og-{p['cat']}.jpg")
+                canonical=f"blog/{p['cat']}/{p['slug']}", schema=schema, og=f"assets/og-{p['cat']}.jpg")
 
 
 def page_start_here():
@@ -1010,7 +1022,7 @@ def page_start_here():
     eyebrow = cfg.get("eyebrow") or "Start here"
     lede = cfg.get("lede") or f"{BRAND} is a small library of decor ideas that are actually finishable. Every guide answers three questions: what do I do first, what does it cost, and what can I skip?"
     # buttons
-    btns_cfg = cfg.get("buttons") or [{"label":"Browse all guides","url":"/blog.html","style":"primary"},{"label":"Shop the looks","url":"/shop-my-home.html","style":"ghost"}]
+    btns_cfg = cfg.get("buttons") or [{"label":"Browse all guides","url":"/blog","style":"primary"},{"label":"Shop the looks","url":"/shop-my-home","style":"ghost"}]
     btn_html = ""
     for b in btns_cfg:
         if not isinstance(b, dict):
@@ -1124,9 +1136,9 @@ def page_start_here():
 {newsletter()}
 """
     desc = cfg.get("description") or "New here? These are the guides to read first: free layout fixes, colour palettes, small-space ideas and budget looks for less. Start decorating in an afternoon."
-    return page("start-here.html", title, desc, body, 0,
+    return page("start-here.html", title, desc, body, 0, canonical="start-here",
                 schema=json.dumps({"@context": "https://schema.org", "@type": "AboutPage", "name": "Start Here",
-                                   "url": DOMAIN + "/start-here.html",
+                                   "url": DOMAIN + "/start-here",
                                    "publisher": {"@type": "Organization", "name": BRAND}}))
 
 
@@ -1170,9 +1182,9 @@ def page_about():
 {newsletter()}
 """
     desc = cfg.get("description") or f"About {BRAND}: a budget-first home decor site for renters and small-space dwellers. Our editorial standards, how we make money, and how to work with us."
-    return page("about.html", title, desc, body, 0,
+    return page("about.html", title, desc, body, 0, canonical="about",
                 schema=json.dumps({"@context": "https://schema.org", "@type": "AboutPage", "name": f"About {BRAND}",
-                                   "url": DOMAIN + "/about.html", "publisher": {"@type": "Organization", "name": BRAND}}))
+                                   "url": DOMAIN + "/about", "publisher": {"@type": "Organization", "name": BRAND}}))
 
 
 def page_contact():
@@ -1226,7 +1238,7 @@ def page_contact():
   <div class="pad" style="background:#FBF6EF">
    <h2 style="margin-top:0">{other_title}</h2>
    {other_html}
-   <div class="btnrow"><a class="btn sm ghost" href="affiliate-disclosure.html">See our disclosure</a></div>
+   <div class="btnrow"><a class="btn sm ghost" href="affiliate-disclosure">See our disclosure</a></div>
   </div>
  </div>
 </div></section>
@@ -1240,8 +1252,8 @@ def page_contact():
 """
     desc = cfg.get("description") or f"Contact {BRAND}: reader questions, corrections, press and brand partnerships. Email {EMAIL} — replies within two business days."
     schema = json.dumps({"@context": "https://schema.org", "@type": "ContactPage", "name": f"Contact {BRAND}",
-                         "url": DOMAIN + "/contact.html", "publisher": {"@type": "Organization", "name": BRAND}})
-    return page("contact.html", title, desc, body, 0, schema=schema)
+                         "url": DOMAIN + "/contact", "publisher": {"@type": "Organization", "name": BRAND}})
+    return page("contact.html", title, desc, body, 0, canonical="contact", schema=schema)
 
 
 def page_shop():
@@ -1251,7 +1263,7 @@ def page_shop():
     eyebrow = cfg.get("eyebrow") or "Shop my home"
     lede = cfg.get("lede") or f"These are the pieces we actually use in our own rooms, at the price we would pay. If you buy through a link here, {BRAND} may earn a small commission — at no extra cost to you. It never changes what makes the list."
     # buttons
-    btns_cfg = cfg.get("buttons") or [{"label":"See the budget looks","url":"/blog.html#get-the-look","style":"primary"},{"label":"Read the disclosure","url":"/affiliate-disclosure.html","style":"ghost"}]
+    btns_cfg = cfg.get("buttons") or [{"label":"See the budget looks","url":"/blog#get-the-look","style":"primary"},{"label":"Read the disclosure","url":"/affiliate-disclosure","style":"ghost"}]
     btn_html = ""
     for b in btns_cfg:
         if not isinstance(b, dict):
@@ -1283,7 +1295,7 @@ def page_shop():
             lis += f'<li><span><b><a href="{amz(n)}" target="_blank" rel="nofollow sponsored noopener">{n}</a></b><span class="d">{note_it}</span></span><span class="p">{price}</span></li>'
         return f"""<div class="post-hero narrow" style="aspect-ratio:16/9;margin-bottom:0">{art_raw(motif, tone)}<div class="tag"><span>{t_title} &middot; shoppable</span></div></div>
 <div class="shop"><h3>{t_title}</h3>
-<p class="muted">{note} Links go to Amazon search results — see our <a href="affiliate-disclosure.html">disclosure</a>.</p>
+<p class="muted">{note} Links go to Amazon search results — see our <a href="affiliate-disclosure">disclosure</a>.</p>
 <ul>{lis}</ul></div>"""
 
     rooms_cfg = cfg.get("rooms")
@@ -1331,9 +1343,9 @@ def page_shop():
 {newsletter()}
 """
     desc = cfg.get("description") or "Shoppable budget decor: the pieces we actually use in living rooms, bedrooms and small apartments, with typical prices and how our affiliate links work."
-    return page("shop-my-home.html", title, desc, body, 0,
+    return page("shop-my-home.html", title, desc, body, 0, canonical="shop-my-home",
                 schema=json.dumps({"@context": "https://schema.org", "@type": "CollectionPage", "name": "Shop My Home",
-                                   "url": DOMAIN + "/shop-my-home.html",
+                                   "url": DOMAIN + "/shop-my-home",
                                    "publisher": {"@type": "Organization", "name": BRAND}}))
 
 
@@ -1361,8 +1373,9 @@ def page_custom(p):
 """
     desc = p.get("description") or p["lede"] or f"{p['title']} — {BRAND}"
     return page(f"{slug}.html", p["title"], desc, body, 0,
+                canonical=f"{slug}",
                 schema=json.dumps({"@context": "https://schema.org", "@type": "WebPage", "name": p["title"],
-                                   "url": DOMAIN + f"/{slug}.html",
+                                   "url": DOMAIN + f"/{slug}",
                                    "publisher": {"@type": "Organization", "name": BRAND}}))
 
 
@@ -1374,8 +1387,8 @@ def page_404():
  <p class="lede">The link is broken or the guide has been renamed. Try one of these instead:</p>
  <div class="btnrow" style="justify-content:center">
   <a class="btn" href="./">Home</a>
-  <a class="btn ghost" href="blog.html">All decor ideas</a>
-  <a class="btn ghost" href="start-here.html">Start here</a>
+  <a class="btn ghost" href="blog">All decor ideas</a>
+  <a class="btn ghost" href="start-here">Start here</a>
  </div>
 </div></section>
 <section class="section"><div class="container">
@@ -1384,7 +1397,7 @@ def page_404():
  </div>
 </div></section>
 """
-    return page("404.html", f"Page not found | {BRAND}", "That page does not exist. Browse the room guides instead.", body, 0)
+    return page("404.html", f"Page not found | {BRAND}", "That page does not exist. Browse the room guides instead.", body, 0, canonical="404")
 
 
 # --------------------------------------------------------------- legal markdown
@@ -1402,9 +1415,9 @@ PLACEHOLDER = {
         "additional ad networks and their vendors, added when applicable",
 }
 PATHMAP = {
-    "/disclosure/": "affiliate-disclosure.html", "/affiliate-disclosure/": "affiliate-disclosure.html",
-    "/cookie-policy/": "cookie-policy.html", "/privacy-policy/": "privacy-policy.html",
-    "/terms-of-use/": "terms-of-use.html", "/disclaimer/": "disclaimer.html", "/contact/": "contact.html",
+    "/disclosure/": "affiliate-disclosure", "/affiliate-disclosure/": "affiliate-disclosure",
+    "/cookie-policy/": "cookie-policy", "/privacy-policy/": "privacy-policy",
+    "/terms-of-use/": "terms-of-use", "/disclaimer/": "disclaimer", "/contact/": "contact",
 }
 
 
@@ -1500,11 +1513,11 @@ def md_to_html(md):
 
 
 LEGAL_FILES = [
-    ("privacy-policy.html", "privacy-policy.md", "Privacy Policy"),
-    ("cookie-policy.html", "cookie-policy.md", "Cookie Policy"),
-    ("terms-of-use.html", "terms-of-use.md", "Terms of Use"),
-    ("disclaimer.html", "disclaimer.md", "Disclaimer"),
-    ("affiliate-disclosure.html", "affiliate-disclosure.md", "Affiliate & Advertising Disclosure"),
+    ("privacy-policy", "privacy-policy.md", "Privacy Policy"),
+    ("cookie-policy", "cookie-policy.md", "Cookie Policy"),
+    ("terms-of-use", "terms-of-use.md", "Terms of Use"),
+    ("disclaimer", "disclaimer.md", "Disclaimer"),
+    ("affiliate-disclosure", "affiliate-disclosure.md", "Affiliate & Advertising Disclosure"),
 ]
 # Legal pages are content: they ship inside the repo so the build works anywhere.
 LEGAL_DIR = os.path.join(CONTENT, "legal")
@@ -1527,7 +1540,7 @@ def legal_pages():
         html_block = md_to_html(md)
         html_block = re.sub(r"^<h1>.*?</h1>\s*", "", html_block, count=1, flags=re.S)
         pills = "".join(f'<a href="{n}">{l}</a>' for n, _, l in LEGAL_FILES if n != out_name)
-        pills += '<a href="contact.html">Contact</a>'
+        pills += '<a href="contact">Contact</a>'
         body = f"""
 <section class="container narrow legalhdr">
  <p class="eyebrow">Legal</p>
@@ -1538,7 +1551,7 @@ def legal_pages():
 <section class="section" style="padding-top:18px"><div class="container narrow article">{html_block}</div></section>
 """
         desc = f"{label} for {BRAND} (homedecorpad.com) — written in plain English, covering cookies, data, ads, affiliate links and your choices."
-        pages.append(page(out_name, f"{label} | {BRAND}", desc, body, 0,
+        pages.append(page(out_name, f"{label} | {BRAND}", desc, body, 0, canonical=out_name.replace(".html",""),
                           schema=json.dumps({"@context": "https://schema.org", "@type": "WebPage", "name": label,
                                              "url": f"{DOMAIN}/{out_name}"})))
     return pages
@@ -1546,13 +1559,13 @@ def legal_pages():
 
 # ------------------------------------------------------------------- extras
 def write_extras():
-    urls = [("", "1.0", "weekly"), ("blog.html", "0.9", "weekly"), ("start-here.html", "0.8", "monthly"),
-            ("shop-my-home.html", "0.8", "monthly"), ("about.html", "0.5", "yearly"),
-            ("contact.html", "0.5", "yearly")]
-    urls += [(f"blog/{p['cat']}/{p['slug']}.html", "0.9", "monthly") for p in POSTS]
-    urls += [("privacy-policy.html", "0.3", "yearly"), ("cookie-policy.html", "0.3", "yearly"),
-             ("terms-of-use.html", "0.3", "yearly"), ("disclaimer.html", "0.3", "yearly"),
-             ("affiliate-disclosure.html", "0.3", "yearly")]
+    urls = [("", "1.0", "weekly"), ("blog", "0.9", "weekly"), ("start-here", "0.8", "monthly"),
+            ("shop-my-home", "0.8", "monthly"), ("about", "0.5", "yearly"),
+            ("contact", "0.5", "yearly")]
+    urls += [(f"blog/{p['cat']}/{p['slug']}", "0.9", "monthly") for p in POSTS]
+    urls += [("privacy-policy", "0.3", "yearly"), ("cookie-policy", "0.3", "yearly"),
+             ("terms-of-use", "0.3", "yearly"), ("disclaimer", "0.3", "yearly"),
+             ("affiliate-disclosure", "0.3", "yearly")]
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u, pri, freq in urls:

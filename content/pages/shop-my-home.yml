@@ -6,10 +6,10 @@ lede: These are the pieces we actually use in our own rooms, at the price we wou
   at no extra cost to you. It never changes what makes the list.
 buttons:
 - label: See the budget looks
-  url: /blog.html#get-the-look
+  url: /blog#get-the-look
   style: primary
 - label: Read the disclosure
-  url: /affiliate-disclosure.html
+  url: /affiliate-disclosure
   style: ghost
 rooms:
 - title: Warm minimalist living room

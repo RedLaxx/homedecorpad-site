@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Press Kit — HomeDecorPad</title>
-<meta name="description" content="Press kit for HomeDecorPad — logos, brand boilerplate, audience stats, and contact.">
-<link rel="canonical" href="https://redlaxx.github.io/homedecorpad-site/press-kit">
+<title>Affiliate & Advertising Disclosure | HomeDecorPad</title>
+<meta name="description" content="Affiliate & Advertising Disclosure for HomeDecorPad (homedecorpad.com) — written in plain English, covering cookies, data, ads, affiliate links and your choices.">
+<link rel="canonical" href="https://redlaxx.github.io/homedecorpad-site/affiliate-disclosure">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HomeDecorPad">
-<meta property="og:title" content="Press Kit — HomeDecorPad">
-<meta property="og:description" content="Press kit for HomeDecorPad — logos, brand boilerplate, audience stats, and contact.">
-<meta property="og:url" content="https://redlaxx.github.io/homedecorpad-site/press-kit">
+<meta property="og:title" content="Affiliate & Advertising Disclosure | HomeDecorPad">
+<meta property="og:description" content="Affiliate & Advertising Disclosure for HomeDecorPad (homedecorpad.com) — written in plain English, covering cookies, data, ads, affiliate links and your choices.">
+<meta property="og:url" content="https://redlaxx.github.io/homedecorpad-site/affiliate-disclosure">
 <meta property="og:image" content="https://redlaxx.github.io/homedecorpad-site/assets/og-default.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Press Kit — HomeDecorPad">
-<meta name="twitter:description" content="Press kit for HomeDecorPad — logos, brand boilerplate, audience stats, and contact.">
+<meta name="twitter:title" content="Affiliate & Advertising Disclosure | HomeDecorPad">
+<meta name="twitter:description" content="Affiliate & Advertising Disclosure for HomeDecorPad (homedecorpad.com) — written in plain English, covering cookies, data, ads, affiliate links and your choices.">
 <meta name="twitter:image" content="https://redlaxx.github.io/homedecorpad-site/assets/og-default.jpg">
 <meta name="theme-color" content="#FBF8F3">
 
@@ -27,7 +27,7 @@
 <!-- GOOGLE ADSENSE: add your publisher ID in Pages CMS > Site settings > adsense_client, then rebuild. Ads stay off until you do. -->
 <!-- GOOGLE ANALYTICS 4: add your measurement ID in Pages CMS > Site settings > ga4_id. -->
 
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Press Kit \u2014 HomeDecorPad", "url": "https://redlaxx.github.io/homedecorpad-site/press-kit", "publisher": {"@type": "Organization", "name": "HomeDecorPad"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Affiliate & Advertising Disclosure", "url": "https://redlaxx.github.io/homedecorpad-site/affiliate-disclosure"}</script>
 <style>
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
@@ -331,38 +331,48 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 </header>
 <main id="main">
 
-<section class="section tight"><div class="container narrow">
- <p class="eyebrow">For press & brands</p>
- <h1>Press Kit</h1>
- <p class="lede">Logos, boilerplate, and how to talk about HomeDecorPad.</p>
-</div></section>
-
-<section class="section"><div class="container narrow article">
- <h2>Boilerplate</h2>
-<p><strong>HomeDecorPad</strong> is a budget-first home decor site for renters and small-space dwellers. We publish practical room ideas, shoppable budget swaps and paint palettes you can recreate this weekend — for real homes with real budgets.</p>
-<p>Based in Lagos, writing for readers in the US, UK, Canada and Australia.</p>
-<h2>Audience</h2>
-<ul><li>Renters, first apartments, small-space dwellers</li><li>US-focused, Pinterest-driven</li><li>Budget-conscious, 25-44</li></ul>
-<div class="ad-slot">Ad slot &mdash; paste your AdSense unit here</div>
-<h2>What we do</h2>
-<ul><li>Sponsored placements (labelled)</li><li>Product features &amp; photography</li><li>Pinterest + affiliate campaigns</li></ul>
-<h2>Contact</h2>
-<p>Email hello@homedecorpad.com or use the contact page.</p>
-<h2>Logos</h2>
-<p>Upload your logos to assets/uploads and link them here.</p>
-<ul><li>Primary logo: /assets/uploads/logo.png</li><li>Icon: /assets/uploads/icon.png</li></ul>
+<section class="container narrow legalhdr">
+ <p class="eyebrow">Legal</p>
+ <h1>Affiliate & Advertising Disclosure</h1>
+ <p class="muted" style="max-width:68ch">HomeDecorPad (homedecorpad.com). This page is written to be readable, not to hide behind jargon. If anything here is unclear, email <a href="mailto:hello@homedecorpad.com">hello@homedecorpad.com</a>.</p>
+ <div class="pill-row"><a href="privacy-policy">Privacy Policy</a><a href="cookie-policy">Cookie Policy</a><a href="terms-of-use">Terms of Use</a><a href="disclaimer">Disclaimer</a><a href="contact">Contact</a></div>
+</section>
+<section class="section" style="padding-top:18px"><div class="container narrow article"><p><strong>Effective date:</strong> 23 September 2026<br><strong>Last updated:</strong> 23 September 2026</p>
+<p>We believe you should always know when and how a website earns money. Here is exactly how HomeDecorPad (homedecorpad.com, the "<strong>Site</strong>") does.</p>
 <hr>
-<p><em>This is an example custom page. Edit it in Pages CMS → Custom Pages, or delete it and create your own like /collab, /advertise, /press.</em></p>
-</div></section>
-
-<section class="section"><div class="container"><div class="cta">
- <div>
-  <p class="eyebrow" style="color:#E9B8A6">Free weekly email</p>
-  <h2>One good decor idea, every Sunday morning</h2>
-  <p>A single room idea, one budget swap and one thing worth buying this week. No spam, ever — and no more than one email a week.</p>
- </div>
- <div><form class="field" onsubmit="alert('Newsletter is not connected yet — see the README to plug in Kit or MailerLite.');return false;"><input type="email" placeholder="you@email.com" aria-label="Email address" required><button class="btn" type="submit">Send it over</button></form><p class="muted" style="color:#A79C8F;margin:12px 0 0;font-size:13px">By subscribing you agree to our <a href="privacy-policy" style="color:#C9BFB2;text-decoration:underline">Privacy Policy</a>.</p></div>
-</div></div></section>
+<h2>1. The short version</h2>
+<p>Some links on the Site and in our newsletter and pins are <strong>affiliate links</strong>. If you click one and buy something, we may earn a small commission <strong>at no extra cost to you</strong>. We also show <strong>display ads</strong>, and occasionally publish <strong>sponsored content</strong> or feature <strong>gifted products</strong> — always clearly labeled. Our opinions are our own, and we only recommend things we would genuinely put in our own home or a friend's.</p>
+<p>This disclosure is provided in accordance with the U.S. Federal Trade Commission's guidance on endorsements and testimonials (16 CFR Part 255) and similar consumer-protection rules elsewhere.</p>
+<hr>
+<h2>2. Affiliate programs we participate in</h2>
+<p><strong>Amazon:</strong> HomeDecorPad is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com. <strong>As an Amazon Associate, we earn from qualifying purchases.</strong> Amazon and the Amazon logo are trademarks of Amazon.com, Inc. or its affiliates.</p>
+<p><strong>Other networks and retailers</strong> (this list is updated as we join or leave programs):</p>
+<ul><li>Impact (partners may include Target, Walmart, Home Depot, and others)</li><li>Awin (partners may include Etsy and others)</li><li>CJ Affiliate</li><li>ShareASale</li><li>Wayfair's affiliate program</li><li>Retailer- or brand-run programs such as Ruggable, Article, Society6, Minted, and Samplize</li><li>[ADD/REMOVE PROGRAMS AS YOUR LIST CHANGES]</li></ul>
+<hr>
+<h2>3. How affiliate links work</h2>
+<p>When you click an affiliate link, the retailer or network places a small tracking cookie on your device. If you make a qualifying purchase within the cookie's window (for example, 24 hours for Amazon, longer for many other programs), the retailer pays us a percentage of the sale. <strong>You pay exactly the same price</strong> whether you use our link or go to the retailer directly. We never see your name, address, or payment details — only aggregated sales and commission reports.</p>
+<p>In some cases, an affiliate link may also earn us a commission on other items you add to your cart during the same session, not just the item we linked to.</p>
+<hr>
+<h2>4. How you'll know a link is an affiliate link</h2>
+<ul><li>Every post that contains affiliate links includes a short disclosure near the top, before the first link, such as: <em>"This post contains affiliate links. If you buy through them, we may earn a commission at no extra cost to you. See our full disclosure."</em></li><li>"Shop the look" and product widgets are affiliate content unless stated otherwise.</li><li>Our newsletter includes a disclosure whenever it contains affiliate links.</li><li>Pins that link directly to a retailer (rather than to a post on the Site) are labeled in the pin description (for example, "affiliate link" or "#ad" where required), and paid partnerships on Pinterest are tagged with Pinterest's paid-partnership label.</li></ul>
+<hr>
+<h2>5. Display advertising</h2>
+<p>We display ads on the Site through advertising networks, currently Google AdSense [AND/OR: Journey by Mediavine / Raptive — UPDATE WHEN YOU JOIN]. These networks and their vendors may use cookies to serve ads based on your prior visits to this and other websites. We do not choose or endorse individual advertisements. You can learn more, and opt out of personalized advertising, in our <a href="privacy-policy">Privacy Policy</a> and <a href="cookie-policy">Cookie Policy</a>.</p>
+<hr>
+<h2>6. Sponsored content and gifted products</h2>
+<p>From time to time a brand may pay us to create a post, pin, video, or newsletter feature, or send us a product for free in the hope that we will feature it. When that happens:</p>
+<ul><li>the post or pin is <strong>clearly labeled</strong> at the top (for example, "This post is sponsored by [Brand]" or "[Brand] gifted this item; opinions are our own");</li><li>we only accept partnerships for products and brands that fit the Site and that we would recommend anyway;</li><li>we retain full editorial control and will share honest opinions, including anything we didn't love;</li><li>payment or a free product never guarantees a positive review.</li></ul>
+<hr>
+<h2>7. Our editorial standards</h2>
+<ul><li>We recommend products based on how they look, how well they work for the budget and style discussed, and — where we own them — our own experience.</li><li>Prices and availability are checked at the time of publishing and periodically thereafter, but they change; please confirm on the retailer's site.</li><li>We are not responsible for a retailer's shipping, returns, warranty, or customer service. Please contact the retailer directly with order issues.</li><li>If we discover a product we recommended has a serious problem (safety recall, consistent poor reviews), we update or remove the recommendation.</li></ul>
+<hr>
+<h2>8. Why we do this</h2>
+<p>Affiliate commissions and advertising are what allow us to publish free, in-depth, ad-supported content without paywalls. If you find our work useful and choose to shop through our links, thank you — it genuinely helps.</p>
+<hr>
+<h2>9. Questions</h2>
+<p>If anything here is unclear, or you want to know whether a specific link is an affiliate link, email hello@homedecorpad.com or use our <a href="contact">contact page</a>.</p>
+<hr>
+<p><em>HomeDecorPad is operated by the operator of HomeDecorPad, Lagos, Nigeria.</em></p></div></section>
 
 </main>
 <footer class="site-footer">

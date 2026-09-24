@@ -1,3 +1,3 @@
 # Renamed pages: old path -> new path.
 # The build writes a redirect at each old path, so existing links keep working.
-blog/diy/ikea-hacks-custom-living-room.html: blog/diy/5-ikea-hacks-for-a-custom-looking-living-room.html
+blog/diy/ikea-hacks-custom-living-room: blog/diy/5-ikea-hacks-for-a-custom-looking-living-room

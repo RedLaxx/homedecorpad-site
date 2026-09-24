@@ -6,19 +6,19 @@ nav_links:
   url: /
   style: default
 - label: Start Here
-  url: /start-here.html
+  url: /start-here
   style: default
 - label: Decor Ideas
-  url: /blog.html
+  url: /blog
   style: default
 - label: Shop My Home
-  url: /shop-my-home.html
+  url: /shop-my-home
   style: outline
 - label: About
-  url: /about.html
+  url: /about
   style: default
 - label: Contact
-  url: /contact.html
+  url: /contact
   style: default
 pinterest_url: https://www.pinterest.com/
 pinterest_label: Pinterest

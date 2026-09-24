@@ -7,10 +7,10 @@ hero_image: /assets/uploads/hero-1500x1000.jpg
 hero_motif: hero
 hero_buttons:
 - label: Start here
-  url: /start-here.html
+  url: /start-here
   style: primary
 - label: Browse all decor ideas
-  url: /blog.html
+  url: /blog
   style: ghost
 trust_badges:
 - Budget-first picks
@@ -18,13 +18,13 @@ trust_badges:
 - New ideas weekly
 browse_title: Browse by room
 browse_link_text: All 10 room guides →
-browse_link_url: /blog.html
+browse_link_url: /blog
 featured_eyebrow: Featured
 featured_title: This week's idea
 latest_eyebrow: Latest
 latest_title: Fresh decor ideas
 latest_link_text: See everything →
-latest_link_url: /blog.html
+latest_link_url: /blog
 latest_count: 6
 signature_eyebrow: Signature series
 signature_title: One room, three budgets
@@ -39,11 +39,11 @@ signature_links:
 - label: Warm minimalist living room under $250
   url: post:warm-minimalist-living-room-under-250
 - label: All Get the Look for Less guides
-  url: /blog.html#get-the-look
+  url: /blog#get-the-look
 start_here_eyebrow: Start here
 start_here_title: New to the site? Read these first
 start_here_link_text: How it works →
-start_here_link_url: /start-here.html
+start_here_link_url: /start-here
 start_here_cards:
 - title: Fix the room before you shop it
   description: Twelve layout mistakes that make a room feel small — every fix is free.

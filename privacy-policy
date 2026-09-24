@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Press Kit — HomeDecorPad</title>
-<meta name="description" content="Press kit for HomeDecorPad — logos, brand boilerplate, audience stats, and contact.">
-<link rel="canonical" href="https://redlaxx.github.io/homedecorpad-site/press-kit">
+<title>Privacy Policy | HomeDecorPad</title>
+<meta name="description" content="Privacy Policy for HomeDecorPad (homedecorpad.com) — written in plain English, covering cookies, data, ads, affiliate links and your choices.">
+<link rel="canonical" href="https://redlaxx.github.io/homedecorpad-site/privacy-policy">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HomeDecorPad">
-<meta property="og:title" content="Press Kit — HomeDecorPad">
-<meta property="og:description" content="Press kit for HomeDecorPad — logos, brand boilerplate, audience stats, and contact.">
-<meta property="og:url" content="https://redlaxx.github.io/homedecorpad-site/press-kit">
+<meta property="og:title" content="Privacy Policy | HomeDecorPad">
+<meta property="og:description" content="Privacy Policy for HomeDecorPad (homedecorpad.com) — written in plain English, covering cookies, data, ads, affiliate links and your choices.">
+<meta property="og:url" content="https://redlaxx.github.io/homedecorpad-site/privacy-policy">
 <meta property="og:image" content="https://redlaxx.github.io/homedecorpad-site/assets/og-default.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Press Kit — HomeDecorPad">
-<meta name="twitter:description" content="Press kit for HomeDecorPad — logos, brand boilerplate, audience stats, and contact.">
+<meta name="twitter:title" content="Privacy Policy | HomeDecorPad">
+<meta name="twitter:description" content="Privacy Policy for HomeDecorPad (homedecorpad.com) — written in plain English, covering cookies, data, ads, affiliate links and your choices.">
 <meta name="twitter:image" content="https://redlaxx.github.io/homedecorpad-site/assets/og-default.jpg">
 <meta name="theme-color" content="#FBF8F3">
 
@@ -27,7 +27,7 @@
 <!-- GOOGLE ADSENSE: add your publisher ID in Pages CMS > Site settings > adsense_client, then rebuild. Ads stay off until you do. -->
 <!-- GOOGLE ANALYTICS 4: add your measurement ID in Pages CMS > Site settings > ga4_id. -->
 
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Press Kit \u2014 HomeDecorPad", "url": "https://redlaxx.github.io/homedecorpad-site/press-kit", "publisher": {"@type": "Organization", "name": "HomeDecorPad"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Privacy Policy", "url": "https://redlaxx.github.io/homedecorpad-site/privacy-policy"}</script>
 <style>
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
@@ -331,38 +331,115 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 </header>
 <main id="main">
 
-<section class="section tight"><div class="container narrow">
- <p class="eyebrow">For press & brands</p>
- <h1>Press Kit</h1>
- <p class="lede">Logos, boilerplate, and how to talk about HomeDecorPad.</p>
-</div></section>
-
-<section class="section"><div class="container narrow article">
- <h2>Boilerplate</h2>
-<p><strong>HomeDecorPad</strong> is a budget-first home decor site for renters and small-space dwellers. We publish practical room ideas, shoppable budget swaps and paint palettes you can recreate this weekend — for real homes with real budgets.</p>
-<p>Based in Lagos, writing for readers in the US, UK, Canada and Australia.</p>
-<h2>Audience</h2>
-<ul><li>Renters, first apartments, small-space dwellers</li><li>US-focused, Pinterest-driven</li><li>Budget-conscious, 25-44</li></ul>
-<div class="ad-slot">Ad slot &mdash; paste your AdSense unit here</div>
-<h2>What we do</h2>
-<ul><li>Sponsored placements (labelled)</li><li>Product features &amp; photography</li><li>Pinterest + affiliate campaigns</li></ul>
-<h2>Contact</h2>
-<p>Email hello@homedecorpad.com or use the contact page.</p>
-<h2>Logos</h2>
-<p>Upload your logos to assets/uploads and link them here.</p>
-<ul><li>Primary logo: /assets/uploads/logo.png</li><li>Icon: /assets/uploads/icon.png</li></ul>
+<section class="container narrow legalhdr">
+ <p class="eyebrow">Legal</p>
+ <h1>Privacy Policy</h1>
+ <p class="muted" style="max-width:68ch">HomeDecorPad (homedecorpad.com). This page is written to be readable, not to hide behind jargon. If anything here is unclear, email <a href="mailto:hello@homedecorpad.com">hello@homedecorpad.com</a>.</p>
+ <div class="pill-row"><a href="cookie-policy">Cookie Policy</a><a href="terms-of-use">Terms of Use</a><a href="disclaimer">Disclaimer</a><a href="affiliate-disclosure">Affiliate & Advertising Disclosure</a><a href="contact">Contact</a></div>
+</section>
+<section class="section" style="padding-top:18px"><div class="container narrow article"><p><strong>Effective date:</strong> 23 September 2026<br><strong>Last updated:</strong> 23 September 2026</p>
+<p>HomeDecorPad ("<strong>we</strong>," "<strong>us</strong>," or "<strong>our</strong>") operates the website homedecorpad.com (the "<strong>Site</strong>"). This Privacy Policy explains what information we collect when you visit the Site, subscribe to our emails, leave a comment, or otherwise interact with us; how we use and share that information; and the choices and rights you have.</p>
+<p>The Site is operated from Lagos, Nigeria, and is intended for a worldwide audience, including readers in the United States, the United Kingdom, and the European Economic Area (EEA). We handle personal information in line with the Nigeria Data Protection Act 2023 (NDPA), the EU and UK General Data Protection Regulation (GDPR), the California Consumer Privacy Act as amended by the California Privacy Rights Act (CCPA/CPRA), and other applicable privacy laws.</p>
+<p>By using the Site you agree to the collection and use of information as described here. If you do not agree, please do not use the Site.</p>
 <hr>
-<p><em>This is an example custom page. Edit it in Pages CMS → Custom Pages, or delete it and create your own like /collab, /advertise, /press.</em></p>
-</div></section>
-
-<section class="section"><div class="container"><div class="cta">
- <div>
-  <p class="eyebrow" style="color:#E9B8A6">Free weekly email</p>
-  <h2>One good decor idea, every Sunday morning</h2>
-  <p>A single room idea, one budget swap and one thing worth buying this week. No spam, ever — and no more than one email a week.</p>
- </div>
- <div><form class="field" onsubmit="alert('Newsletter is not connected yet — see the README to plug in Kit or MailerLite.');return false;"><input type="email" placeholder="you@email.com" aria-label="Email address" required><button class="btn" type="submit">Send it over</button></form><p class="muted" style="color:#A79C8F;margin:12px 0 0;font-size:13px">By subscribing you agree to our <a href="privacy-policy" style="color:#C9BFB2;text-decoration:underline">Privacy Policy</a>.</p></div>
-</div></div></section>
+<h2>1. Who is responsible for your information</h2>
+<p>The data controller for the Site is:</p>
+<p><strong>HomeDecorPad</strong>, operated by the operator of HomeDecorPad<br>Lagos, Nigeria<br>Email: hello@homedecorpad.com</p>
+<hr>
+<h2>2. Information we collect</h2>
+<h3>2.1 Information you give us directly</h3>
+<ul><li><strong>Comments:</strong> when you comment on a post we collect the name, email address, and (optionally) website you enter, the content of your comment, your IP address, and browser user-agent string (to help detect spam).</li><li><strong>Email newsletter:</strong> when you subscribe we collect your email address and, if you provide it, your first name. Subscription is confirmed by double opt-in.</li><li><strong>Contact form and email:</strong> when you contact us we collect your name, email address, and whatever you include in your message.</li><li><strong>Giveaways, surveys, or reader submissions (if offered):</strong> the information requested at the time, which we explain when we ask for it.</li></ul>
+<h3>2.2 Information collected automatically</h3>
+<p>When you visit the Site, we and our service providers automatically collect certain technical information through cookies, pixels, log files, and similar technologies:</p>
+<ul><li>IP address (which may reveal approximate location such as city or country), device type, operating system, browser type, language, and screen size;</li><li>the pages you view, the links and ads you click, the date and time of your visit, time spent on pages, and the website that referred you (for example, Pinterest or Google);</li><li>identifiers stored in cookies or similar technologies (see Section 5).</li></ul>
+<h3>2.3 Information from third parties</h3>
+<p>We may receive aggregated, non-identifying statistics from platforms such as Pinterest and Google about how people reach and use the Site. We do not purchase personal information about you from data brokers.</p>
+<hr>
+<h2>3. How we use information</h2>
+<p>We use the information we collect to:</p>
+<ul><li>operate, maintain, secure, and improve the Site and its content;</li><li>publish and moderate comments and prevent spam and abuse;</li><li>send our email newsletter and related messages to subscribers who have opted in, and let you unsubscribe at any time;</li><li>respond to your questions and requests;</li><li>understand how the Site is used (analytics) so we can create more useful content;</li><li>display advertising, including, where permitted and with consent where required, personalized advertising, and to measure ad performance;</li><li>track referrals to retailers through affiliate links so that we can earn commissions (see Section 8);</li><li>comply with legal obligations, enforce our Terms of Use, and protect our rights, our readers, and the public.</li></ul>
+<p>We do not use your personal information to make automated decisions that produce legal or similarly significant effects about you.</p>
+<hr>
+<h2>4. Legal bases for processing (EEA, UK, and Nigeria)</h2>
+<p>Where the GDPR, UK GDPR, or NDPA applies, we rely on the following legal bases:</p>
+<ul><li><strong>Consent</strong> — for non-essential cookies and similar technologies, personalized advertising, and our email newsletter. You can withdraw consent at any time (see Section 12).</li><li><strong>Legitimate interests</strong> — to operate and secure the Site, measure and improve it, prevent spam and fraud, and display non-personalized advertising, where these interests are not overridden by your rights.</li><li><strong>Performance of a contract / steps at your request</strong> — to deliver content or services you ask for, such as a free download.</li><li><strong>Legal obligation</strong> — to comply with applicable laws and lawful requests.</li></ul>
+<hr>
+<h2>5. Cookies and similar technologies</h2>
+<p>Cookies are small text files stored on your device. We also use pixels, tags, local storage, and similar technologies. Together these are referred to as "cookies" in this Policy. We use:</p>
+<ul><li><strong>Strictly necessary cookies</strong> — required for the Site to work (for example, remembering your cookie choices or keeping the Site secure).</li><li><strong>Analytics cookies</strong> — to understand how visitors use the Site (Google Analytics 4).</li><li><strong>Advertising cookies</strong> — set by us and our advertising partners to serve ads, limit how often you see an ad, measure ad performance, and, with consent where required, personalize ads based on your interests.</li><li><strong>Affiliate tracking cookies</strong> — set by affiliate networks and retailers when you click an affiliate link, so the retailer can credit a purchase to us.</li><li><strong>Functional / embedded-content cookies</strong> — set by third-party content embedded on the Site (for example, Pinterest, YouTube, or Instagram embeds).</li></ul>
+<p><strong>Managing cookies.</strong> Visitors in the EEA, UK, and Switzerland (and other regions where consent is required) will see a consent banner when they first visit the Site and can change their choices at any time via the "Cookie Settings" / "Privacy Settings" link in the footer. You can also delete or block cookies through your browser settings; if you block strictly necessary cookies, parts of the Site may not work. For more detail, see our <a href="cookie-policy">Cookie Policy</a>.</p>
+<hr>
+<h2>6. Advertising</h2>
+<p>We display advertising on the Site to keep our content free.</p>
+<p><strong>Google AdSense and Google advertising products.</strong> Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to this website or other websites. Google's use of advertising cookies enables it and its partners to serve ads to our users based on their visit to our Site and/or other sites on the Internet. Users may opt out of personalized advertising by visiting Google's <a href="https://www.google.com/settings/ads">Ads Settings</a>. Alternatively, you can opt out of a third-party vendor's use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info/choices">www.aboutads.info/choices</a>. To learn more about how Google uses data when you use our Site, see <a href="https://policies.google.com/technologies/partner-sites">How Google uses information from sites or apps that use our services</a>.</p>
+<p><strong>Other advertising partners.</strong> We may also work with other advertising networks and ad-management partners, whose vendors may set cookies and collect the technical information described in Section 2.2 to serve and measure ads. [WHEN YOU JOIN JOURNEY BY MEDIAVINE OR RAPTIVE, PASTE THEIR REQUIRED PRIVACY POLICY LANGUAGE HERE. THEY WILL SUPPLY IT DURING ONBOARDING.]</p>
+<p><strong>Opting out of interest-based advertising generally.</strong> In addition to the links above, you can opt out of interest-based advertising from participating companies at:</p>
+<ul><li>Digital Advertising Alliance (US): <a href="https://www.aboutads.info/choices">www.aboutads.info/choices</a></li><li>Network Advertising Initiative (US): <a href="https://optout.networkadvertising.org/">optout.networkadvertising.org</a></li><li>Digital Advertising Alliance of Canada: <a href="https://youradchoices.ca/">youradchoices.ca</a></li><li>European Interactive Digital Advertising Alliance: <a href="https://www.youronlinechoices.eu/">www.youronlinechoices.eu</a></li></ul>
+<p>Opting out does not mean you will stop seeing ads; it means the ads you see will be less relevant to you. Opt-outs are typically cookie-based, so if you clear cookies or switch devices you may need to opt out again.</p>
+<p><strong>Sponsored content.</strong> When a post or pin is sponsored, or when we have received a product for free, we say so clearly in the content itself. See our <a href="affiliate-disclosure">Affiliate &amp; Advertising Disclosure</a>.</p>
+<hr>
+<h2>7. Analytics</h2>
+<p>We use <strong>Google Analytics 4</strong> (provided by Google LLC) to understand how visitors find and use the Site. Google Analytics uses cookies and similar technologies to collect information such as pages visited, time on page, approximate location derived from IP address, device and browser information, and the source that referred you. We have enabled IP anonymization features where available and do not send Google information that directly identifies you (such as your name or email address).</p>
+<p>You can learn about Google's practices at <a href="https://policies.google.com/technologies/partner-sites">policies.google.com/technologies/partner-sites</a> and prevent Google Analytics from using your data by installing the <a href="https://tools.google.com/dlpage/gaoptout">Google Analytics opt-out browser add-on</a>.</p>
+<p>We also use <strong>Pinterest Analytics</strong> and the <strong>Pinterest Tag</strong> to understand how people arrive from Pinterest and how they interact with the Site, and to measure the performance of any content we promote on Pinterest. You can manage personalization in your Pinterest account under <em>Settings → Privacy and data</em>. Pinterest's privacy policy is at <a href="https://policy.pinterest.com/en/privacy-policy">policy.pinterest.com/privacy-policy</a>.</p>
+<hr>
+<h2>8. Affiliate links</h2>
+<p>Many posts on the Site contain <strong>affiliate links</strong>. If you click one and make a purchase, we may earn a commission at no extra cost to you. To make this possible, the affiliate network or retailer sets a cookie on your device when you click the link so that your purchase can be attributed to us. These cookies are controlled by the relevant network or retailer, not by us, and are subject to their privacy policies. We do not receive your name, payment details, or address from these purchases; we typically see only aggregated order and commission data.</p>
+<p>We participate in programs including: the <strong>Amazon Services LLC Associates Program</strong> (<em>As an Amazon Associate, we earn from qualifying purchases</em>), <strong>Impact</strong>, <strong>Awin</strong>, <strong>CJ Affiliate</strong>, <strong>ShareASale</strong>, and programs operated directly by retailers. Read our full <a href="affiliate-disclosure">Affiliate &amp; Advertising Disclosure</a>.</p>
+<hr>
+<h2>9. Email newsletter</h2>
+<p>If you subscribe to our newsletter, we store your email address and name (if provided) with our email service provider, <strong>Kit</strong> (Kit.com, formerly ConvertKit) [OR: MailerLite — EDIT TO MATCH THE PROVIDER YOU USE], which processes it on our behalf. We use double opt-in, so you will receive a confirmation email before you are added to the list.</p>
+<p>Our emails may contain small tracking pixels and tracked links that tell us whether an email was opened and which links were clicked. We use this to understand what content you find useful and to keep our list healthy.</p>
+<p>You can unsubscribe at any time using the link at the bottom of every email or by contacting us. Unsubscribing removes you from marketing emails; we may keep a suppression record of your email address so we don't email you again by mistake.</p>
+<hr>
+<h2>10. Comments, embedded content, and social features</h2>
+<p><strong>Comments.</strong> Comments and the name you provide are published publicly. Your email address is not published. Your IP address and user-agent are collected to help detect spam, and comments may be checked by an automated spam-detection service (Akismet). If you provide an email address associated with a Gravatar profile, your Gravatar image may be displayed alongside your comment.</p>
+<p><strong>Embedded content.</strong> Posts may include embedded content from other websites (for example, Pinterest pins, YouTube videos, or Instagram posts). Embedded content behaves exactly as if you had visited the other website: those sites may collect data about you, use cookies, embed additional third-party tracking, and monitor your interaction with the embedded content, including if you are logged into an account with them.</p>
+<p><strong>Social sharing buttons.</strong> Our sharing buttons link to social platforms. Depending on the platform and your settings, clicking them may allow the platform to collect information about your visit.</p>
+<hr>
+<h2>11. How we share information</h2>
+<p>We do not sell your personal information for money. We share information only as follows:</p>
+<ul><li><strong>Service providers</strong> who process information on our behalf and under our instructions, including web hosting and content-delivery providers, our email service provider, analytics providers, spam-filtering services, and security services.</li><li><strong>Advertising partners and networks</strong> (Section 6), which collect information via cookies on the Site to serve and measure ads. Under the CCPA/CPRA, disclosing information to advertising partners for cross-context behavioral advertising may be considered "sharing." You can opt out as described in Section 12.</li><li><strong>Affiliate networks and retailers</strong> (Section 8), which receive click and referral data when you use an affiliate link.</li><li><strong>Legal and safety reasons</strong> — if we believe disclosure is required by law, regulation, legal process, or a governmental request, or is necessary to protect the rights, property, or safety of us, our readers, or others.</li><li><strong>Business transfers</strong> — if the Site or our business is sold, merged, or reorganized, information may be transferred as part of that transaction; this Policy will continue to apply until it is updated.</li></ul>
+<hr>
+<h2>12. Your privacy rights and choices</h2>
+<h3>12.1 Everyone</h3>
+<ul><li><strong>Cookies and ads:</strong> use the consent banner / footer "Privacy Settings" link where available, your browser settings, and the opt-out links in Section 6.</li><li><strong>Email:</strong> unsubscribe via the link in any email.</li><li><strong>Comments:</strong> you may request that we edit or delete a comment you posted.</li><li><strong>Access, correction, deletion:</strong> you may contact us at hello@homedecorpad.com to ask what personal information we hold about you and to request correction or deletion. We may need to verify your identity before acting on a request.</li></ul>
+<h3>12.2 Residents of the EEA, United Kingdom, and Switzerland</h3>
+<p>Under the GDPR and UK GDPR you have the right to: access your personal data; have inaccurate data corrected; have your data erased; restrict or object to processing (including processing based on legitimate interests and any direct marketing); receive your data in a portable format; and withdraw consent at any time without affecting the lawfulness of processing before withdrawal. You also have the right to lodge a complaint with your local supervisory authority (a list is available at <a href="https://www.edpb.europa.eu/about-edpb/about-edpb/members_en">edpb.europa.eu</a>; in the UK, the Information Commissioner's Office at <a href="https://ico.org.uk/">ico.org.uk</a>). To exercise these rights, email hello@homedecorpad.com. We respond within one month, extendable where permitted.</p>
+<h3>12.3 Residents of Nigeria</h3>
+<p>Under the Nigeria Data Protection Act 2023 you have the right to access, correct, delete, or restrict the processing of your personal data; to data portability; to object to processing; to withdraw consent; and to lodge a complaint with the Nigeria Data Protection Commission (<a href="https://ndpc.gov.ng/">ndpc.gov.ng</a>). Email hello@homedecorpad.com to exercise these rights.</p>
+<h3>12.4 California residents (CCPA/CPRA)</h3>
+<p>To the extent the CCPA/CPRA applies to us, California residents have the right to:</p>
+<ul><li><strong>Know</strong> the categories and specific pieces of personal information we have collected, the sources, our purposes, and the categories of third parties with whom we share it;</li><li><strong>Delete</strong> personal information we collected from you, subject to legal exceptions;</li><li><strong>Correct</strong> inaccurate personal information;</li><li><strong>Opt out of the "sale" or "sharing"</strong> of personal information, including sharing for cross-context behavioral advertising. You can do this via the <strong>"Do Not Sell or Share My Personal Information"</strong> link in the Site footer [PROVIDED BY YOUR CONSENT MANAGEMENT PLATFORM / AD NETWORK] and by enabling the <strong>Global Privacy Control (GPC)</strong> signal in your browser, which we honor where required;</li><li><strong>Limit</strong> the use of sensitive personal information (we do not collect sensitive personal information as defined by the CPRA);</li><li><strong>Non-discrimination</strong> — we will not treat you differently for exercising your rights.</li></ul>
+<p>In the preceding 12 months we have collected the following categories of personal information: identifiers (such as IP address, email address, and name if you provide it); internet or other electronic network activity information (such as pages viewed and interactions with ads and links); approximate geolocation derived from IP address; and inferences drawn from the above for advertising purposes by our advertising partners. We do not knowingly sell or share the personal information of consumers under 16. You may designate an authorized agent to make a request on your behalf; we may require proof of authorization. Submit requests to hello@homedecorpad.com.</p>
+<h3>12.5 Residents of other U.S. states</h3>
+<p>Residents of states with comprehensive privacy laws (including Virginia, Colorado, Connecticut, Utah, Texas, Oregon, Montana, and others) may have similar rights to access, correct, delete, obtain a copy of, and opt out of targeted advertising or the sale of personal data. To the extent those laws apply to us, you may exercise these rights by emailing hello@homedecorpad.com. If we deny your request you may appeal by replying to our decision email.</p>
+<hr>
+<h2>13. Do Not Track and Global Privacy Control</h2>
+<p>Some browsers offer a "Do Not Track" (DNT) setting. Because there is no common industry standard for DNT, the Site does not currently respond to DNT signals. We do honor <strong>Global Privacy Control (GPC)</strong> opt-out preference signals where required by law, treating them as a request to opt out of the sale or sharing of personal information and of targeted advertising.</p>
+<hr>
+<h2>14. International data transfers</h2>
+<p>The Site is operated from Nigeria and hosted on servers that may be located in the United States, the European Union, or elsewhere. Our service providers (including Google, our host, and our email provider) may process information in the United States and other countries whose data-protection laws differ from those in your country. Where required, we rely on appropriate safeguards such as the European Commission's Standard Contractual Clauses, the UK International Data Transfer Addendum, and our providers' participation in recognized transfer frameworks.</p>
+<hr>
+<h2>15. Data retention</h2>
+<p>We keep personal information only as long as needed for the purposes described in this Policy:</p>
+<ul><li><strong>Comments:</strong> retained indefinitely while published so that follow-up comments can be recognized automatically, unless you ask us to remove them.</li><li><strong>Newsletter data:</strong> until you unsubscribe or ask to be deleted, after which we keep a minimal suppression record.</li><li><strong>Contact messages:</strong> generally up to 24 months after our last correspondence.</li><li><strong>Analytics data:</strong> Google Analytics user- and event-level data is retained for 14 months [CHECK YOUR GA4 RETENTION SETTING]; aggregated reports may be kept longer.</li><li><strong>Server logs:</strong> typically 30–90 days, depending on our hosting provider.</li></ul>
+<hr>
+<h2>16. Security</h2>
+<p>We use reasonable technical and organizational measures to protect personal information, including HTTPS encryption across the Site, reputable hosting with security monitoring, limited access to accounts, and strong authentication. No method of transmission or storage is completely secure, so we cannot guarantee absolute security.</p>
+<hr>
+<h2>17. Children's privacy</h2>
+<p>The Site is a general-audience website about home decor and is not directed to children under 13 (or under 16 in the EEA/UK). We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, contact us at hello@homedecorpad.com and we will delete it.</p>
+<hr>
+<h2>18. Third-party websites</h2>
+<p>The Site links to retailers, brands, designers, and other websites we do not control. Their privacy practices are governed by their own policies, which we encourage you to read. We are not responsible for the content or privacy practices of third-party sites.</p>
+<hr>
+<h2>19. Changes to this Policy</h2>
+<p>We may update this Privacy Policy from time to time. The "Last updated" date at the top shows when it was last revised. If we make material changes, we will post a notice on the Site and, where appropriate, notify newsletter subscribers by email. Continued use of the Site after changes take effect means you accept the updated Policy.</p>
+<hr>
+<h2>20. Contact us</h2>
+<p>Questions, requests, or complaints about this Policy or your personal information:</p>
+<p><strong>HomeDecorPad</strong> — the operator of HomeDecorPad<br>Lagos, Nigeria<br>Email: hello@homedecorpad.com<br>Contact page: homedecorpad.com/contact/</p></div></section>
 
 </main>
 <footer class="site-footer">

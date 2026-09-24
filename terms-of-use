@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Press Kit — HomeDecorPad</title>
-<meta name="description" content="Press kit for HomeDecorPad — logos, brand boilerplate, audience stats, and contact.">
-<link rel="canonical" href="https://redlaxx.github.io/homedecorpad-site/press-kit">
+<title>Terms of Use | HomeDecorPad</title>
+<meta name="description" content="Terms of Use for HomeDecorPad (homedecorpad.com) — written in plain English, covering cookies, data, ads, affiliate links and your choices.">
+<link rel="canonical" href="https://redlaxx.github.io/homedecorpad-site/terms-of-use">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HomeDecorPad">
-<meta property="og:title" content="Press Kit — HomeDecorPad">
-<meta property="og:description" content="Press kit for HomeDecorPad — logos, brand boilerplate, audience stats, and contact.">
-<meta property="og:url" content="https://redlaxx.github.io/homedecorpad-site/press-kit">
+<meta property="og:title" content="Terms of Use | HomeDecorPad">
+<meta property="og:description" content="Terms of Use for HomeDecorPad (homedecorpad.com) — written in plain English, covering cookies, data, ads, affiliate links and your choices.">
+<meta property="og:url" content="https://redlaxx.github.io/homedecorpad-site/terms-of-use">
 <meta property="og:image" content="https://redlaxx.github.io/homedecorpad-site/assets/og-default.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Press Kit — HomeDecorPad">
-<meta name="twitter:description" content="Press kit for HomeDecorPad — logos, brand boilerplate, audience stats, and contact.">
+<meta name="twitter:title" content="Terms of Use | HomeDecorPad">
+<meta name="twitter:description" content="Terms of Use for HomeDecorPad (homedecorpad.com) — written in plain English, covering cookies, data, ads, affiliate links and your choices.">
 <meta name="twitter:image" content="https://redlaxx.github.io/homedecorpad-site/assets/og-default.jpg">
 <meta name="theme-color" content="#FBF8F3">
 
@@ -27,7 +27,7 @@
 <!-- GOOGLE ADSENSE: add your publisher ID in Pages CMS > Site settings > adsense_client, then rebuild. Ads stay off until you do. -->
 <!-- GOOGLE ANALYTICS 4: add your measurement ID in Pages CMS > Site settings > ga4_id. -->
 
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Press Kit \u2014 HomeDecorPad", "url": "https://redlaxx.github.io/homedecorpad-site/press-kit", "publisher": {"@type": "Organization", "name": "HomeDecorPad"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Terms of Use", "url": "https://redlaxx.github.io/homedecorpad-site/terms-of-use"}</script>
 <style>
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
@@ -331,38 +331,84 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 </header>
 <main id="main">
 
-<section class="section tight"><div class="container narrow">
- <p class="eyebrow">For press & brands</p>
- <h1>Press Kit</h1>
- <p class="lede">Logos, boilerplate, and how to talk about HomeDecorPad.</p>
-</div></section>
-
-<section class="section"><div class="container narrow article">
- <h2>Boilerplate</h2>
-<p><strong>HomeDecorPad</strong> is a budget-first home decor site for renters and small-space dwellers. We publish practical room ideas, shoppable budget swaps and paint palettes you can recreate this weekend — for real homes with real budgets.</p>
-<p>Based in Lagos, writing for readers in the US, UK, Canada and Australia.</p>
-<h2>Audience</h2>
-<ul><li>Renters, first apartments, small-space dwellers</li><li>US-focused, Pinterest-driven</li><li>Budget-conscious, 25-44</li></ul>
-<div class="ad-slot">Ad slot &mdash; paste your AdSense unit here</div>
-<h2>What we do</h2>
-<ul><li>Sponsored placements (labelled)</li><li>Product features &amp; photography</li><li>Pinterest + affiliate campaigns</li></ul>
-<h2>Contact</h2>
-<p>Email hello@homedecorpad.com or use the contact page.</p>
-<h2>Logos</h2>
-<p>Upload your logos to assets/uploads and link them here.</p>
-<ul><li>Primary logo: /assets/uploads/logo.png</li><li>Icon: /assets/uploads/icon.png</li></ul>
+<section class="container narrow legalhdr">
+ <p class="eyebrow">Legal</p>
+ <h1>Terms of Use</h1>
+ <p class="muted" style="max-width:68ch">HomeDecorPad (homedecorpad.com). This page is written to be readable, not to hide behind jargon. If anything here is unclear, email <a href="mailto:hello@homedecorpad.com">hello@homedecorpad.com</a>.</p>
+ <div class="pill-row"><a href="privacy-policy">Privacy Policy</a><a href="cookie-policy">Cookie Policy</a><a href="disclaimer">Disclaimer</a><a href="affiliate-disclosure">Affiliate & Advertising Disclosure</a><a href="contact">Contact</a></div>
+</section>
+<section class="section" style="padding-top:18px"><div class="container narrow article"><p><strong>Effective date:</strong> 23 September 2026<br><strong>Last updated:</strong> 23 September 2026</p>
+<p>Welcome to HomeDecorPad ("<strong>we</strong>," "<strong>us</strong>," "<strong>our</strong>"), located at homedecorpad.com (the "<strong>Site</strong>"). These Terms of Use ("<strong>Terms</strong>") govern your access to and use of the Site, including all content, features, newsletters, downloads, and services we offer through it.</p>
+<p><strong>Please read these Terms carefully. By accessing or using the Site you agree to be bound by these Terms and by our <a href="privacy-policy">Privacy Policy</a>, <a href="disclaimer">Disclaimer</a>, and <a href="affiliate-disclosure">Affiliate &amp; Advertising Disclosure</a>, which are incorporated by reference. If you do not agree, do not use the Site.</strong></p>
 <hr>
-<p><em>This is an example custom page. Edit it in Pages CMS → Custom Pages, or delete it and create your own like /collab, /advertise, /press.</em></p>
-</div></section>
-
-<section class="section"><div class="container"><div class="cta">
- <div>
-  <p class="eyebrow" style="color:#E9B8A6">Free weekly email</p>
-  <h2>One good decor idea, every Sunday morning</h2>
-  <p>A single room idea, one budget swap and one thing worth buying this week. No spam, ever — and no more than one email a week.</p>
- </div>
- <div><form class="field" onsubmit="alert('Newsletter is not connected yet — see the README to plug in Kit or MailerLite.');return false;"><input type="email" placeholder="you@email.com" aria-label="Email address" required><button class="btn" type="submit">Send it over</button></form><p class="muted" style="color:#A79C8F;margin:12px 0 0;font-size:13px">By subscribing you agree to our <a href="privacy-policy" style="color:#C9BFB2;text-decoration:underline">Privacy Policy</a>.</p></div>
-</div></div></section>
+<h2>1. Who may use the Site</h2>
+<p>You must be at least 13 years old to use the Site. If you are under the age of majority where you live, you may use the Site only with the involvement and consent of a parent or guardian. By using the Site you confirm that you meet these requirements.</p>
+<hr>
+<h2>2. Our content and intellectual property</h2>
+<h3>2.1 Ownership</h3>
+<p>Unless otherwise stated, all content on the Site — including articles, photographs, graphics, mood boards, pin images, printables, logos, layouts, videos, the HomeDecorPad name, and the selection and arrangement of the content — is owned by or licensed to HomeDecorPad and is protected by copyright, trademark, and other intellectual-property laws worldwide.</p>
+<h3>2.2 What you may do</h3>
+<p>We grant you a limited, personal, non-exclusive, non-transferable, revocable license to:</p>
+<ul><li>view, read, and print pages of the Site for your own personal, non-commercial use;</li><li><strong>save (pin) our images to Pinterest and share links to our posts on social media</strong>, provided the pin or share links back to the original page on the Site and our images are not altered, cropped to remove our branding, or uploaded as new images that do not link to us;</li><li>download and print free printables and downloads we offer, for personal use only.</li></ul>
+<h3>2.3 What you may not do</h3>
+<p>Without our prior written permission you may not:</p>
+<ul><li>copy, reproduce, republish, upload, post, publicly display, translate, sell, or distribute any content from the Site, in whole or in part, including on other websites, blogs, social media accounts, print-on-demand shops, or in newsletters;</li><li>use our photographs or graphics in your own pins, posts, or products, or remove watermarks, credits, or branding;</li><li>use the Site or its content to train, fine-tune, or evaluate artificial-intelligence or machine-learning models, or scrape, crawl, or harvest content using automated means beyond standard search-engine indexing;</li><li>frame or mirror any part of the Site;</li><li>use the HomeDecorPad name, logo, or trade dress in any way that suggests we endorse you or your products.</li></ul>
+<p>To request permission to use our content, email hello@homedecorpad.com. Short quotations (a sentence or two) with a clear credit and a link to the original post are welcome.</p>
+<h3>2.4 Third-party content and credits</h3>
+<p>Some images on the Site belong to designers, brands, retailers, or photographers and are used with permission, under license, or in accordance with the platform or program through which they were provided, with credit where available. Those images remain the property of their owners. If you believe your work appears on the Site without proper authorization or credit, see Section 8.</p>
+<hr>
+<h2>3. Acceptable use</h2>
+<p>You agree not to:</p>
+<ul><li>use the Site for any unlawful purpose or in violation of any applicable law;</li><li>post or transmit anything that is defamatory, obscene, threatening, harassing, hateful, infringing, or otherwise objectionable;</li><li>impersonate any person or misrepresent your affiliation with anyone;</li><li>introduce viruses, malware, or any other harmful code, or attempt to gain unauthorized access to the Site, its servers, or any connected systems;</li><li>interfere with the proper working of the Site or place an unreasonable load on our infrastructure;</li><li>collect or harvest personal information about other users;</li><li>post advertising, spam, or promotional material in comments without our consent.</li></ul>
+<p>We may restrict, suspend, or terminate your access to the Site if we reasonably believe you have violated these Terms.</p>
+<hr>
+<h2>4. Comments and other user submissions</h2>
+<h3>4.1 Your license to us</h3>
+<p>If you post a comment, send us a photo, reply to a newsletter, or otherwise submit content to us ("<strong>Submissions</strong>"), you grant HomeDecorPad a worldwide, non-exclusive, royalty-free, perpetual, irrevocable, sublicensable license to use, reproduce, edit, adapt, publish, translate, display, and distribute the Submission in any media in connection with the Site and our related channels (for example, featuring a reader's question in a post or a reader photo in a round-up, with credit where practical). You retain ownership of your Submission.</p>
+<h3>4.2 Your responsibilities</h3>
+<p>You confirm that you own or have the necessary rights to your Submission, that it does not infringe anyone's rights or violate any law, and that it does not contain personal information about others without their consent.</p>
+<h3>4.3 Moderation</h3>
+<p>We may, but are not obligated to, review, edit, refuse, or remove any Submission at any time for any reason, including comments that are off-topic, promotional, abusive, or that we believe violate these Terms. We are not responsible for Submissions posted by others.</p>
+<hr>
+<h2>5. Advertising, affiliate links, and sponsored content</h2>
+<p>The Site is supported by display advertising, affiliate links, and occasional sponsored content. When you click an affiliate link and make a purchase, we may earn a commission at no additional cost to you. Sponsored content and gifted products are disclosed within the relevant post. Full details are in our <a href="affiliate-disclosure">Affiliate &amp; Advertising Disclosure</a>.</p>
+<p>Advertisements are served by third-party networks. We do not endorse, and are not responsible for, the products, services, or claims in third-party advertisements.</p>
+<hr>
+<h2>6. Third-party websites, products, and retailers</h2>
+<p>The Site links to retailers, brands, designers, tools, and other third-party websites for your convenience. We do not control those websites and are not responsible for their content, accuracy, availability, pricing, shipping, returns, privacy practices, or terms. <strong>Any purchase you make from a third party is a transaction solely between you and that retailer</strong>, governed by the retailer's terms. Prices, availability, and product specifications shown on the Site were accurate to our knowledge when published and may change without notice; always confirm details on the retailer's site before buying.</p>
+<hr>
+<h2>7. Newsletter, downloads, and free resources</h2>
+<p>By subscribing to our newsletter you agree to receive periodic emails from us; you may unsubscribe at any time using the link in any email. Free printables, templates, and other downloads are licensed for your personal, non-commercial use only. You may not resell, redistribute, or claim them as your own.</p>
+<hr>
+<h2>8. Copyright complaints</h2>
+<p>We respect the intellectual-property rights of others. If you believe content on the Site infringes your copyright, send a notice to hello@homedecorpad.com with the subject line "Copyright Notice" that includes:</p>
+<ol><li>identification of the copyrighted work you claim has been infringed;</li><li>the URL(s) on the Site where the material appears;</li><li>your name, address, telephone number, and email address;</li><li>a statement that you have a good-faith belief that the use is not authorized by the copyright owner, its agent, or the law;</li><li>a statement, made under penalty of perjury, that the information in your notice is accurate and that you are the copyright owner or authorized to act on the owner's behalf;</li><li>your physical or electronic signature.</li></ol>
+<p>We will review valid notices promptly and remove or disable access to infringing material where appropriate. This procedure is modeled on the U.S. Digital Millennium Copyright Act (DMCA) and applies to complaints from any jurisdiction.</p>
+<hr>
+<h2>9. Disclaimers of warranties</h2>
+<p>THE SITE AND ALL CONTENT ARE PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, OR STATUTORY, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. WE DO NOT WARRANT THAT THE SITE WILL BE UNINTERRUPTED, ERROR-FREE, SECURE, OR FREE OF VIRUSES, OR THAT ANY CONTENT IS ACCURATE, COMPLETE, OR CURRENT.</p>
+<p>The Site provides home-decor ideas, opinions, and general information for inspiration and entertainment. It is <strong>not professional interior-design, architectural, engineering, electrical, plumbing, construction, safety, financial, or legal advice.</strong> You are responsible for evaluating whether any idea, product, or project is suitable and safe for your home, your lease or homeowners' association rules, your local building codes, and your skill level, and for consulting qualified professionals where appropriate. See our <a href="disclaimer">Disclaimer</a>.</p>
+<p>Some jurisdictions do not allow the exclusion of certain warranties, so some of the above exclusions may not apply to you.</p>
+<hr>
+<h2>10. Limitation of liability</h2>
+<p>TO THE FULLEST EXTENT PERMITTED BY LAW, HomeDecorPad, ITS OWNER, CONTRIBUTORS, AND SERVICE PROVIDERS WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF PROFITS, DATA, GOODWILL, OR PROPERTY DAMAGE OR PERSONAL INJURY, ARISING OUT OF OR RELATED TO YOUR USE OF (OR INABILITY TO USE) THE SITE, ITS CONTENT, ANY PROJECT OR PRODUCT DESCRIBED ON THE SITE, OR ANY THIRD-PARTY WEBSITE OR RETAILER, WHETHER BASED ON WARRANTY, CONTRACT, TORT (INCLUDING NEGLIGENCE), OR ANY OTHER LEGAL THEORY, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+<p>TO THE EXTENT LIABILITY CANNOT BE EXCLUDED, OUR TOTAL AGGREGATE LIABILITY TO YOU FOR ALL CLAIMS RELATING TO THE SITE WILL NOT EXCEED ONE HUNDRED U.S. DOLLARS (US$100) OR THE AMOUNT YOU PAID US IN THE 12 MONTHS BEFORE THE CLAIM, WHICHEVER IS GREATER.</p>
+<p>Nothing in these Terms excludes or limits liability that cannot be excluded or limited under applicable law, including for death or personal injury caused by negligence, or for fraud.</p>
+<hr>
+<h2>11. Indemnification</h2>
+<p>You agree to indemnify, defend, and hold harmless HomeDecorPad and its owner, contributors, and service providers from and against any claims, liabilities, damages, losses, and expenses (including reasonable legal fees) arising out of or related to your Submissions, your use of the Site, or your violation of these Terms or any law or third-party right.</p>
+<hr>
+<h2>12. Changes to the Site and these Terms</h2>
+<p>We may change, suspend, or discontinue any part of the Site at any time without notice. We may also revise these Terms from time to time; the "Last updated" date shows the latest revision. Material changes will be indicated by a notice on the Site. Your continued use of the Site after changes take effect constitutes acceptance of the revised Terms.</p>
+<hr>
+<h2>13. Governing law and dispute resolution</h2>
+<p>These Terms and any dispute arising out of or relating to them or the Site are governed by the laws of the Federal Republic of Nigeria, without regard to conflict-of-law principles. Before starting any formal proceeding, you agree to contact us at hello@homedecorpad.com and attempt in good faith to resolve the dispute informally for at least 30 days. Subject to that, you agree that the courts of Lagos State, Nigeria, have exclusive jurisdiction, except that we may seek injunctive relief in any court of competent jurisdiction to protect our intellectual property. If you are a consumer in the EEA or UK, nothing in this section deprives you of the protection of mandatory consumer-protection laws of the country in which you live.</p>
+<hr>
+<h2>14. General</h2>
+<ul><li><strong>Entire agreement.</strong> These Terms, together with the Privacy Policy, Disclaimer, and Affiliate &amp; Advertising Disclosure, are the entire agreement between you and us regarding the Site.</li><li><strong>Severability.</strong> If any provision is found unenforceable, the remaining provisions remain in full force.</li><li><strong>No waiver.</strong> Our failure to enforce any provision is not a waiver of our right to do so later.</li><li><strong>Assignment.</strong> You may not assign these Terms; we may assign them in connection with a transfer of the Site or our business.</li><li><strong>Language.</strong> These Terms are written in English; any translation is for convenience only.</li></ul>
+<hr>
+<h2>15. Contact</h2>
+<p><strong>HomeDecorPad</strong> — the operator of HomeDecorPad<br>Lagos, Nigeria<br>Email: hello@homedecorpad.com<br>Contact page: homedecorpad.com/contact/</p></div></section>
 
 </main>
 <footer class="site-footer">

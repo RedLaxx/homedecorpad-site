@@ -6,10 +6,10 @@ lede: 'HomeDecorPad is a small library of decor ideas that are actually finishab
   what can I skip?'
 buttons:
 - label: Browse all guides
-  url: /blog.html
+  url: /blog
   style: primary
 - label: Shop the looks
-  url: /shop-my-home.html
+  url: /shop-my-home
   style: ghost
 how_it_works_title: How this site works
 how_it_works_body: 'Most decor content is aimed at people with a renovation budget.
@@ -56,7 +56,7 @@ known_for_items:
   link_url: post:one-room-three-budgets-cozy-bedroom
 - text: Room guides — layout, light and styling rules by room.
   link_label: Living room, small space, colour
-  link_url: /blog.html
+  link_url: /blog
 picks_title: Pick your first project
 picks_eyebrow: Start somewhere
 picks_link_text: ''

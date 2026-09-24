@@ -758,45 +758,51 @@ ICON = {
 
 NAV = [
     ("", "Home"),
-    ("start-here.html", "Start Here"),
-    ("blog.html", "Decor Ideas"),
-    ("shop-my-home.html", "Shop My Home"),
-    ("about.html", "About"),
-    ("contact.html", "Contact"),
+    ("start-here", "Start Here"),
+    ("blog", "Decor Ideas"),
+    ("shop-my-home", "Shop My Home"),
+    ("about", "About"),
+    ("contact", "Contact"),
 ]
 
 FOOTER_LEGAL = [
-    ("privacy-policy.html", "Privacy Policy"),
-    ("cookie-policy.html", "Cookie Policy"),
-    ("terms-of-use.html", "Terms of Use"),
-    ("disclaimer.html", "Disclaimer"),
-    ("affiliate-disclosure.html", "Affiliate Disclosure"),
-    ("contact.html", "Contact"),
+    ("privacy-policy", "Privacy Policy"),
+    ("cookie-policy", "Cookie Policy"),
+    ("terms-of-use", "Terms of Use"),
+    ("disclaimer", "Disclaimer"),
+    ("affiliate-disclosure", "Affiliate Disclosure"),
+    ("contact", "Contact"),
 ]
 
 FOOTER_CATS = [
-    ("blog.html#living-room", "Living Room Ideas"),
-    ("blog.html#small-space", "Small Space & Renters"),
-    ("blog.html#get-the-look", "Get the Look for Less"),
-    ("blog.html#finds", "Home Finds & Deals"),
-    ("blog.html#diy", "IKEA Hacks & DIY"),
-    ("blog.html#color", "Color & Paint"),
+    ("blog#living-room", "Living Room Ideas"),
+    ("blog#small-space", "Small Space & Renters"),
+    ("blog#get-the-look", "Get the Look for Less"),
+    ("blog#finds", "Home Finds & Deals"),
+    ("blog#diy", "IKEA Hacks & DIY"),
+    ("blog#color", "Color & Paint"),
 ]
 
 
 def header(rel="", current=""):
     # Use editable navigation from content/navigation.yml if present, else fallback to hardcoded NAV
     def clean_home_href(href, rel):
-        # Remove index.html, turn home into clean URL
+        # Remove index.html and .html extension for clean URLs
         h = href.strip()
         if h in ("", "index.html", "/index.html", "/", "./", "/"):
-            # home: rel is "" at root, "../../" in posts
             return rel if rel else "./"
-        # strip leading slash and remove trailing index.html
         if h.startswith("/"):
             h = h.lstrip("/")
         h = h.replace("/index.html", "/").replace("index.html", "")
-        # if after cleaning it's empty, it's home
+        # strip .html extension for clean URLs, but keep fragments #...
+        if "#" in h:
+            base, frag = h.split("#",1)
+            if base.endswith(".html"):
+                base = base[:-5]
+            h = f"{base}#{frag}"
+        else:
+            if h.endswith(".html"):
+                h = h[:-5]
         if h in ("", "/"):
             return rel if rel else "./"
         return f"{rel}{h}" if not h.startswith(("http://","https://")) else h
@@ -816,16 +822,21 @@ def header(rel="", current=""):
             href = url
             if href.startswith("post:"):
                 slug = href[5:].strip()
-                href = f"blog.html#{slug}"
+                href = f"blog#{slug}"
             full_href = clean_home_href(href, rel)
             cls = ""
             if style == "outline":
                 cls = ' class="pin"'
             elif style == "primary":
                 cls = ' class="btn sm" style="text-transform:none;letter-spacing:0;padding:8px 16px"'
-            # current page detection — normalize current vs href
-            cur_href = href.lstrip("/").replace("index.html","").rstrip("/")
-            cur_current = current.replace("index.html","").rstrip("/")
+            # current page detection — normalize current vs href (strip .html)
+            def norm_cur(s):
+                s = s.lstrip("/").replace("index.html","")
+                if s.endswith(".html"):
+                    s = s[:-5]
+                return s.rstrip("/")
+            cur_href = norm_cur(href)
+            cur_current = norm_cur(current)
             cur = ' aria-current="page"' if cur_href == cur_current or (cur_href=="" and cur_current=="") else ""
             links += f'<a href="{full_href}"{cls}{cur}>{label}</a>'
         show_pin = nav_cfg.get("show_pinterest", True)
@@ -850,12 +861,15 @@ def header(rel="", current=""):
     # fallback to old hardcoded NAV
     links = ""
     for href, label in NAV:
-        # href "" is home
         full_href = clean_home_href(href, rel)
-        cls = ' class="pin"' if href == "shop-my-home.html" else ""
-        # current detection
-        cur_href = href.replace("index.html","").rstrip("/")
-        cur_current = current.replace("index.html","").rstrip("/")
+        cls = ' class="pin"' if href in ("shop-my-home", "shop-my-home.html") else ""
+        def norm2(s):
+            s = s.replace("index.html","")
+            if s.endswith(".html"):
+                s = s[:-5]
+            return s.rstrip("/")
+        cur_href = norm2(href)
+        cur_current = norm2(current)
         cur = ' aria-current="page"' if cur_href == cur_current else ""
         links += f'<a href="{full_href}"{cls}{cur}>{label}</a>'
     brand_href = rel if rel else "./"
@@ -871,7 +885,7 @@ def footer(rel=""):
     f_cfg = FOOTER if isinstance(FOOTER, dict) and FOOTER else {}
     desc = f_cfg.get("description") or "Designer-looking rooms without the designer budget. Home decor ideas, budget swaps, paint palettes and room makeovers you can actually pull off this weekend."
     copyright = f_cfg.get("copyright") or f"© 2026 {BRAND}. All rights reserved."
-    disc_text = f_cfg.get("disclosure_text") or f"As an Amazon Associate we earn from qualifying purchases. {BRAND} also participates in other affiliate programs and displays advertising; see our <a href=\"{rel}affiliate-disclosure.html\">Affiliate Disclosure</a> for details. Nothing on this site is professional design, legal, or financial advice."
+    disc_text = f_cfg.get("disclosure_text") or f"As an Amazon Associate we earn from qualifying purchases. {BRAND} also participates in other affiliate programs and displays advertising; see our <a href=\"{rel}affiliate-disclosure\">Affiliate Disclosure</a> for details. Nothing on this site is professional design, legal, or financial advice."
     explore_cfg = f_cfg.get("explore_links")
     if explore_cfg and isinstance(explore_cfg, list) and isinstance(explore_cfg[0], dict):
         explore_html = ""
@@ -882,7 +896,7 @@ def footer(rel=""):
                 continue
             explore_html += f'<li><a href="{rel}{url}">{label}</a></li>'
     else:
-        explore_html = f'<li><a href="{rel}start-here.html">Start Here</a></li><li><a href="{rel}blog.html">All Decor Ideas</a></li><li><a href="{rel}shop-my-home.html">Shop My Home</a></li><li><a href="{rel}about.html">About</a></li><li><a href="{rel}contact.html">Work With Us</a></li>'
+        explore_html = f'<li><a href="{rel}start-here">Start Here</a></li><li><a href="{rel}blog">All Decor Ideas</a></li><li><a href="{rel}shop-my-home">Shop My Home</a></li><li><a href="{rel}about">About</a></li><li><a href="{rel}contact">Work With Us</a></li>'
 
     room_cfg = f_cfg.get("room_guides")
     if room_cfg and isinstance(room_cfg, list) and isinstance(room_cfg[0], dict):
@@ -922,7 +936,7 @@ def footer(rel=""):
   <p class="disc">{disc_text}</p>
   <div class="fbot">
    <span>{copyright}</span>
-   <span><a href="{rel}privacy-policy.html">Privacy</a> &middot; <a href="{rel}cookie-policy.html">Cookies</a> &middot; <a href="#" onclick="localStorage.removeItem('hdp-consent');location.reload();return false;">Cookie settings</a> &middot; <a href="{rel}sitemap.xml">Sitemap</a></span>
+   <span><a href="{rel}privacy-policy">Privacy</a> &middot; <a href="{rel}cookie-policy">Cookies</a> &middot; <a href="#" onclick="localStorage.removeItem('hdp-consent');location.reload();return false;">Cookie settings</a> &middot; <a href="{rel}sitemap.xml">Sitemap</a></span>
   </div>
  </div>
 </footer>
@@ -934,7 +948,7 @@ function hdp(n){{try{{localStorage.setItem(k,n);}}catch(e){{}}var b=document.get
 
 def consent(rel=""):
     return f"""<div class="consent" id="consent" role="dialog" aria-label="Cookie notice">
- <p><b>We use cookies.</b> Essential cookies keep the site working; analytics and advertising cookies help us improve and keep the lights on. Read our <a href="{rel}cookie-policy.html">Cookie Policy</a>.</p>
+ <p><b>We use cookies.</b> Essential cookies keep the site working; analytics and advertising cookies help us improve and keep the lights on. Read our <a href="{rel}cookie-policy">Cookie Policy</a>.</p>
  <span class="field"><button class="btn sm" type="button" onclick="hdp('all')">Accept all</button>
  <button class="btn sm ghost" type="button" onclick="hdp('essential')">Essential only</button></span>
 </div>"""
@@ -1027,12 +1041,12 @@ def comments_section(rel="", post=None, comments=None):
         else:
             # FormSubmit.co works with no signup — first email needs confirmation, then it forwards
             form_action = f"https://formsubmit.co/{EMAIL}"
-            extra_hidden = f'<input type="hidden" name="_captcha" value="false"><input type="hidden" name="_next" value="{DOMAIN}/thanks.html">'
+            extra_hidden = f'<input type="hidden" name="_captcha" value="false"><input type="hidden" name="_next" value="{DOMAIN}/thanks">'
 
         form = f"""<form action="{form_action}" method="POST" class="comment-form" onsubmit="this.querySelector('button').textContent='Sending…';">
   <input type="hidden" name="_subject" value="New comment on {title}">
   <input type="hidden" name="post_slug" value="{slug}">
-  <input type="hidden" name="post_url" value="{DOMAIN}/blog/{post.get('cat','')}/{slug}.html">
+  <input type="hidden" name="post_url" value="{DOMAIN}/blog/{post.get('cat','')}/{slug}">
   {extra_hidden}
   <div class="form-row"><label for="c-name">Your name</label><input id="c-name" name="name" type="text" placeholder="Alex" required maxlength="60"></div>
   <div class="form-row"><label for="c-comment">Your comment</label><textarea id="c-comment" name="comment" placeholder="Love this idea! I tried it and..." required maxlength="1000" style="min-height:110px"></textarea></div>
