@@ -1,20 +1,21 @@
+# Home page — editable in Pages CMS → Home page
 hero_eyebrow: Home decor ideas · looks for less
 hero_title: Designer-looking rooms without the designer budget.
-hero_lede: Practical room ideas, shoppable budget swaps and paint palettes you
-  can recreate this weekend — for real homes with real budgets.
-hero_image: /assets/uploads/hero-1500x1000-1.jpg
+hero_lede: Practical room ideas, shoppable budget swaps and paint palettes you can
+  recreate this weekend — for real homes with real budgets.
+hero_image: /assets/uploads/hero-1500x1000.jpg
 hero_motif: hero
 hero_buttons:
-  - label: Start here
-    url: /start-here.html
-    style: primary
-  - label: Browse all decor ideas
-    url: /blog.html
-    style: ghost
+- label: Start here
+  url: /start-here.html
+  style: primary
+- label: Browse all decor ideas
+  url: /blog.html
+  style: ghost
 trust_badges:
-  - Budget-first picks
-  - Renter friendly
-  - New ideas weekly
+- Budget-first picks
+- Renter friendly
+- New ideas weekly
 browse_title: Browse by room
 browse_link_text: All 10 room guides →
 browse_link_url: /blog.html
@@ -27,28 +28,29 @@ latest_link_url: /blog.html
 latest_count: 6
 signature_eyebrow: Signature series
 signature_title: One room, three budgets
-signature_description: Every room, styled three ways — a $150 refresh, a $500
-  upgrade and a full makeover. You get the exact shopping list and the order to
-  buy things in, so you never waste money on the wrong piece first.
+signature_description: Every room, styled three ways — a $150 refresh, a $500 upgrade
+  and a full makeover. You get the exact shopping list and the order to buy things
+  in, so you never waste money on the wrong piece first.
+signature_image: ''
 signature_motif: arch
 signature_links:
-  - label: "Cozy bedroom: $150 / $500 / $1,500"
-    url: post:one-room-three-budgets-cozy-bedroom
-  - label: Warm minimalist living room under $250
-    url: post:warm-minimalist-living-room-under-250
-  - label: All Get the Look for Less guides
-    url: /blog.html#get-the-look
+- label: 'Cozy bedroom: $150 / $500 / $1,500'
+  url: post:one-room-three-budgets-cozy-bedroom
+- label: Warm minimalist living room under $250
+  url: post:warm-minimalist-living-room-under-250
+- label: All Get the Look for Less guides
+  url: /blog.html#get-the-look
 start_here_eyebrow: Start here
 start_here_title: New to the site? Read these first
 start_here_link_text: How it works →
 start_here_link_url: /start-here.html
 start_here_cards:
-  - title: Fix the room before you shop it
-    description: Twelve layout mistakes that make a room feel small — every fix is free.
-    link_text: Read the layout guide →
-    link_url: post:living-room-layout-mistakes
-  - title: Choose the palette
-    description: Eight neutral-anchored colour palettes with proportions that
-      actually work at home.
-    link_text: See the palettes →
-    link_url: post:home-decor-color-palettes-2027
+- title: Fix the room before you shop it
+  description: Twelve layout mistakes that make a room feel small — every fix is free.
+  link_text: Read the layout guide →
+  link_url: post:living-room-layout-mistakes
+- title: Choose the palette
+  description: Eight neutral-anchored colour palettes with proportions that actually
+    work at home.
+  link_text: See the palettes →
+  link_url: post:home-decor-color-palettes-2027
