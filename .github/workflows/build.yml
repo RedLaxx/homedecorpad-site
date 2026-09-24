@@ -42,8 +42,8 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install Pillow (only needed for the share images)
-        run: pip install --quiet pillow
+     - name: Install deps (Pillow + PyYAML for comments)
+  run: pip install --quiet pillow pyyaml
         continue-on-error: true
 
       - name: Build the site
