@@ -386,7 +386,17 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 
  <div id="tab-anon" class="tab-pane active">
   <p class="muted">No comments yet — be the first!</p>
- <div style="margin-top:26px"><h3 style="font-size:19px;margin:0 0 12px">Leave a comment — no login needed</h3><div class="comments-disabled"><p><b>Comment form not connected yet:</b> Add your Formspree ID in Pages CMS → Site settings → formspree_id. Or get a free ID at formspree.io — takes 30 seconds. Until then, email comments to hello@homedecorpad.com.</p></div></div>
+ <div style="margin-top:26px"><h3 style="font-size:19px;margin:0 0 12px">Leave a comment — no login needed</h3><form action="https://formsubmit.co/hello@homedecorpad.com" method="POST" class="comment-form" onsubmit="this.querySelector('button').textContent='Sending…';">
+  <input type="hidden" name="_subject" value="New comment on 7 Renter-Friendly Wall Decor Ideas That Won’t Cost You Your Deposit">
+  <input type="hidden" name="post_slug" value="renter-friendly-wall-decor-ideas">
+  <input type="hidden" name="post_url" value="https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/renter-friendly-wall-decor-ideas.html">
+  <input type="hidden" name="_captcha" value="false"><input type="hidden" name="_next" value="https://redlaxx.github.io/homedecorpad-site/thanks.html">
+  <div class="form-row"><label for="c-name">Your name</label><input id="c-name" name="name" type="text" placeholder="Alex" required maxlength="60"></div>
+  <div class="form-row"><label for="c-comment">Your comment</label><textarea id="c-comment" name="comment" placeholder="Love this idea! I tried it and..." required maxlength="1000" style="min-height:110px"></textarea></div>
+  <div class="form-row"><label for="c-email" class="muted" style="font-weight:400">Email (optional, not shown — for reply)</label><input id="c-email" name="email" type="email" placeholder="you@email.com"></div>
+  <button class="btn sm" type="submit">Post comment — no login needed</button>
+  <p class="muted" style="margin-top:10px;font-size:12.5px">Anonymous, no GitHub needed. Comments are moderated — we approve in Pages CMS → Comments within hours and it appears after next rebuild (1-2 min). No Formspree ID yet — using email fallback. Add formspree_id in Site settings for faster delivery.</p>
+</form></div>
  </div>
  <div id="tab-giscus" class="tab-pane">
   <div class="giscus"></div>

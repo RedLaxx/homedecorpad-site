@@ -186,20 +186,56 @@ def load_comments():
             continue
         raw = open(os.path.join(folder, fn), encoding="utf-8").read()
         fm, _ = md_engine.parse_frontmatter(raw)
-        # support both frontmatter and plain yaml
-        if not fm and raw.strip().startswith("post_slug"):
-            # try plain yaml
+        # support both frontmatter and plain yaml (no PyYAML needed on GitHub)
+        if not fm:
+            txt = raw.strip()
+            # if wrapped in --- frontmatter, extract inner
+            if txt.startswith("---"):
+                # remove first --- line
+                parts = txt.split("---")
+                if len(parts) >= 3:
+                    txt = parts[1]
+            # try yaml if available
             try:
                 import yaml as _yaml
-                fm = _yaml.safe_load(raw) or {}
+                fm = _yaml.safe_load(txt) or {}
             except Exception:
+                # simple key: value parser
                 fm = {}
+                lines = txt.splitlines()
+                i = 0
+                while i < len(lines):
+                    line = lines[i]
+                    m = re.match(r"^\s*(post_slug|author|date|body|approved)\s*:\s*(.*)$", line)
+                    if m:
+                        k, v = m.group(1), m.group(2).strip()
+                        if k == "body":
+                            # body may be on same line or multiline
+                            if v in ("|", ">", "|-", ">-"):
+                                # collect indented lines
+                                body_lines = []
+                                i += 1
+                                while i < len(lines) and (lines[i].startswith("  ") or lines[i].startswith("\t") or not lines[i].strip()):
+                                    body_lines.append(lines[i].lstrip())
+                                    i += 1
+                                fm[k] = "\n".join(body_lines).strip()
+                                continue
+                            else:
+                                # strip quotes
+                                fm[k] = v.strip("\"'").strip()
+                        elif k == "approved":
+                            fm[k] = v.lower() in ("true", "yes", "1")
+                        else:
+                            fm[k] = v.strip("\"'").strip()
+                    i += 1
         if not fm.get("post_slug") or not fm.get("body"):
             continue
         if fm.get("approved") is False:
             continue
-        # skip if explicitly not approved and no approved key? default approved if missing? require true
         if "approved" in fm and not fm.get("approved"):
+            continue
+        # if approved key missing, require explicit true for safety (avoid drafts)
+        if "approved" not in fm:
             continue
         slug = slugify(str(fm.get("post_slug")))
         entry = {

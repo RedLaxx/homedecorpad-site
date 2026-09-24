@@ -888,22 +888,27 @@ def comments_section(rel="", post=None, comments=None):
         else:
             existing = '<p class="muted">No comments yet — be the first!</p>'
 
-        # Formspree ID from global
+        # Formspree ID from global — fallback to FormSubmit.co so it works even without Formspree
         form_id = FORMSPREE_ID
-        form_action = f"https://formspree.io/f/{form_id}" if form_id and form_id != "YOUR_FORM_ID" else ""
-        if form_action:
-            form = f"""<form action="{form_action}" method="POST" class="comment-form" onsubmit="this.querySelector('button').textContent='Sending…';">
+        if form_id and form_id != "YOUR_FORM_ID" and len(form_id) > 5:
+            form_action = f"https://formspree.io/f/{form_id}"
+            extra_hidden = ""
+        else:
+            # FormSubmit.co works with no signup — first email needs confirmation, then it forwards
+            form_action = f"https://formsubmit.co/{EMAIL}"
+            extra_hidden = f'<input type="hidden" name="_captcha" value="false"><input type="hidden" name="_next" value="{DOMAIN}/thanks.html">'
+
+        form = f"""<form action="{form_action}" method="POST" class="comment-form" onsubmit="this.querySelector('button').textContent='Sending…';">
   <input type="hidden" name="_subject" value="New comment on {title}">
   <input type="hidden" name="post_slug" value="{slug}">
   <input type="hidden" name="post_url" value="{DOMAIN}/blog/{post.get('cat','')}/{slug}.html">
+  {extra_hidden}
   <div class="form-row"><label for="c-name">Your name</label><input id="c-name" name="name" type="text" placeholder="Alex" required maxlength="60"></div>
   <div class="form-row"><label for="c-comment">Your comment</label><textarea id="c-comment" name="comment" placeholder="Love this idea! I tried it and..." required maxlength="1000" style="min-height:110px"></textarea></div>
   <div class="form-row"><label for="c-email" class="muted" style="font-weight:400">Email (optional, not shown — for reply)</label><input id="c-email" name="email" type="email" placeholder="you@email.com"></div>
   <button class="btn sm" type="submit">Post comment — no login needed</button>
-  <p class="muted" style="margin-top:10px;font-size:12.5px">Anonymous, no GitHub needed. Comments are moderated — we approve within a few hours and it appears here after the next rebuild (1-2 min). No spam, no ads.</p>
+  <p class="muted" style="margin-top:10px;font-size:12.5px">Anonymous, no GitHub needed. Comments are moderated — we approve in Pages CMS → Comments within hours and it appears after next rebuild (1-2 min). {'Using Formspree.' if form_id and form_id!='YOUR_FORM_ID' else 'No Formspree ID yet — using email fallback. Add formspree_id in Site settings for faster delivery.'}</p>
 </form>"""
-        else:
-            form = f"""<div class="comments-disabled"><p><b>Comment form not connected yet:</b> Add your Formspree ID in Pages CMS → Site settings → formspree_id. Or get a free ID at formspree.io — takes 30 seconds. Until then, email comments to {EMAIL}.</p></div>"""
 
         return f"""{existing}
  <div style="margin-top:26px"><h3 style="font-size:19px;margin:0 0 12px">Leave a comment — no login needed</h3>{form}</div>"""
