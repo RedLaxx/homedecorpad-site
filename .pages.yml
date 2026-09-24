@@ -12,13 +12,13 @@ content:
     type: collection
     path: content/posts
     format: yaml-frontmatter
-    # The file name (and therefore the URL) is generated from the post title.
-    # "My Post: 5 Ideas!" becomes my-post-5-ideas.md. The box appears when you
-    # create a post, is pre-filled for you, and is hidden when editing later so
-    # the address of a published post cannot change by accident.
+    # The file name (and therefore the URL) is generated from the post title automatically.
+    # "My Post: 5 Ideas!" becomes my-post-5-ideas.md — no need to type a slug.
+    # Hidden on create and edit so the address cannot be changed by accident in the UI.
+    # If you need a different URL, use the optional "URL slug" field below.
     filename:
       template: "{primary}.md"
-      field: create
+      field: false
     exclude:
       - README.md
     view:
@@ -209,7 +209,7 @@ content:
     format: yaml-frontmatter
     filename:
       template: "{primary}.md"
-      field: create
+      field: false
     exclude:
       - README.md
     view:
