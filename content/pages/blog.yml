@@ -1,8 +1,10 @@
-title: All Decor Ideas — Room Guides & Budget Makeovers
+title: All Decor Ideas — Room Guides & Budget Makeovers | HomeDecorPad
 h1: Room guides, budget makeovers & home finds
 eyebrow: All decor ideas
-lede: 'Every guide is written to be used, not just saved: what to do first, what it
-  costs, and what to skip. Filter by room or search below.'
+lede: 'Every guide is written to be used, not just saved: what to do first, what it costs, and what to skip. Newest posts first.'
 search_placeholder: 'Search: small apartment, rug, paint…'
-empty_text: No guides match that search yet — try a room name like "bedroom" or a
-  topic like "rug".
+empty_text: No guides match that search yet — try a room name like "bedroom" or a topic like "rug".
+display_mode: grid
+show_filters: true
+posts_per_page: 0
+

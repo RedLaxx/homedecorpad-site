@@ -635,6 +635,48 @@ content:
         label: Blog listing page
         type: file
         path: content/pages/blog.yml
+        fields:
+          - name: title
+            label: SEO Title
+            type: string
+            description: Browser title, e.g. All Decor Ideas — Room Guides & Budget Makeovers
+          - name: h1
+            label: H1 Headline
+            type: string
+            description: Main headline on blog page
+          - name: eyebrow
+            label: Eyebrow (small label above H1)
+            type: string
+          - name: lede
+            label: Intro paragraph (lede)
+            type: text
+            description: One or two sentences under H1
+          - name: search_placeholder
+            label: Search placeholder
+            type: string
+            description: e.g. Search small apartment, rug, paint...
+          - name: empty_text
+            label: Empty search message
+            type: text
+          - name: display_mode
+            label: Display mode
+            type: select
+            description: How to show posts — newest first always
+            options:
+              values:
+                - name: grid
+                  label: Grid (cards, newest first)
+                - name: list
+                  label: List (compact, newest first)
+          - name: show_filters
+            label: Show category filters
+            type: boolean
+            description: Show filter buttons for categories
+          - name: posts_per_page
+            label: Posts per page (0 = show all)
+            type: number
+            description: Leave 0 to show all posts newest to oldest
+
 
   - name: site
     label: Site settings

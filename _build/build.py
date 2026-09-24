@@ -862,73 +862,95 @@ def page_blog():
     cfg = PAGES_SETTINGS.get("blog") or {}
     eyebrow = cfg.get("eyebrow") or "All decor ideas"
     h1 = cfg.get("h1") or "Room guides, budget makeovers & home finds"
-    lede = cfg.get("lede") or "Every guide is written to be used, not just saved: what to do first, what it costs, and what to skip. Filter by room or search below."
-    search_placeholder = cfg.get("search_placeholder") or "Search: small apartment, rug, paint…"
-    empty_text = cfg.get("empty_text") or "No guides match that search yet — try a room name like “bedroom” or a topic like “rug”."
+    lede = cfg.get("lede") or "Every guide is written to be used, not just saved: what to do first, what it costs, and what to skip. Newest posts first."
+    search_placeholder = cfg.get("search_placeholder") or "Search: small apartment, rug, paint..."
+    empty_text = cfg.get("empty_text") or "No guides match that search yet — try a room name like bedroom or a topic like rug."
     title = cfg.get("title") or f"All Decor Ideas — Room Guides & Budget Makeovers | {BRAND}"
+    display_mode = (cfg.get("display_mode") or "grid").lower()
+    show_filters = cfg.get("show_filters", True)
+    posts_per_page = int(cfg.get("posts_per_page") or 0)
 
-    sections = ""
-    for c in CATS:
-        posts = [p for p in POSTS if p["cat"] == c["slug"]]
-        if len(posts) == 1:
-            p = posts[0]
-            inner = (f'<article class="feature catwide">{cover_html(p, 0, "c3x2")}'
-                     f'<div class="body"><span class="chip">{c["name"]}</span>'
-                     f'<h3><a href="{post_url(p["slug"])}">{p["title"]}</a></h3>'
-                     f'<p>{p["dek"]}</p><div class="meta"><span>{d(p["date"])}</span><i></i>'
-                     f'<span>{read_label(p)}</span></div>'
-                     f'<div class="btnrow"><a class="btn sm" href="{post_url(p["slug"])}">View post</a></div></div></article>')
-        elif posts:
-            inner = f'<div class="grid">{"".join(card(p) for p in posts)}</div>'
+    all_posts = POSTS[:]
+    total = len(all_posts)
+    if posts_per_page and posts_per_page > 0:
+        visible_posts = all_posts[:posts_per_page]
+    else:
+        visible_posts = all_posts
+
+    chips_html = ""
+    if show_filters:
+        chips = "".join(f'<button type="button" data-f="{c["slug"]}">{c["name"]}</button>' for c in CATS)
+        chips_html = f'<div class="cats" id="filters"><button type="button" class="on" data-f="all">All guides</button>{chips}</div>'
+
+    if display_mode == "list":
+        posts_html = '<div class="post-list" style="display:flex;flex-direction:column;gap:16px">'
+        for p in visible_posts:
+            posts_html += f'<article class="card list" data-cat="{p["cat"]}" data-text="{(p["title"]+" "+p["dek"]+" "+" ".join(p["tags"])).lower()}"><div class="body"><span class="chip">{CAT[p["cat"]]["name"]}</span><h3><a href="{post_url(p["slug"])}">{p["title"]}</a></h3><p class="muted" style="font-size:14px;margin:6px 0">{p["dek"][:160]}</p><div class="meta"><span>{d(p["date"])}</span><i></i><span>{read_label(p)}</span></div><a class="btn sm" href="{post_url(p["slug"])}">View post</a></div></article>'
+        posts_html += '</div>'
+    else:
+        if visible_posts:
+            first = visible_posts[0]
+            first_html = f'<article class="feature catwide" data-cat="{first["cat"]}" data-text="{(first["title"]+" "+first["dek"]).lower()}">{cover_html(first, 0, "c3x2")}<div class="body"><span class="chip">{CAT[first["cat"]]["name"]}</span><h3><a href="{post_url(first["slug"])}">{first["title"]}</a></h3><p>{first["dek"]}</p><div class="meta"><span>{d(first["date"])}</span><i></i><span>{read_label(first)}</span></div><div class="btnrow"><a class="btn sm" href="{post_url(first["slug"])}">View post</a></div></div></article>'
+            rest = visible_posts[1:]
+            rest_html = "".join(card(p) for p in rest)
+            posts_html = f'{first_html}<div class="grid" style="margin-top:22px">{rest_html}</div>'
         else:
-            inner = f'<div class="prosebox"><p class="eyebrow">Guides in progress</p><p style="margin:0">{CAT_NOTES.get(c["slug"], "New guides for this category are being written now.")}</p></div>'
-        note = CAT_NOTES.get(c["slug"], "") if posts else ""
-        sections += f"""<section class="section catsec" id="{c['slug']}"><div class="container">
- <div class="sec-head"><div><p class="eyebrow">Room guide</p><h2>{c['name']}</h2><p class="muted" style="margin:6px 0 0;max-width:60ch">{c['blurb']}</p></div></div>
- {inner}
- {f'<p class="muted" style="max-width:70ch">{note}</p>' if note else ''}
-</div></section>"""
-    chips = "".join(f'<button type="button" data-f="{c["slug"]}">{c["name"]}</button>' for c in CATS)
+            posts_html = '<p class="muted">No posts yet — daily auto-posts will appear here starting at 3 AM UTC.</p>'
+
     body = f"""
 <section class="section tight"><div class="container" id="categories">
  <p class="eyebrow">{eyebrow}</p>
  <h1>{h1}</h1>
  <p class="lede" style="max-width:62ch">{lede}</p>
+ <p class="muted" style="font-size:13.5px;margin-top:8px">{total} posts — newest first</p>
  <div class="field" style="margin:24px 0 18px;max-width:520px">
   <input type="search" id="q" placeholder="{search_placeholder}" aria-label="Search guides">
  </div>
- <div class="cats" id="filters"><button type="button" class="on" data-f="all">All guides</button>{chips}</div>
+ {chips_html}
  <p class="muted" id="empty" style="display:none">{empty_text}</p>
 </div></section>
-{sections}
+
+<section class="section"><div class="container">
+ <div id="blog-posts">
+  {posts_html}
+ </div>
+</div></section>
+
 {newsletter(0, dark=False)}
+
 <script>
 (function(){{
- var q=document.getElementById('q'), btns=document.querySelectorAll('#filters button'), secs=document.querySelectorAll('.catsec'), empty=document.getElementById('empty'), active='all';
+ var q=document.getElementById('q'), btns=document.querySelectorAll('#filters button'), container=document.getElementById('blog-posts'), empty=document.getElementById('empty'), active='all';
  function run(){{
   var term=(q.value||'').toLowerCase().trim(), shown=0;
-  secs.forEach(function(s){{
-   var vis = (active==='all'||s.id===active); s.hidden=!vis; if(!vis) return;
-   var cards=s.querySelectorAll('.card'), any=0;
-   cards.forEach(function(cd){{
-    var ok=!term||cd.getAttribute('data-text').indexOf(term)>-1;
-    cd.style.display=ok?'':'none'; if(ok)any++;
-   }});
-   shown+=any;
+  var cards=container.querySelectorAll('.card, .feature');
+  cards.forEach(function(cd){{
+    var dataCat=cd.getAttribute('data-cat')||'';
+    var txt=(cd.getAttribute('data-text')||cd.textContent||'').toLowerCase();
+    var catOk = (active==='all'||dataCat===active);
+    if(!dataCat && active!=='all'){{
+      var chip=cd.querySelector('.chip');
+      var chipTxt=chip?chip.textContent.toLowerCase():'';
+      catOk = chipTxt.indexOf(active.replace('-',' '))>-1 || chipTxt.indexOf(active)>-1;
+      if(active==='all') catOk=true;
+    }}
+    var termOk = !term||txt.indexOf(term)>-1;
+    var ok = catOk && termOk;
+    cd.style.display=ok?'':'none';
+    if(ok) shown++;
   }});
-  empty.style.display=shown?'none':'block';
+  if(empty) empty.style.display=shown?'none':'block';
  }}
- q.addEventListener('input',run);
- btns.forEach(function(b){{b.addEventListener('click',function(){{
+ if(q) q.addEventListener('input',run);
+ if(btns) btns.forEach(function(b){{b.addEventListener('click',function(){{
   active=b.getAttribute('data-f');
   btns.forEach(function(x){{x.classList.toggle('on',x===b);}});
   run();
-  if(active!=='all'){{var t=document.getElementById(active);if(t)window.scrollTo({{top:t.offsetTop-90,behavior:'smooth'}});}}
  }});}});
 }})();
 </script>
 """
-    desc = cfg.get("description") or "Browse all HomeDecorPad guides: living room and bedroom ideas, small apartment decor, budget swaps, Amazon home finds, IKEA hacks, wall decor and paint palettes."
+    desc = cfg.get("description") or f"Browse all {total} HomeDecorPad guides newest first: living room, bedroom, small apartments, color palettes, kitchen and more."
     schema = json.dumps({"@context": "https://schema.org", "@type": "CollectionPage", "name": "All decor ideas",
                          "url": DOMAIN + "/blog", "publisher": {"@type": "Organization", "name": BRAND}})
     return page("blog.html", title, desc, body, 0, canonical="blog", schema=schema)
