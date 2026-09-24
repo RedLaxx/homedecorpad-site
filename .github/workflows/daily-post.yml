@@ -1,0 +1,67 @@
+name: Daily blog post
+
+on:
+  schedule:
+    # Daily at 9:00 AM UTC (5 AM ET) — Pinterest peak is morning US time
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+    inputs:
+      force_title:
+        description: 'Optional custom title (leave empty for random)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  daily-post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          pip install pyyaml
+
+      - name: Generate daily post
+        run: |
+          if [ -n "${{ inputs.force_title }}" ]; then
+            python3 _build/generate_daily_post.py --title "${{ inputs.force_title }}"
+          else
+            python3 _build/generate_daily_post.py
+          fi
+          ls -lh content/posts/ | tail -20
+
+      - name: Build site (verify)
+        run: |
+          python3 _build/build.py
+
+      - name: Commit and push if new post
+        run: |
+          git config user.name "HomeDecorPad Bot"
+          git config user.email "bot@homedecorpad.com"
+          git add content/posts/
+          if git diff --cached --quiet; then
+            echo "No new post — nothing to commit"
+            exit 0
+          fi
+          # Get latest post title for commit message
+          LATEST=$(ls -t content/posts/*.md | head -1)
+          TITLE=$(grep -m1 "^title:" "$LATEST" | sed 's/title: //')
+          git commit -m "Daily post: $TITLE [auto]"
+          git push origin main
+          echo "Pushed new post: $TITLE"
+
+      - name: Summary
+        run: |
+          echo "### Daily post job done" >> $GITHUB_STEP_SUMMARY
+          ls -t content/posts/*.md | head -5 >> $GITHUB_STEP_SUMMARY
