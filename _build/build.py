@@ -172,6 +172,48 @@ def load_posts():
     out.sort(key=lambda p: p["date"], reverse=True)
     return out
 
+
+def load_comments():
+    """Read content/comments/*.yml and group approved comments by post_slug."""
+    folder = os.path.join(CONTENT, "comments")
+    if not os.path.exists(folder):
+        return {}
+    grouped = {}
+    for fn in sorted(os.listdir(folder)):
+        if fn.lower() == "readme.md" or fn.startswith("_"):
+            continue
+        if not (fn.endswith(".yml") or fn.endswith(".yaml") or fn.endswith(".md")):
+            continue
+        raw = open(os.path.join(folder, fn), encoding="utf-8").read()
+        fm, _ = md_engine.parse_frontmatter(raw)
+        # support both frontmatter and plain yaml
+        if not fm and raw.strip().startswith("post_slug"):
+            # try plain yaml
+            try:
+                import yaml as _yaml
+                fm = _yaml.safe_load(raw) or {}
+            except Exception:
+                fm = {}
+        if not fm.get("post_slug") or not fm.get("body"):
+            continue
+        if fm.get("approved") is False:
+            continue
+        # skip if explicitly not approved and no approved key? default approved if missing? require true
+        if "approved" in fm and not fm.get("approved"):
+            continue
+        slug = slugify(str(fm.get("post_slug")))
+        entry = {
+            "author": str(fm.get("author") or "Anonymous").strip()[:60],
+            "date": str(fm.get("date") or BUILD_DATE)[:10],
+            "body": str(fm.get("body") or "").strip()[:2000],
+        }
+        grouped.setdefault(slug, []).append(entry)
+    # sort each post's comments by date ascending
+    for k in grouped:
+        grouped[k].sort(key=lambda c: c["date"])
+    return grouped
+
+
 CAT_NOTES = {
  "kitchen-dining": "Full kitchen and dining guides are in progress. In the meantime, three rules do most of the work: clear the counters down to three objects, warm the bulbs to 2700K, and put one wood board or basket on display so the room has an organic element.",
  "organization": "Full storage guides are coming. Start with the 80/20 version: one basket per surface for things that have no home, vertical storage above the toilet and kitchen cabinets, and a labelled box for the seasonal rotation.",
@@ -551,7 +593,7 @@ def page_post(p):
  <div class="grid">{rel_cards}</div>
 </div></section>
 
-{comments_section('../'*depth)}
+{comments_section('../'*depth, post=p, comments=COMMENTS.get(p['slug'], []))}
 
 {newsletter(depth)}
 """
@@ -1133,6 +1175,8 @@ def make_og_image():
 POSTS = load_posts()
 POST_BY_SLUG = {p["slug"]: p for p in POSTS}
 REL = {p["slug"]: p.get("related", []) for p in POSTS}
+COMMENTS = load_comments()
+print(f"  comments: {sum(len(v) for v in COMMENTS.values())} approved across {len(COMMENTS)} posts")
 
 
 REDIRECTS_FILE = os.path.join(CONTENT, "redirects.yml")

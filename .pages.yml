@@ -156,6 +156,44 @@ content:
         scope: entry
         confirm: false
 
+  - name: comments
+    label: Comments (anonymous)
+    type: collection
+    path: content/comments
+    format: yaml-frontmatter
+    filename:
+      template: "{fields.post_slug}-{year}-{month}-{day}-{primary}.yml"
+      field: create
+    view:
+      primary: author
+      sort: date
+      order: desc
+      fields: [post_slug, author, date, approved]
+    fields:
+      - name: post_slug
+        label: Post slug
+        type: string
+        required: true
+        description: Slug of the post this comment belongs to, e.g. living-room-layout-mistakes
+      - name: author
+        label: Author name
+        type: string
+        required: true
+      - name: date
+        label: Date
+        type: date
+        required: true
+      - name: body
+        label: Comment
+        type: text
+        required: true
+        options:
+          maxlength: 1000
+      - name: approved
+        label: Approved
+        type: boolean
+        description: Tick to show on live site. Untick to hide.
+
   - name: legal
     label: Legal pages
     type: group

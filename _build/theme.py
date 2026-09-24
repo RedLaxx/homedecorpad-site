@@ -261,6 +261,15 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 .tab-pane{display:none}
 .tab-pane.active{display:block}
 .cusdis{margin-top:8px}
+.comment-list{display:flex;flex-direction:column;gap:14px;margin:16px 0 24px}
+.comment{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.comment-meta{font-size:13px;color:var(--muted);margin-bottom:6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.comment-meta b{color:var(--ink);font-family:var(--serif);font-size:15px}
+.comment p{margin:0;font-size:15px;line-height:1.6}
+.comment-form{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:0 6px 20px rgba(70,50,30,.05)}
+.comment-form .form-row{margin-bottom:14px}
+.comment-form label{display:block;font-size:13px;font-weight:600;margin:0 0 6px}
+.comment-form input[type=text],.comment-form input[type=email],.comment-form textarea{width:100%;font-family:var(--sans);font-size:14.5px;padding:12px 14px;border-radius:10px;border:1px solid var(--line)}
 
 /* consent */
 .consent{position:fixed;z-index:80;left:14px;right:14px;bottom:14px;max-width:960px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 44px rgba(60,40,20,.2);padding:16px 18px;display:none;gap:14px;align-items:center;flex-wrap:wrap}
@@ -800,20 +809,24 @@ def consent(rel=""):
 </div>"""
 
 
-def comments_section(rel=""):
-    """Comment widget — supports Giscus (GitHub login) and Cusdis (anonymous, no login). Tabbed when both enabled."""
-    system = (COMMENT_SYSTEM or "giscus").lower()
+def comments_section(rel="", post=None, comments=None):
+    """Comment widget — supports built-in anonymous (no login, no external service) + Giscus + Cusdis. Tabbed when both enabled."""
+    system = (COMMENT_SYSTEM or "both").lower()
+    post = post or {}
+    comments = comments or []
+    slug = post.get("slug","")
+    title = post.get("title","")
 
     if system == "none":
         return ""
 
     # Helpers
     def giscus_html():
-        if not GISCUS_ENABLED:
+        if not GISCUS_ENABLED and system != "giscus" and system != "both":
             return ""
         if not GISCUS_CATEGORY_ID:
             return f"""<div class="comments-disabled">
-  <p><b>Giscus setup needed:</b> Go to <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, enter <code>{GISCUS_REPO}</code>, copy IDs into Site settings → Giscus.</p>
+  <p><b>Giscus setup:</b> Install app at <a href="https://github.com/apps/giscus" target="_blank">github.com/apps/giscus</a> → select repo <code>{GISCUS_REPO}</code>. Then go to <a href="https://giscus.app" target="_blank">giscus.app</a> to get IDs.</p>
 </div>"""
         return f"""<div class="giscus"></div>
  <script src="https://giscus.app/client.js"
@@ -837,8 +850,7 @@ def comments_section(rel=""):
             return ""
         if not CUSDIS_APP_ID:
             return f"""<div class="comments-disabled">
-  <p><b>Anonymous comments setup:</b> Get free App ID at <a href="https://cusdis.com" target="_blank" rel="noopener">cusdis.com</a> → New Website → paste App ID into Site settings → Cusdis App ID.</p>
-  <p style="margin:8px 0 0" class="muted">Once saved, anonymous comments work with no login. Takes 1 minute.</p>
+  <p><b>Cusdis is down or not configured.</b> Get free App ID at <a href="https://cusdis.com" target="_blank">cusdis.com</a> when it's back, or use the built-in anonymous comments below (no external service needed).</p>
 </div>"""
         return f"""<div id="cusdis_thread"
   data-host="{CUSDIS_HOST}"
@@ -859,24 +871,66 @@ def comments_section(rel=""):
  </script>
  <script async defer src="{CUSDIS_HOST}/js/cusdis.es.js"></script>"""
 
-    # --- BOTH: tabbed, Cusdis on top (as requested) ---
+    def builtin_html():
+        # Built-in anonymous comments — no login, no external service, stored in repo
+        # Render existing approved comments
+        existing = ""
+        if comments:
+            items = ""
+            for c in comments:
+                author = (c.get("author") or "Anonymous").replace("<","&lt;").replace(">","&gt;")[:60]
+                body = (c.get("body") or "").replace("<","&lt;").replace(">","&gt;")
+                date = c.get("date","")
+                # simple markdown-ish line breaks
+                body_html = body.replace("\n","<br>")
+                items += f'<div class="comment"><div class="comment-meta"><b>{author}</b> <span class="muted">{date}</span></div><p>{body_html}</p></div>'
+            existing = f'<div class="comment-list">{items}</div>'
+        else:
+            existing = '<p class="muted">No comments yet — be the first!</p>'
+
+        # Formspree ID from global
+        form_id = FORMSPREE_ID
+        form_action = f"https://formspree.io/f/{form_id}" if form_id and form_id != "YOUR_FORM_ID" else ""
+        if form_action:
+            form = f"""<form action="{form_action}" method="POST" class="comment-form" onsubmit="this.querySelector('button').textContent='Sending…';">
+  <input type="hidden" name="_subject" value="New comment on {title}">
+  <input type="hidden" name="post_slug" value="{slug}">
+  <input type="hidden" name="post_url" value="{DOMAIN}/blog/{post.get('cat','')}/{slug}.html">
+  <div class="form-row"><label for="c-name">Your name</label><input id="c-name" name="name" type="text" placeholder="Alex" required maxlength="60"></div>
+  <div class="form-row"><label for="c-comment">Your comment</label><textarea id="c-comment" name="comment" placeholder="Love this idea! I tried it and..." required maxlength="1000" style="min-height:110px"></textarea></div>
+  <div class="form-row"><label for="c-email" class="muted" style="font-weight:400">Email (optional, not shown — for reply)</label><input id="c-email" name="email" type="email" placeholder="you@email.com"></div>
+  <button class="btn sm" type="submit">Post comment — no login needed</button>
+  <p class="muted" style="margin-top:10px;font-size:12.5px">Anonymous, no GitHub needed. Comments are moderated — we approve within a few hours and it appears here after the next rebuild (1-2 min). No spam, no ads.</p>
+</form>"""
+        else:
+            form = f"""<div class="comments-disabled"><p><b>Comment form not connected yet:</b> Add your Formspree ID in Pages CMS → Site settings → formspree_id. Or get a free ID at formspree.io — takes 30 seconds. Until then, email comments to {EMAIL}.</p></div>"""
+
+        return f"""{existing}
+ <div style="margin-top:26px"><h3 style="font-size:19px;margin:0 0 12px">Leave a comment — no login needed</h3>{form}</div>"""
+
+    # --- BOTH: tabbed, Anonymous (built-in + Cusdis) on top, Giscus below ---
     if system == "both" or (GISCUS_ENABLED and CUSDIS_ENABLED):
         g_html = giscus_html()
         c_html = cusdis_html()
+        b_html = builtin_html()
+        # Build anonymous pane: built-in always, plus Cusdis if configured (even if down, show note)
+        anon_content = b_html
+        if CUSDIS_APP_ID:
+            anon_content = c_html + "<hr style='margin:28px 0'>" + b_html
         # If both empty, nothing
-        if not g_html and not c_html:
+        if not anon_content and not g_html:
             return ""
         return f"""<section class="comments" id="comments"><div class="container narrow">
  <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div>
- <p class="comments-note">Anonymous comments on top — no login needed. GitHub comments below for those who prefer it.</p></div>
+ <p class="comments-note">Anonymous on top — no login, no GitHub. GitHub comments below.</p></div>
 
  <div class="comment-tabs">
-  <button class="tab active" data-tab="cusdis" onclick="switchCommentTab('cusdis')">💬 Anonymous — no login</button>
+  <button class="tab active" data-tab="anon" onclick="switchCommentTab('anon')">💬 Anonymous — no login</button>
   <button class="tab" data-tab="giscus" onclick="switchCommentTab('giscus')">🐙 GitHub — with login</button>
  </div>
 
- <div id="tab-cusdis" class="tab-pane active">
-  <div class="cusdis">{c_html}</div>
+ <div id="tab-anon" class="tab-pane active">
+  {anon_content}
  </div>
  <div id="tab-giscus" class="tab-pane">
   {g_html}
@@ -899,24 +953,41 @@ def comments_section(rel=""):
 </div></section>"""
 
     # --- CUSDIS only ---
-    if system == "cusdis" or (CUSDIS_ENABLED and not GISCUS_ENABLED):
+    if system == "cusdis":
         c_html = cusdis_html()
-        if not c_html:
-            return ""
+        b_html = builtin_html()
+        content = c_html if CUSDIS_APP_ID else b_html
+        if CUSDIS_APP_ID:
+            content = c_html + "<hr style='margin:28px 0'>" + b_html
         return f"""<section class="comments" id="comments"><div class="container narrow">
  <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div>
- <p class="comments-note">No login needed — just your name and comment.</p></div>
- <div class="cusdis">{c_html}</div>
+ <p class="comments-note">No login needed — anonymous comments.</p></div>
+ {content}
+</div></section>"""
+
+    # --- Built-in anonymous only (when comment_system = none? but we want fallback) ---
+    if system not in ("giscus","both","cusdis","none"):
+        # default to built-in if unknown
+        return f"""<section class="comments" id="comments"><div class="container narrow">
+ <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div></div>
+ {builtin_html()}
 </div></section>"""
 
     # --- GISCUS only ---
     g_html = giscus_html()
-    if not g_html:
+    if not g_html and not builtin_html():
         return ""
-    return f"""<section class="comments" id="comments"><div class="container narrow">
+    # If giscus only but we have built-in as fallback for anonymous, show built-in if giscus fails?
+    if system == "giscus":
+        return f"""<section class="comments" id="comments"><div class="container narrow">
  <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div>
- <p class="comments-note">Share your take — requires GitHub login. For anonymous, switch to Both in Site settings.</p></div>
+ <p class="comments-note">GitHub login required. For anonymous (no login), switch Comment system to Both in Site settings.</p></div>
  {g_html}
+</div></section>"""
+    # fallback: show built-in
+    return f"""<section class="comments" id="comments"><div class="container narrow">
+ <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div></div>
+ {builtin_html()}
 </div></section>"""
 
 

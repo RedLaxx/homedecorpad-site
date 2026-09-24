@@ -253,6 +253,15 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 .tab-pane{display:none}
 .tab-pane.active{display:block}
 .cusdis{margin-top:8px}
+.comment-list{display:flex;flex-direction:column;gap:14px;margin:16px 0 24px}
+.comment{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.comment-meta{font-size:13px;color:var(--muted);margin-bottom:6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.comment-meta b{color:var(--ink);font-family:var(--serif);font-size:15px}
+.comment p{margin:0;font-size:15px;line-height:1.6}
+.comment-form{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:0 6px 20px rgba(70,50,30,.05)}
+.comment-form .form-row{margin-bottom:14px}
+.comment-form label{display:block;font-size:13px;font-weight:600;margin:0 0 6px}
+.comment-form input[type=text],.comment-form input[type=email],.comment-form textarea{width:100%;font-family:var(--sans);font-size:14.5px;padding:12px 14px;border-radius:10px;border:1px solid var(--line)}
 
 /* consent */
 .consent{position:fixed;z-index:80;left:14px;right:14px;bottom:14px;max-width:960px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 44px rgba(60,40,20,.2);padding:16px 18px;display:none;gap:14px;align-items:center;flex-wrap:wrap}
@@ -364,18 +373,16 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 
 <section class="comments" id="comments"><div class="container narrow">
  <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div>
- <p class="comments-note">Anonymous comments on top — no login needed. GitHub comments below for those who prefer it.</p></div>
+ <p class="comments-note">Anonymous on top — no login, no GitHub. GitHub comments below.</p></div>
 
  <div class="comment-tabs">
-  <button class="tab active" data-tab="cusdis" onclick="switchCommentTab('cusdis')">💬 Anonymous — no login</button>
+  <button class="tab active" data-tab="anon" onclick="switchCommentTab('anon')">💬 Anonymous — no login</button>
   <button class="tab" data-tab="giscus" onclick="switchCommentTab('giscus')">🐙 GitHub — with login</button>
  </div>
 
- <div id="tab-cusdis" class="tab-pane active">
-  <div class="cusdis"><div class="comments-disabled">
-  <p><b>Anonymous comments setup:</b> Get free App ID at <a href="https://cusdis.com" target="_blank" rel="noopener">cusdis.com</a> → New Website → paste App ID into Site settings → Cusdis App ID.</p>
-  <p style="margin:8px 0 0" class="muted">Once saved, anonymous comments work with no login. Takes 1 minute.</p>
-</div></div>
+ <div id="tab-anon" class="tab-pane active">
+  <p class="muted">No comments yet — be the first!</p>
+ <div style="margin-top:26px"><h3 style="font-size:19px;margin:0 0 12px">Leave a comment — no login needed</h3><div class="comments-disabled"><p><b>Comment form not connected yet:</b> Add your Formspree ID in Pages CMS → Site settings → formspree_id. Or get a free ID at formspree.io — takes 30 seconds. Until then, email comments to hello@homedecorpad.com.</p></div></div>
  </div>
  <div id="tab-giscus" class="tab-pane">
   <div class="giscus"></div>
