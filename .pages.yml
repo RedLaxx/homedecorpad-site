@@ -248,6 +248,54 @@ content:
           - name: youtube
             label: YouTube URL
             type: string
+      - name: giscus_enabled
+        label: Enable comments (Giscus)
+        type: boolean
+        description: Tick to show a comment section at the bottom of every blog post. Uses GitHub Discussions — free, no ads. Requires Discussions enabled in repo settings.
+      - name: giscus_repo
+        label: Giscus — repo (owner/repo)
+        type: string
+        description: e.g. RedLaxx/homedecorpad-site
+      - name: giscus_repo_id
+        label: Giscus — repo ID
+        type: string
+        description: From https://giscus.app — e.g. R_kgDOUoGanw
+      - name: giscus_category
+        label: Giscus — discussion category
+        type: string
+        description: e.g. General, or Comments. Create it in GitHub > Discussions > Categories.
+      - name: giscus_category_id
+        label: Giscus — category ID
+        type: string
+        description: From https://giscus.app — e.g. DIC_kwDOUoGan...
+      - name: giscus_mapping
+        label: Giscus — mapping
+        type: select
+        description: How to map post to discussion. pathname is recommended.
+        options:
+          values:
+            - name: pathname
+              label: pathname (/blog/category/slug.html)
+            - name: url
+              label: url (full URL)
+            - name: title
+              label: title
+            - name: og:title
+              label: og:title
+      - name: giscus_theme
+        label: Giscus — theme
+        type: select
+        description: Visual theme for the comment widget.
+        options:
+          values:
+            - name: light
+              label: light
+            - name: dark
+              label: dark
+            - name: preferred_color_scheme
+              label: auto (follows user)
+            - name: transparent_dark
+              label: transparent_dark
 
 settings:
   content:

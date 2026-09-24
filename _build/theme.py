@@ -16,6 +16,14 @@ GA4_ID = ""
 PINTEREST_VERIFY = ""
 FORMSPREE_ID = "YOUR_FORM_ID"
 AMAZON_TAG = "YOUR-AMAZON-TAG-20"
+# Giscus comments — set from content/site.yml via build.py
+GISCUS_ENABLED = False
+GISCUS_REPO = "RedLaxx/homedecorpad-site"
+GISCUS_REPO_ID = "R_kgDOUoGanw"
+GISCUS_CATEGORY = "General"
+GISCUS_CATEGORY_ID = ""
+GISCUS_MAPPING = "pathname"
+GISCUS_THEME = "light"
 # Canonical domain. Override when deploying elsewhere, e.g.:
 #   SITE_DOMAIN="https://redlaxx.github.io/HomeDecorPad" python3 _build/build.py
 DOMAIN = os.environ.get("SITE_DOMAIN", "https://homedecorpad.com").rstrip("/")
@@ -232,6 +240,16 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 .fbot{border-top:1px solid rgba(255,255,255,.14);margin-top:36px;padding-top:18px;font-size:13px;color:#A79C8F;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
 .fbot a{color:#C9BFB2;text-decoration:underline}
 .disc{font-size:13px;color:#A79C8F;margin-top:14px;max-width:none}
+
+/* comments - Giscus */
+.comments{margin:48px 0 0;padding-top:36px;border-top:1px solid var(--line)}
+.comments-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.comments-head h2{margin:0;font-size:clamp(22px,2.8vw,28px)}
+.comments-note{font-size:13.5px;color:var(--muted);max-width:48ch}
+.giscus{margin-top:18px}
+.giscus-frame{border:0;width:100%}
+/* when disabled */
+.comments-disabled{background:#fff;border:1px dashed var(--line);border-radius:14px;padding:20px 22px;color:var(--muted);font-size:14.5px}
 
 /* consent */
 .consent{position:fixed;z-index:80;left:14px;right:14px;bottom:14px;max-width:960px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 44px rgba(60,40,20,.2);padding:16px 18px;display:none;gap:14px;align-items:center;flex-wrap:wrap}
@@ -769,6 +787,43 @@ def consent(rel=""):
  <span class="field"><button class="btn sm" type="button" onclick="hdp('all')">Accept all</button>
  <button class="btn sm ghost" type="button" onclick="hdp('essential')">Essential only</button></span>
 </div>"""
+
+
+def comments_section(rel=""):
+    """Giscus comment widget — shows when enabled in Site settings."""
+    if not GISCUS_ENABLED:
+        return ""
+    # If category ID is missing, show a helpful placeholder instead of broken widget
+    if not GISCUS_CATEGORY_ID:
+        return f"""<section class="comments" id="comments"><div class="container narrow">
+ <div class="comments-head"><h2>Comments</h2><p class="comments-note">Comments are enabled but need a category ID from giscus.app</p></div>
+ <div class="comments-disabled">
+  <p><b>Setup needed:</b> Go to <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, enter <code>{GISCUS_REPO}</code>, pick a category, copy the IDs into Pages CMS → Site settings → Giscus.</p>
+  <p style="margin:0">Once saved, the site rebuilds and comments appear here. No ads, free, uses GitHub Discussions.</p>
+ </div>
+</div></section>"""
+    # Normal Giscus embed
+    return f"""<section class="comments" id="comments"><div class="container narrow">
+ <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div>
+ <p class="comments-note">Share your take, ask a question, or tell us what you tried. No account needed beyond GitHub — free, no ads.</p></div>
+ <div class="giscus"></div>
+ <script src="https://giscus.app/client.js"
+        data-repo="{GISCUS_REPO}"
+        data-repo-id="{GISCUS_REPO_ID}"
+        data-category="{GISCUS_CATEGORY}"
+        data-category-id="{GISCUS_CATEGORY_ID}"
+        data-mapping="{GISCUS_MAPPING}"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="{GISCUS_THEME}"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+ </script>
+ <noscript><p class="muted">Enable JavaScript to view comments powered by <a href="https://giscus.app" target="_blank" rel="noopener">Giscus</a>.</p></noscript>
+</div></section>"""
 
 
 def _snippets():

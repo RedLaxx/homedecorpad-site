@@ -12,7 +12,7 @@ import urllib.parse as urllib_parse
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import theme
-from theme import (CSS, head, footer, consent, art, art_raw, ICON, header, TONES)
+from theme import (CSS, head, footer, consent, comments_section, art, art_raw, ICON, header, TONES)
 import md as md_engine
 
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
@@ -56,6 +56,14 @@ theme.GA4_ID = str(SETTINGS.get("ga4_id") or "").strip()
 theme.PINTEREST_VERIFY = str(SETTINGS.get("pinterest_verify") or "").strip()
 _social = SETTINGS.get("social")
 theme.SOCIAL = {k: str(v or "").strip() for k, v in _social.items()} if isinstance(_social, dict) else {}
+# Giscus comments
+theme.GISCUS_ENABLED = bool(SETTINGS.get("giscus_enabled"))
+theme.GISCUS_REPO = str(SETTINGS.get("giscus_repo") or "RedLaxx/homedecorpad-site").strip()
+theme.GISCUS_REPO_ID = str(SETTINGS.get("giscus_repo_id") or "R_kgDOUoGanw").strip()
+theme.GISCUS_CATEGORY = str(SETTINGS.get("giscus_category") or "General").strip()
+theme.GISCUS_CATEGORY_ID = str(SETTINGS.get("giscus_category_id") or "").strip()
+theme.GISCUS_MAPPING = str(SETTINGS.get("giscus_mapping") or "pathname").strip()
+theme.GISCUS_THEME = str(SETTINGS.get("giscus_theme") or "light").strip()
 
 POSTS, POST_BY_SLUG, REL = [], {}, {}
 
@@ -537,6 +545,8 @@ def page_post(p):
  <div class="sec-head"><div><p class="eyebrow">Keep reading</p><h2>Related ideas</h2></div><a href="{'../'*depth}blog.html">All guides →</a></div>
  <div class="grid">{rel_cards}</div>
 </div></section>
+
+{comments_section('../'*depth)}
 
 {newsletter(depth)}
 """

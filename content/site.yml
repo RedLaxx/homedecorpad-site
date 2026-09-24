@@ -7,38 +7,40 @@ domain: https://redlaxx.github.io/homedecorpad-site
 
 # Effective and last-updated dates shown on the Privacy Policy, Cookie Policy,
 # Terms of Use, Disclaimer and Affiliate Disclosure pages.
-# Bump these by hand when you materially change a legal page.
 legal_effective_date: 2026-09-23
 legal_updated_date: 2026-09-23
 
-# Where reader emails and brand enquiries go. Shown in the footer of the
-# legal pages and on the contact page.
+# Where reader emails and brand enquiries go.
 email: hello@homedecorpad.com
 
-# Amazon Associates tracking ID. Leave as-is until you are approved,
-# then replace with your real tag (e.g. yourname-20).
+# Amazon Associates tracking ID.
 amazon_tag: YOUR-AMAZON-TAG-20
 
 # Free Formspree form endpoint for the contact page form.
-# Create a form at formspree.io, then paste the ID (the part after /f/).
 formspree_id: YOUR_FORM_ID
 
 # Google AdSense publisher ID, e.g. ca-pub-1234567890123456
-# Leave as-is to keep ads switched OFF. AdSense also needs the
-# matching line in ads.txt and your consent message enabled.
 adsense_client: ""
 
 # Google Analytics 4 measurement ID, e.g. G-ABCDE12345
-# Leave empty to keep analytics switched off.
 ga4_id: ""
 
-# Pinterest domain verification code (from Pinterest > Settings > Claimed accounts).
-# Leave empty to hide the meta tag.
+# Pinterest domain verification code
 pinterest_verify: ""
 
-# Social profiles shown in the footer. Remove a line to hide that icon.
+# Social profiles shown in the footer.
 social:
   pinterest: ""
   instagram: ""
   facebook: ""
   youtube: ""
+
+# Comments — Giscus (GitHub Discussions). Free, no ads.
+# Discussions now enabled, using General category.
+giscus_enabled: true
+giscus_repo: RedLaxx/homedecorpad-site
+giscus_repo_id: R_kgDOUoGanw
+giscus_category: General
+giscus_category_id: DIC_kwDOUoGan84DGS2E
+giscus_mapping: pathname
+giscus_theme: light

@@ -1,0 +1,144 @@
+# View post button inside Pages CMS — one-time setup (30 seconds)
+
+Pages CMS only allows buttons that trigger GitHub Actions workflows.
+GitHub blocks personal access tokens from creating `.github/workflows/*` files,
+so this last file has to be added in the GitHub web UI once.
+
+## What you get
+In Pages CMS, when you edit any blog post, top-right header now shows:
+
+**View post** — one click → runs a 10-second workflow → GitHub shows:
+- a **View deployment** button that opens `https://redlaxx.github.io/homedecorpad-site/blog/<category>/<slug>.html`
+- a clickable link in the run summary
+
+No rebuild, no extra steps.
+
+## One-time install
+
+1. Click this link (opens new file form, pre-filled path):
+   https://github.com/RedLaxx/homedecorpad-site/new/main?filename=.github%2Fworkflows%2Fview-post.yml
+
+2. Delete any placeholder content GitHub shows, paste the **entire** file below.
+
+3. Click **Commit changes...** → **Commit directly to the main branch** → **Commit changes**
+
+Done. Refresh Pages CMS — the button will work.
+
+---
+
+## File: `.github/workflows/view-post.yml` (copy everything)
+
+```yaml
+# One-click "View post" button inside Pages CMS.
+# Appears in the post editor header (scope: entry) because .pages.yml
+# defines: actions: [{ name: view-post, label: View post, workflow: view-post.yml, scope: entry, confirm: false }]
+#
+# Flow:
+# 1. You click "View post" in Pages CMS (top-right of the post editor)
+# 2. This workflow runs (~10s), computes https://.../blog/<category>/<slug>.html from the payload
+# 3. GitHub shows "View deployment" button + clickable link in the summary
+#
+# INSTALL: GitHub blocks PATs from pushing .github/workflows/*, so create this file
+# in the GitHub web UI: go to https://github.com/RedLaxx/homedecorpad-site/new/main?filename=.github%2Fworkflows%2Fview-post.yml
+# paste this whole file, Commit directly to main.
+
+name: View post
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: Pages CMS payload as JSON
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  view:
+    runs-on: ubuntu-latest
+    environment:
+      name: preview
+      url: ${{ steps.compute.outputs.url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compute live post URL
+        id: compute
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          raw = os.environ.get('PAYLOAD_JSON','')
+          try:
+              payload = json.loads(raw) if raw else {}
+          except Exception as e:
+              print(f"Failed to parse payload: {e}")
+              payload = {}
+
+          ctx = payload.get('context', {}) or {}
+          data = ctx.get('data', {}) or {}
+          path = ctx.get('path', '') or ''
+
+          slug = (data.get('slug') or '').strip()
+          category = (data.get('category') or '').strip()
+          title = (data.get('title') or '').strip()
+
+          def slugify(s):
+              s = s.lower()
+              s = re.sub(r'[^a-z0-9]+', '-', s)
+              return s.strip('-')
+
+          if not slug:
+              m = re.search(r'([^/]+)\.md$', path)
+              if m:
+                  slug = slugify(m.group(1))
+          if not slug and title:
+              slug = slugify(title)
+          if not slug:
+              slug = 'unknown'
+          if not category:
+              category = 'living-room'
+
+          # Try to read domain from content/site.yml without yaml lib
+          base = 'https://redlaxx.github.io/homedecorpad-site'
+          try:
+              with open('content/site.yml','r', encoding='utf-8') as f:
+                  txt = f.read()
+                  m = re.search(r'^domain:\s*["\']?([^"\'\s]+)', txt, re.MULTILINE)
+                  if m:
+                      d = m.group(1).strip().rstrip('/')
+                      if d.startswith('http'):
+                          base = d
+          except Exception as e:
+              print(f"Could not read domain: {e}")
+
+          url = f"{base}/blog/{category}/{slug}.html"
+          print(f"path={path}")
+          print(f"category={category} slug={slug}")
+          print(f"url={url}")
+
+          gh_out = os.environ.get('GITHUB_OUTPUT')
+          if gh_out:
+              with open(gh_out, 'a') as out:
+                  out.write(f"url={url}\n")
+          gh_summary = os.environ.get('GITHUB_STEP_SUMMARY')
+          if gh_summary:
+              with open(gh_summary, 'a') as s:
+                  s.write(f"### View post\n\n**{title or slug}**\n\n[{url}]({url})\n\n---\n\n*Category:* `{category}`  \n*Slug:* `{slug}`  \n*Source:* `{path}`\n")
+          PY
+        env:
+          PAYLOAD_JSON: ${{ inputs.payload }}
+
+      - name: Show URL
+        run: |
+          echo "Live URL: ${{ steps.compute.outputs.url }}"
+          echo "::notice title=View post::${{ steps.compute.outputs.url }}"
+```
+
+---
+
+After you commit, test:
+- Open https://app.pagescms.org/ → your repo → Blog posts → any post → top right you should see **View post**
+- Click it → it says "Action dispatched" → click "View run" → in the run you'll see **View deployment** → clicks to live post
