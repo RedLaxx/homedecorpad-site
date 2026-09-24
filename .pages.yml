@@ -354,6 +354,29 @@ content:
         type: string
         list: true
         description: e.g. Budget-first picks
+      - name: slider_enabled
+        label: Hero Slider — enable slider (top 5 posts)
+        type: boolean
+        description: Tick to replace static hero with auto-flipping slider of top 5 posts
+      - name: slider_title
+        label: Hero Slider — title above slider
+        type: string
+        description: e.g. Top 5 this month
+      - name: slider_autoplay
+        label: Hero Slider — autoplay seconds
+        type: number
+        description: Seconds per slide, e.g. 5
+      - name: slider_posts
+        label: Hero Slider — top 5 post slugs
+        type: string
+        list: true
+        description: Slugs of 5 most viewed posts, e.g. living-room-layout-mistakes. Order is slide order.
+      - name: slider_show_dots
+        label: Hero Slider — show dots
+        type: boolean
+      - name: slider_show_arrows
+        label: Hero Slider — show arrows
+        type: boolean
       - name: browse_title
         label: Browse by room — title
         type: string

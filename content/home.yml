@@ -54,3 +54,14 @@ start_here_cards:
     work at home.
   link_text: See the palettes →
   link_url: post:home-decor-color-palettes-2027
+slider_enabled: true
+slider_title: Top 5 this month
+slider_autoplay: 5
+slider_posts:
+- living-room-layout-mistakes
+- small-apartment-decor-ideas
+- home-decor-color-palettes-2027
+- warm-minimalist-living-room-under-250
+- renter-friendly-wall-decor-ideas
+slider_show_dots: true
+slider_show_arrows: true

@@ -540,15 +540,34 @@ def page_home():
     latest_count = int(h.get("latest_count") or 6)
     rest = POSTS[1:1+latest_count] if POSTS else []
 
-    # hero
+    # hero — static or slider
+    slider_enabled = bool(h.get("slider_enabled"))
+    slider_posts_slugs = h.get("slider_posts") or []
+    slider_title = h.get("slider_title") or "Top 5 this month"
+    slider_autoplay = int(h.get("slider_autoplay") or 5)
+    slider_show_dots = bool(h.get("slider_show_dots", True))
+    slider_show_arrows = bool(h.get("slider_show_arrows", True))
+
+    # Build slider slides from top 5 slugs
+    slider_slides = []
+    for slug in slider_posts_slugs[:5]:
+        slug = slugify(str(slug))
+        if slug in POST_BY_SLUG:
+            slider_slides.append(POST_BY_SLUG[slug])
+    # fallback to most recent 5 if not enough
+    if len(slider_slides) < 5:
+        for p in POSTS:
+            if p not in slider_slides:
+                slider_slides.append(p)
+            if len(slider_slides) >=5:
+                break
+
     hero_eyebrow = h.get("hero_eyebrow") or "Home decor ideas · looks for less"
     hero_title = h.get("hero_title") or "Designer-looking rooms without the designer budget."
     hero_lede = h.get("hero_lede") or "Practical room ideas, shoppable budget swaps and paint palettes you can recreate this weekend — for real homes with real budgets."
     hero_image = (h.get("hero_image") or "").strip()
     hero_motif = (h.get("hero_motif") or "hero").strip()
-    # hero art: image if exists else illustration
     if hero_image:
-        # check if file exists
         rel = hero_image.lstrip("/")
         if os.path.exists(os.path.join(ROOT, rel)):
             hero_art = f'<div class="art"><img src="{asset_url(hero_image,0)}" alt="" style="width:100%;height:100%;object-fit:cover" loading="eager"></div>'
@@ -557,7 +576,6 @@ def page_home():
     else:
         hero_art = f'<div class="art">{art_raw(hero_motif, 4)}</div>'
 
-    # hero buttons
     btns_cfg = h.get("hero_buttons") or [
         {"label":"Start here","url":"/start-here.html","style":"primary"},
         {"label":"Browse all decor ideas","url":"/blog.html","style":"ghost"},
@@ -576,9 +594,122 @@ def page_home():
             cls="btn ghost"
         btn_html += f'<a class="{cls}" href="{url}">{label}</a>'
 
-    # trust badges
     badges = h.get("trust_badges") or ["Budget-first picks","Renter friendly","New ideas weekly"]
     trust_html = "".join(f'<span>{ICON["check"]}{b}</span>' for b in badges if b)
+
+    # Build hero HTML — slider or static
+    if slider_enabled and slider_slides:
+        # Build slides HTML
+        slides_html = ""
+        dots_html = ""
+        for idx, p in enumerate(slider_slides):
+            active = " active" if idx==0 else ""
+            # cover
+            cover = cover_html(p, 0, "c3x2")
+            cat = CAT[p["cat"]]
+            # title and link
+            post_link = post_url(p["slug"])
+            slides_html += f"""
+  <div class="slide{active}" data-index="{idx}">
+   <div class="slide-img">{cover}</div>
+   <div class="slide-body">
+    <p class="eyebrow">{slider_title} · {idx+1}/5</p>
+    <span class="chip">{cat['name']}</span>
+    <h2><a href="{post_link}">{p['title']}</a></h2>
+    <p class="muted" style="margin:8px 0 0">{short(p['dek'], 120)}</p>
+    <div class="meta" style="margin-top:12px"><span>{d(p['date'])}</span><i></i><span>{read_label(p)}</span></div>
+    <div class="btnrow"><a class="btn sm" href="{post_link}">View post</a><a class="btn sm ghost" href="{post_link}">Read now →</a></div>
+   </div>
+  </div>"""
+            dots_html += f'<button class="dot{" active" if idx==0 else ""}" data-slide="{idx}" aria-label="Go to slide {idx+1}"></button>'
+
+        arrows_html = ""
+        if slider_show_arrows:
+            arrows_html = '<button class="arrow prev" aria-label="Previous">‹</button><button class="arrow next" aria-label="Next">›</button>'
+
+        hero_html = f"""
+<section class="container hero-slider-wrap">
+ <div class="hero-slider" data-autoplay="{slider_autoplay}">
+  <div class="slides">
+   {slides_html}
+  </div>
+  {arrows_html}
+  {'<div class="dots">'+dots_html+'</div>' if slider_show_dots else ''}
+ </div>
+ <div class="hero-static-below">
+  <div>
+   <p class="eyebrow">{hero_eyebrow}</p>
+   <h1>{hero_title}</h1>
+   <p class="lede">{hero_lede}</p>
+   <div class="btnrow">{btn_html}</div>
+   <div class="trust">{trust_html}</div>
+  </div>
+  {hero_art}
+ </div>
+</section>
+<script>
+(function(){{
+  var slider = document.querySelector('.hero-slider');
+  if(!slider) return;
+  var slides = slider.querySelectorAll('.slide');
+  var dots = slider.querySelectorAll('.dot');
+  var prev = slider.querySelector('.arrow.prev');
+  var next = slider.querySelector('.arrow.next');
+  var current = 0;
+  var autoplay = parseInt(slider.getAttribute('data-autoplay')||'5')*1000;
+  var timer = null;
+
+  function go(n){{
+    current = (n+slides.length)%slides.length;
+    slides.forEach(function(s,i){{s.classList.toggle('active', i===current);}});
+    dots.forEach(function(d,i){{d.classList.toggle('active', i===current);}});
+  }}
+  function nextSlide(){{go(current+1);}}
+  function prevSlide(){{go(current-1);}}
+  function start(){{if(autoplay>0){{timer=setInterval(nextSlide, autoplay);}}}}
+  function stop(){{if(timer){{clearInterval(timer);timer=null;}}}}
+
+  if(next) next.addEventListener('click', function(){{stop();nextSlide();start();}});
+  if(prev) prev.addEventListener('click', function(){{stop();prevSlide();start();}});
+  dots.forEach(function(d){{
+    d.addEventListener('click', function(){{
+      stop();
+      go(parseInt(d.getAttribute('data-slide')));
+      start();
+    }});
+  }});
+  slider.addEventListener('mouseenter', stop);
+  slider.addEventListener('mouseleave', start);
+  // touch swipe
+  var startX=0;
+  slider.addEventListener('touchstart', function(e){{startX=e.touches[0].clientX;stop();}}, {{passive:true}});
+  slider.addEventListener('touchend', function(e){{
+    var endX=e.changedTouches[0].clientX;
+    if(endX-startX>50) prevSlide();
+    else if(startX-endX>50) nextSlide();
+    start();
+  }}, {{passive:true}});
+  start();
+}})();
+</script>
+"""
+    else:
+        hero_html = f"""
+<section class="container hero">
+ <div>
+  <p class="eyebrow">{hero_eyebrow}</p>
+  <h1>{hero_title}</h1>
+  <p class="lede">{hero_lede}</p>
+  <div class="btnrow">
+   {btn_html}
+  </div>
+  <div class="trust">
+   {trust_html}
+  </div>
+ </div>
+ {hero_art}
+</section>
+"""
 
     # browse by room
     browse_title = h.get("browse_title") or "Browse by room"
@@ -655,21 +786,7 @@ def page_home():
             continue
         sh_cards_html += f'<div class="prosebox"><h3 style="margin-top:0">{title}</h3><p class="muted">{desc}</p><p><a href="{lu}">{lt}</a></p></div>'
 
-    body = f"""
-<section class="container hero">
- <div>
-  <p class="eyebrow">{hero_eyebrow}</p>
-  <h1>{hero_title}</h1>
-  <p class="lede">{hero_lede}</p>
-  <div class="btnrow">
-   {btn_html}
-  </div>
-  <div class="trust">
-   {trust_html}
-  </div>
- </div>
- {hero_art}
-</section>
+    body = f"""{hero_html}
 
 <section class="section tight"><div class="container">
  <div class="sec-head"><h2 style="font-size:22px">{browse_title}</h2><a href="{browse_link_url}">{browse_link_text}</a></div>
