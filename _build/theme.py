@@ -336,26 +336,30 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
  .feature .body,.panel .pad{padding:28px 24px}
  .cta{padding:32px 26px}
  .fgrid{grid-template-columns:1fr 1fr}
- .hdr{gap:12px}
- .nav{gap:14px}
+ .hdr{gap:14px;padding:10px 0}
+ .nav{gap:16px}
  .section{padding:40px 0}
- .container{padding:0 24px}
+ .container{padding:0 28px}
 }
 @media (max-width:620px){
  .fgrid{grid-template-columns:1fr}
- .nav{width:100%;gap:12px}
- .nav a{font-size:12px}
+ .nav{width:100%;gap:14px;justify-content:flex-start}
+ .nav a{font-size:12.5px}
  .hero .art{order:-1}
  .post-hero{border-radius:14px}
- .container{padding:0 20px}
+ .container{padding:0 24px}
  .section{padding:32px 0}
  .section.tight{padding:24px 0}
- .grid{gap:18px;grid-template-columns:1fr}
+ .grid{gap:20px;grid-template-columns:1fr}
  .card{border-radius:14px}
- .hdr{padding:8px 0;min-height:64px}
+ .hdr{padding:14px 0;min-height:68px;gap:16px}
+ .brand{font-size:21px}
+ .site-header{padding:0 2px}
 }
 @media (max-width:400px){
- .container{padding:0 18px}
+ .container{padding:0 22px}
+ .hdr{padding:12px 0}
+ .nav{gap:12px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 """

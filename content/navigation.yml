@@ -17,12 +17,6 @@ nav_links:
 - label: Shop My Home
   url: /shop-my-home
   style: outline
-- label: About
-  url: /about
-  style: default
-- label: Contact
-  url: /contact
-  style: default
 pinterest_url: https://www.pinterest.com/
 pinterest_label: Pinterest
 show_pinterest: true
