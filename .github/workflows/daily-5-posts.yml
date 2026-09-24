@@ -113,20 +113,8 @@ jobs:
       - name: Build site (verify 1500+ words, SEO, internal links)
         run: |
           python3 _build/build.py
-          echo "Checking word counts:"
-          for f in $(ls -t content/posts/*.md | head -5); do
-            WC=$(grep -c "word_count" "$f" || wc -w < "$f")
-            echo "$f: $WC"
-            # Verify 1500+ words in frontmatter
-            python3 -c "
-import yaml
-text=open('$f',encoding='utf-8').read()
-fm=yaml.safe_load(text.split('---')[1])
-wc=fm.get('word_count',0)
-print(f\"  frontmatter word_count: {wc}\")
-assert wc >= 1500, f'Word count {wc} < 1500'
-"
-          done
+          python3 _build/check_word_count.py
+          echo "Build OK"
 
       - name: Commit and push
         run: |
