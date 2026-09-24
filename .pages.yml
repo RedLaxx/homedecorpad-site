@@ -194,6 +194,67 @@ content:
         type: boolean
         description: Tick to show on live site. Untick to hide.
 
+  - name: custom-pages
+    label: Custom Pages (create any page)
+    type: collection
+    path: content/custom-pages
+    format: yaml-frontmatter
+    filename:
+      template: "{primary}.md"
+      field: create
+    exclude:
+      - README.md
+    view:
+      primary: title
+      sort: title
+      fields: [title, slug]
+    fields:
+      - name: title
+        label: SEO title (browser tab)
+        type: string
+        required: true
+        description: e.g. Press Kit — HomeDecorPad — keep under 60 chars
+      - name: slug
+        label: URL slug (optional — leave empty)
+        type: string
+        description: |
+          Leave empty — auto-generated from title, e.g. "Press Kit" → /press-kit.html
+          Only fill if you want a different URL, e.g. press → /press.html
+        pattern: "^[a-z0-9-]+$"
+        options:
+          maxlength: 80
+      - name: h1
+        label: Headline (H1) — optional
+        type: string
+        description: Big headline on page. If empty, uses SEO title.
+      - name: eyebrow
+        label: Eyebrow (small uppercase above H1)
+        type: string
+      - name: lede
+        label: Lede (intro paragraph under H1)
+        type: text
+      - name: description
+        label: Meta description (for Google)
+        type: text
+        required: true
+        description: 1-2 sentences for search results
+        options:
+          maxlength: 300
+      - name: hero_image
+        label: Hero image (optional)
+        type: image
+        description: Upload a photo to show at top of page. Leave empty for no image.
+      - name: body
+        label: Page content
+        type: rich-text
+        description: Markdown — headings, bold, links, lists, images all work. This is the main page content.
+    actions:
+      - name: view-page
+        label: View page
+        workflow: view-post.yml
+        scope: entry
+        confirm: false
+
   - name: legal
     label: Legal pages
     type: group

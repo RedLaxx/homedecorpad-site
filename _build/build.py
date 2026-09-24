@@ -288,6 +288,68 @@ def load_comments():
     return grouped
 
 
+def load_custom_pages():
+    """Read content/custom-pages/*.md and *.yml with frontmatter — each becomes /slug.html"""
+    folder = os.path.join(CONTENT, "custom-pages")
+    if not os.path.exists(folder):
+        return []
+    out = []
+    for fn in sorted(os.listdir(folder)):
+        if fn.lower() == "readme.md" or fn.startswith("_"):
+            continue
+        if not (fn.endswith(".md") or fn.endswith(".yml") or fn.endswith(".yaml")):
+            continue
+        raw = open(os.path.join(folder, fn), encoding="utf-8").read()
+        fm, body_md = md_engine.parse_frontmatter(raw)
+        # if no frontmatter and plain yaml file (like press-kit.yml with --- delimiters and body after)
+        # md_engine.parse_frontmatter already handles --- frontmatter
+        # For plain .yml without --- but with body after ---? try fallback
+        if not fm:
+            # try yaml load for whole file
+            try:
+                import yaml as _yaml
+                # split at first --- that separates frontmatter and body if present
+                if raw.strip().startswith("---"):
+                    # find second ---
+                    parts = raw.split("---")
+                    if len(parts) >= 3:
+                        fm = _yaml.safe_load(parts[1]) or {}
+                        body_md = "---".join(parts[2:]).strip()
+                    else:
+                        fm = _yaml.safe_load(raw) or {}
+                else:
+                    fm = _yaml.safe_load(raw) or {}
+                    body_md = fm.pop("body", "") if isinstance(fm, dict) else ""
+            except Exception:
+                fm = {}
+                body_md = ""
+        if not fm or not fm.get("title"):
+            print(f"  ! skipping custom-pages/{fn} — no title")
+            continue
+        if fm.get("draft") is True:
+            continue
+        slug = slugify(fm.get("slug") or fn.rsplit(".",1)[0])
+        # avoid collision with existing hardcoded pages
+        if slug in ("index","blog","start-here","about","contact","shop-my-home","privacy-policy","cookie-policy","terms-of-use","disclaimer","affiliate-disclosure","404"):
+            print(f"  ! skipping custom-pages/{fn} — slug '{slug}' collides with built-in page")
+            continue
+        # render body markdown
+        html_body, _ = md_engine.render(body_md or fm.get("body") or "", lambda h, d=0: resolve_link(h, d))
+        html_body = drop_missing_images(html_body, slug)
+        out.append({
+            "slug": slug,
+            "title": str(fm.get("title") or slug),
+            "h1": str(fm.get("h1") or fm.get("title") or slug),
+            "eyebrow": str(fm.get("eyebrow") or ""),
+            "lede": str(fm.get("lede") or ""),
+            "description": str(fm.get("description") or fm.get("dek") or "")[:300],
+            "hero_image": str(fm.get("hero_image") or "").strip(),
+            "body": html_body,
+        })
+    out.sort(key=lambda p: p["slug"])
+    return out
+
+
 CAT_NOTES = {
  "kitchen-dining": "Full kitchen and dining guides are in progress. In the meantime, three rules do most of the work: clear the counters down to three objects, warm the bulbs to 2700K, and put one wood board or basket on display so the room has an organic element.",
  "organization": "Full storage guides are coming. Start with the 80/20 version: one basket per surface for things that have no home, vertical storage above the toilet and kitchen cabinets, and a labelled box for the seasonal rotation.",
@@ -1144,6 +1206,35 @@ def page_shop():
                                    "publisher": {"@type": "Organization", "name": BRAND}}))
 
 
+def page_custom(p):
+    """Render a custom page from content/custom-pages/ — /slug.html"""
+    slug = p["slug"]
+    # hero image if exists
+    hero_html = ""
+    if p.get("hero_image"):
+        rel_path = p["hero_image"].lstrip("/")
+        if os.path.exists(os.path.join(ROOT, rel_path)):
+            hero_html = f'<div class="container narrow"><div class="post-hero" style="aspect-ratio:16/9"><img src="{asset_url(p["hero_image"],0)}" alt="" style="width:100%;height:100%;object-fit:cover"></div></div>'
+    body = f"""
+<section class="section tight"><div class="container narrow">
+ {f'<p class="eyebrow">{p["eyebrow"]}</p>' if p.get("eyebrow") else ''}
+ <h1>{p["h1"]}</h1>
+ {f'<p class="lede">{p["lede"]}</p>' if p.get("lede") else ''}
+</div></section>
+{hero_html}
+<section class="section"><div class="container narrow article">
+ {p["body"]}
+</div></section>
+
+{newsletter()}
+"""
+    desc = p.get("description") or p["lede"] or f"{p['title']} — {BRAND}"
+    return page(f"{slug}.html", p["title"], desc, body, 0,
+                schema=json.dumps({"@context": "https://schema.org", "@type": "WebPage", "name": p["title"],
+                                   "url": DOMAIN + f"/{slug}.html",
+                                   "publisher": {"@type": "Organization", "name": BRAND}}))
+
+
 def page_404():
     body = f"""
 <section class="section"><div class="container narrow center">
@@ -1451,6 +1542,8 @@ POST_BY_SLUG = {p["slug"]: p for p in POSTS}
 REL = {p["slug"]: p.get("related", []) for p in POSTS}
 COMMENTS = load_comments()
 print(f"  comments: {sum(len(v) for v in COMMENTS.values())} approved across {len(COMMENTS)} posts")
+CUSTOM_PAGES = load_custom_pages()
+print(f"  custom pages: {len(CUSTOM_PAGES)}")
 
 
 REDIRECTS_FILE = os.path.join(CONTENT, "redirects.yml")
@@ -1602,6 +1695,7 @@ def check_links():
 def main():
     pages = [page_home(), page_blog(), page_start_here(), page_about(), page_contact(), page_shop()]
     pages += [page_post(p) for p in POSTS]
+    pages += [page_custom(p) for p in CUSTOM_PAGES]
     pages += legal_pages()
     for path, html in pages:
         write(path, html)
