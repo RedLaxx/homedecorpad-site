@@ -1463,7 +1463,7 @@ def page_shop_now():
 </div></section>
 
 <section class="section" style="padding-top:0"><div class="container">
- <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px">{cards_html}</div>
+ <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px">{cards_html}</div>
 </div></section>
 
 <section class="section"><div class="container narrow">
