@@ -449,6 +449,101 @@ content:
         label: Show Pinterest button
         type: boolean
 
+  - name: footer
+    label: Footer
+    type: file
+    path: content/footer.yml
+    fields:
+      - name: description
+        label: Footer description
+        type: text
+      - name: copyright
+        label: Copyright line
+        type: string
+      - name: disclosure_text
+        label: Disclosure text (under footer)
+        type: text
+      - name: explore_links
+        label: Explore links
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Label
+            type: string
+            required: true
+          - name: url
+            label: URL
+            type: string
+            required: true
+      - name: room_guides
+        label: Room guides links
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Label
+            type: string
+            required: true
+          - name: url
+            label: URL
+            type: string
+            required: true
+      - name: legal_links
+        label: Legal links
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Label
+            type: string
+            required: true
+          - name: url
+            label: URL
+            type: string
+            required: true
+      - name: social
+        label: Social links
+        type: object
+        fields:
+          - name: pinterest
+            label: Pinterest URL
+            type: string
+          - name: instagram
+            label: Instagram URL
+            type: string
+          - name: facebook
+            label: Facebook URL
+            type: string
+          - name: youtube
+            label: YouTube URL
+            type: string
+
+  - name: pages
+    label: Pages (Shop, Start Here, About, Contact, Blog)
+    type: group
+    items:
+      - name: start-here
+        label: Start Here page
+        type: file
+        path: content/pages/start-here.yml
+      - name: about
+        label: About page
+        type: file
+        path: content/pages/about.yml
+      - name: contact
+        label: Contact page
+        type: file
+        path: content/pages/contact.yml
+      - name: shop
+        label: Shop My Home page
+        type: file
+        path: content/pages/shop-my-home.yml
+      - name: blog
+        label: Blog listing page
+        type: file
+        path: content/pages/blog.yml
+
   - name: site
     label: Site settings
     type: file

@@ -18,6 +18,8 @@ FORMSPREE_ID = "YOUR_FORM_ID"
 AMAZON_TAG = "YOUR-AMAZON-TAG-20"
 HOME = {}
 NAV = {}
+FOOTER = {}
+PAGES = {}
 # Giscus comments — set from content/site.yml via build.py
 GISCUS_ENABLED = False
 GISCUS_REPO = "RedLaxx/homedecorpad-site"
@@ -823,34 +825,60 @@ def header(rel="", current=""):
 
 
 def footer(rel=""):
-    cats = "".join(f'<li><a href="{rel}{h}">{l}</a></li>' for h, l in FOOTER_CATS)
-    legal = "".join(f'<li><a href="{rel}{h}">{l}</a></li>' for h, l in FOOTER_LEGAL)
-    soc = "".join(
-        f'<a href="{SOCIAL.get(k) or "#"}" aria-label="{n}" rel="noopener">'
-        + (ICON[k] if SOCIAL.get(k) else ICON[k]) + "</a>"
-        for k, n in [("pinterest", "Pinterest"), ("instagram", "Instagram"), ("facebook", "Facebook"), ("youtube", "YouTube")]
-    )
+    f_cfg = FOOTER if isinstance(FOOTER, dict) and FOOTER else {}
+    desc = f_cfg.get("description") or "Designer-looking rooms without the designer budget. Home decor ideas, budget swaps, paint palettes and room makeovers you can actually pull off this weekend."
+    copyright = f_cfg.get("copyright") or f"© 2026 {BRAND}. All rights reserved."
+    disc_text = f_cfg.get("disclosure_text") or f"As an Amazon Associate we earn from qualifying purchases. {BRAND} also participates in other affiliate programs and displays advertising; see our <a href=\"{rel}affiliate-disclosure.html\">Affiliate Disclosure</a> for details. Nothing on this site is professional design, legal, or financial advice."
+    explore_cfg = f_cfg.get("explore_links")
+    if explore_cfg and isinstance(explore_cfg, list) and isinstance(explore_cfg[0], dict):
+        explore_html = ""
+        for item in explore_cfg:
+            label = (item.get("label") or "").strip()
+            url = (item.get("url") or "").strip().lstrip("/")
+            if not label or not url:
+                continue
+            explore_html += f'<li><a href="{rel}{url}">{label}</a></li>'
+    else:
+        explore_html = f'<li><a href="{rel}start-here.html">Start Here</a></li><li><a href="{rel}blog.html">All Decor Ideas</a></li><li><a href="{rel}shop-my-home.html">Shop My Home</a></li><li><a href="{rel}about.html">About</a></li><li><a href="{rel}contact.html">Work With Us</a></li>'
+
+    room_cfg = f_cfg.get("room_guides")
+    if room_cfg and isinstance(room_cfg, list) and isinstance(room_cfg[0], dict):
+        cats = "".join(f'<li><a href="{rel}{ (item.get("url") or "").lstrip("/") }">{item.get("label")}</a></li>' for item in room_cfg if item.get("label") and item.get("url"))
+    else:
+        cats = "".join(f'<li><a href="{rel}{h}">{l}</a></li>' for h, l in FOOTER_CATS)
+
+    legal_cfg = f_cfg.get("legal_links")
+    if legal_cfg and isinstance(legal_cfg, list) and isinstance(legal_cfg[0], dict):
+        legal = "".join(f'<li><a href="{rel}{ (item.get("url") or "").lstrip("/") }">{item.get("label")}</a></li>' for item in legal_cfg if item.get("label") and item.get("url"))
+    else:
+        legal = "".join(f'<li><a href="{rel}{h}">{l}</a></li>' for h, l in FOOTER_LEGAL)
+
+    social_cfg = f_cfg.get("social") if isinstance(f_cfg.get("social"), dict) else SOCIAL
+    soc = ""
+    for k, n in [("pinterest", "Pinterest"), ("instagram", "Instagram"), ("facebook", "Facebook"), ("youtube", "YouTube")]:
+        url = social_cfg.get(k) if isinstance(social_cfg, dict) else None
+        if url:
+            url = str(url).strip()
+            if url:
+                soc += f'<a href="{url}" aria-label="{n}" rel="noopener" target="_blank">{ICON.get(k,"")}</a>'
+
     return f"""<footer class="site-footer">
  <div class="container">
   <div class="fgrid">
    <div>
     <div class="brandline">{ICON['logo']}<span>{BRAND}</span></div>
-    <p>Designer-looking rooms without the designer budget. Home decor ideas, budget swaps, paint palettes and room makeovers you can actually pull off this weekend.</p>
+    <p>{desc}</p>
     <div class="social">{soc}</div>
    </div>
    <div><h4>Explore</h4><ul>
-     <li><a href="{rel}start-here.html">Start Here</a></li>
-     <li><a href="{rel}blog.html">All Decor Ideas</a></li>
-     <li><a href="{rel}shop-my-home.html">Shop My Home</a></li>
-     <li><a href="{rel}about.html">About</a></li>
-     <li><a href="{rel}contact.html">Work With Us</a></li>
+     {explore_html}
    </ul></div>
    <div><h4>Room Guides</h4><ul>{cats}</ul></div>
    <div><h4>Legal</h4><ul>{legal}</ul></div>
   </div>
-  <p class="disc">As an Amazon Associate we earn from qualifying purchases. {BRAND} also participates in other affiliate programs and displays advertising; see our <a href="{rel}affiliate-disclosure.html">Affiliate Disclosure</a> for details. Nothing on this site is professional design, legal, or financial advice.</p>
+  <p class="disc">{disc_text}</p>
   <div class="fbot">
-   <span>&copy; 2026 {BRAND}. All rights reserved.</span>
+   <span>{copyright}</span>
    <span><a href="{rel}privacy-policy.html">Privacy</a> &middot; <a href="{rel}cookie-policy.html">Cookies</a> &middot; <a href="#" onclick="localStorage.removeItem('hdp-consent');location.reload();return false;">Cookie settings</a> &middot; <a href="{rel}sitemap.xml">Sitemap</a></span>
   </div>
  </div>

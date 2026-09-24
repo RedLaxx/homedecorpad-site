@@ -1,0 +1,47 @@
+# Footer — editable in Pages CMS → Footer
+description: Designer-looking rooms without the designer budget. Home decor ideas, budget swaps, paint palettes and room makeovers you can actually pull off this weekend.
+copyright: "© 2026 HomeDecorPad. All rights reserved."
+disclosure_text: As an Amazon Associate we earn from qualifying purchases. HomeDecorPad also participates in other affiliate programs and displays advertising; see our Affiliate Disclosure for details. Nothing on this site is professional design, legal, or financial advice.
+explore_links:
+  - label: Start Here
+    url: /start-here.html
+  - label: All Decor Ideas
+    url: /blog.html
+  - label: Shop My Home
+    url: /shop-my-home.html
+  - label: About
+    url: /about.html
+  - label: Contact
+    url: /contact.html
+    extra: Work With Us
+room_guides:
+  - label: Living Room Ideas
+    url: /blog.html#living-room
+  - label: Small Space & Renters
+    url: /blog.html#small-space
+  - label: Get the Look for Less
+    url: /blog.html#get-the-look
+  - label: Home Finds & Deals
+    url: /blog.html#finds
+  - label: IKEA Hacks & DIY
+    url: /blog.html#diy
+  - label: Color & Paint
+    url: /blog.html#color
+legal_links:
+  - label: Privacy Policy
+    url: /privacy-policy.html
+  - label: Cookie Policy
+    url: /cookie-policy.html
+  - label: Terms of Use
+    url: /terms-of-use.html
+  - label: Disclaimer
+    url: /disclaimer.html
+  - label: Affiliate Disclosure
+    url: /affiliate-disclosure.html
+  - label: Contact
+    url: /contact.html
+social:
+  pinterest: https://www.pinterest.com/
+  instagram: ""
+  facebook: ""
+  youtube: ""

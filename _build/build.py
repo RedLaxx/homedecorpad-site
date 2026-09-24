@@ -70,6 +70,13 @@ def load_yaml_file(fname):
 SETTINGS = load_settings()
 HOME_SETTINGS = load_yaml_file("home.yml")
 NAV_SETTINGS = load_yaml_file("navigation.yml")
+FOOTER_SETTINGS = load_yaml_file("footer.yml")
+# Load editable pages
+PAGES_SETTINGS = {}
+for _pname in ["start-here", "about", "contact", "shop-my-home", "blog"]:
+    _data = load_yaml_file(f"pages/{_pname}.yml")
+    if _data:
+        PAGES_SETTINGS[_pname] = _data
 LEGAL_EFFECTIVE = fmt_date(SETTINGS.get("legal_effective_date"), LAUNCH_DATE)
 LEGAL_UPDATED = fmt_date(SETTINGS.get("legal_updated_date"), LAUNCH_DATE)
 theme.BRAND = BRAND = SETTINGS.get("brand") or "HomeDecorPad"
@@ -78,6 +85,8 @@ theme.DOMAIN = DOMAIN
 theme.EMAIL = EMAIL = SETTINGS.get("email") or "hello@homedecorpad.com"
 theme.HOME = HOME_SETTINGS
 theme.NAV = NAV_SETTINGS
+theme.FOOTER = FOOTER_SETTINGS
+theme.PAGES = PAGES_SETTINGS
 TAG = theme.AMAZON_TAG = SETTINGS.get("amazon_tag") or "YOUR-AMAZON-TAG-20"
 theme.FORMSPREE_ID = SETTINGS.get("formspree_id") or "YOUR_FORM_ID"
 theme.ADSENSE_CLIENT = str(SETTINGS.get("adsense_client") or "").strip()
@@ -647,6 +656,14 @@ def page_home():
 
 
 def page_blog():
+    cfg = PAGES_SETTINGS.get("blog") or {}
+    eyebrow = cfg.get("eyebrow") or "All decor ideas"
+    h1 = cfg.get("h1") or "Room guides, budget makeovers & home finds"
+    lede = cfg.get("lede") or "Every guide is written to be used, not just saved: what to do first, what it costs, and what to skip. Filter by room or search below."
+    search_placeholder = cfg.get("search_placeholder") or "Search: small apartment, rug, paint…"
+    empty_text = cfg.get("empty_text") or "No guides match that search yet — try a room name like “bedroom” or a topic like “rug”."
+    title = cfg.get("title") or f"All Decor Ideas — Room Guides & Budget Makeovers | {BRAND}"
+
     sections = ""
     for c in CATS:
         posts = [p for p in POSTS if p["cat"] == c["slug"]]
@@ -671,14 +688,14 @@ def page_blog():
     chips = "".join(f'<button type="button" data-f="{c["slug"]}">{c["name"]}</button>' for c in CATS)
     body = f"""
 <section class="section tight"><div class="container" id="categories">
- <p class="eyebrow">All decor ideas</p>
- <h1>Room guides, budget makeovers &amp; home finds</h1>
- <p class="lede" style="max-width:62ch">Every guide is written to be used, not just saved: what to do first, what it costs, and what to skip. Filter by room or search below.</p>
+ <p class="eyebrow">{eyebrow}</p>
+ <h1>{h1}</h1>
+ <p class="lede" style="max-width:62ch">{lede}</p>
  <div class="field" style="margin:24px 0 18px;max-width:520px">
-  <input type="search" id="q" placeholder="Search: small apartment, rug, paint…" aria-label="Search guides">
+  <input type="search" id="q" placeholder="{search_placeholder}" aria-label="Search guides">
  </div>
  <div class="cats" id="filters"><button type="button" class="on" data-f="all">All guides</button>{chips}</div>
- <p class="muted" id="empty" style="display:none">No guides match that search yet — try a room name like “bedroom” or a topic like “rug”.</p>
+ <p class="muted" id="empty" style="display:none">{empty_text}</p>
 </div></section>
 {sections}
 {newsletter(0, dark=False)}
@@ -708,10 +725,10 @@ def page_blog():
 }})();
 </script>
 """
-    desc = "Browse all HomeDecorPad guides: living room and bedroom ideas, small apartment decor, budget swaps, Amazon home finds, IKEA hacks, wall decor and paint palettes."
+    desc = cfg.get("description") or "Browse all HomeDecorPad guides: living room and bedroom ideas, small apartment decor, budget swaps, Amazon home finds, IKEA hacks, wall decor and paint palettes."
     schema = json.dumps({"@context": "https://schema.org", "@type": "CollectionPage", "name": "All decor ideas",
                          "url": DOMAIN + "/blog.html", "publisher": {"@type": "Organization", "name": BRAND}})
-    return page("blog.html", f"All Decor Ideas — Room Guides & Budget Makeovers | {BRAND}", desc, body, 0, schema=schema)
+    return page("blog.html", title, desc, body, 0, schema=schema)
 
 
 def faq_schema(items):
@@ -793,148 +810,213 @@ def page_post(p):
 
 
 def page_start_here():
-    picks = [
-        ("living-room-layout-mistakes", "Fix the room before you shop it", "Living room",
-         "Twelve free layout fixes that make a room feel bigger and more finished."),
-        ("home-decor-color-palettes-2027", "Pick your palette", "Color & paint",
-         "Eight 60/30/10 palettes with proportions that actually work at home."),
-        ("small-apartment-decor-ideas", "Make a small space feel bigger", "Small space",
-         "Ten moves that add up in a 500 sq ft rental."),
-        ("warm-minimalist-living-room-under-250", "Get a designer look for less", "Get the look",
-         "A complete warm minimalist living room for under $250."),
-        ("renter-friendly-wall-decor-ideas", "Decorate without losing your deposit", "Wall decor",
-         "Seven damage-free ideas that genuinely stay on the wall."),
-        ("amazon-home-finds-look-expensive", "Buy the right pieces", "Home finds",
-         "Eleven finds under $60 that read far more expensive than they are."),
+    cfg = PAGES_SETTINGS.get("start-here") or {}
+    # Editable fields with fallbacks
+    title = cfg.get("title") or f"Start Here — How to Decorate on a Budget | {BRAND}"
+    h1 = cfg.get("h1") or "Make your home look designed — without a designer budget"
+    eyebrow = cfg.get("eyebrow") or "Start here"
+    lede = cfg.get("lede") or f"{BRAND} is a small library of decor ideas that are actually finishable. Every guide answers three questions: what do I do first, what does it cost, and what can I skip?"
+    # buttons
+    btns_cfg = cfg.get("buttons") or [{"label":"Browse all guides","url":"/blog.html","style":"primary"},{"label":"Shop the looks","url":"/shop-my-home.html","style":"ghost"}]
+    btn_html = ""
+    for b in btns_cfg:
+        if not isinstance(b, dict):
+            continue
+        label = b.get("label","")
+        url = _resolve_home_url(b.get("url",""))
+        style = (b.get("style") or "primary").lower()
+        cls = "btn" if style=="primary" else "btn ghost"
+        if label and url:
+            btn_html += f'<a class="{cls}" href="{url}">{label}</a>'
+
+    # how it works
+    how_title = cfg.get("how_it_works_title") or "How this site works"
+    how_body = cfg.get("how_it_works_body") or ""
+    how_html = md_to_html(how_body) if how_body else "<p>Most decor content is aimed at people with a renovation budget...</p>"
+
+    # method
+    method_title = cfg.get("method_title") or "The four-step method we use in every room"
+    method_steps = cfg.get("method_steps") or []
+    method_html = ""
+    if method_steps:
+        for s in method_steps:
+            t = s.get("title","") if isinstance(s, dict) else ""
+            b = s.get("body","") if isinstance(s, dict) else ""
+            if t or b:
+                method_html += f'<li><b>{t}</b> {b}</li>'
+        method_html = f"<ol class='steps'>{method_html}</ol>"
+    else:
+        method_html = """<ol class="steps"><li><b>Edit.</b> Clear every surface...</li></ol>"""
+
+    callout_title = cfg.get("callout_title") or "The rule behind all of it"
+    callout_body = cfg.get("callout_body") or "Spend on the things your eye lands on — the rug, the lighting, the bedding — and save on the things it does not."
+    known_for_title = cfg.get("known_for_title") or "What we are known for"
+    known_for_items = cfg.get("known_for_items") or []
+    known_html = ""
+    if known_for_items:
+        for it in known_for_items:
+            txt = it.get("text","") if isinstance(it, dict) else ""
+            ll = it.get("link_label","") if isinstance(it, dict) else ""
+            lu = _resolve_home_url(it.get("link_url","")) if isinstance(it, dict) else ""
+            if txt:
+                if ll and lu:
+                    known_html += f'<li>{txt} <a href="{lu}">{ll}</a>.</li>'
+                else:
+                    known_html += f'<li>{txt}</li>'
+        known_html = f"<ul>{known_html}</ul>"
+    else:
+        known_html = "<ul><li>...</li></ul>"
+
+    # picks
+    picks_cfg = cfg.get("picks") or [
+        {"slug":"living-room-layout-mistakes","title":"Fix the room before you shop it","kicker":"Living room","description":"Twelve free layout fixes..."},
+        {"slug":"home-decor-color-palettes-2027","title":"Pick your palette","kicker":"Color & paint","description":"Eight palettes..."},
     ]
+    picks_eyebrow = cfg.get("picks_eyebrow") or "Start somewhere"
+    picks_title = cfg.get("picks_title") or "Pick your first project"
+    picks_link_text = cfg.get("picks_link_text") or ""
+    picks_link_url = _resolve_home_url(cfg.get("picks_link_url") or "")
     cards = ""
-    for slug, title, kicker, sub in picks:
+    for item in picks_cfg:
+        if not isinstance(item, dict):
+            continue
+        slug = item.get("slug","")
+        title = item.get("title","")
+        kicker = item.get("kicker","")
+        sub = item.get("description","")
+        if not slug or slug not in POST_BY_SLUG:
+            continue
         p_ = POST_BY_SLUG[slug]
         cards += (f'<article class="card">{cover_html(p_, 0, "c3x2")}'
-                  f'<div class="body"><span class="chip">{kicker}</span>'
-                  f'<h3><a href="{post_url(slug)}">{title}</a></h3><p>{sub}</p>'
+                  f'<div class="body"><span class="chip">{kicker or CAT[p_["cat"]]["name"]}</span>'
+                  f'<h3><a href="{post_url(slug)}">{title or p_["title"]}</a></h3><p>{sub or p_["dek"]}</p>'
                   f'<div class="btnrow cardbtn"><a class="btn sm ghost" href="{post_url(slug)}">View post</a></div>'
                   f'<div class="meta"><span>{read_label(p_)}</span></div></div></article>')
+
+    coming_title = cfg.get("coming_next_title") or "What is coming next"
+    coming_body = cfg.get("coming_next_body") or "Kitchen and dining styling..."
+    coming_html = md_to_html(coming_body)
+
     body = f"""
 <section class="section tight"><div class="container narrow">
- <p class="eyebrow">Start here</p>
- <h1>Make your home look designed — without a designer budget</h1>
- <p class="lede">{BRAND} is a small library of decor ideas that are actually finishable. Every guide answers three questions: what do I do first, what does it cost, and what can I skip?</p>
- <div class="btnrow"><a class="btn" href="blog.html">Browse all guides</a><a class="btn ghost" href="shop-my-home.html">Shop the looks</a></div>
+ <p class="eyebrow">{eyebrow}</p>
+ <h1>{h1}</h1>
+ <p class="lede">{lede}</p>
+ <div class="btnrow">{btn_html}</div>
 </div></section>
 
 <section class="section"><div class="container narrow">
- <h2>How this site works</h2>
- <p>Most decor content is aimed at people with a renovation budget. This site is built for the opposite: renters, first apartments, and anyone furnishing a room with a number in mind.</p>
- <ul>
-  <li><b>Free fixes before purchases.</b> Layout, light and editing come first because they change a room the most and cost the least.</li>
-  <li><b>Prices and order of operations.</b> We tell you what to buy first, so you never spend your budget on the wrong piece.</li>
-  <li><b>Honest about the cheap stuff.</b> We will tell you when a budget item is not worth it — and what we would return.</li>
- </ul>
+ <h2>{how_title}</h2>
+ {how_html}
 
- <h2>The four-step method we use in every room</h2>
- <ol class="steps">
-  <li><b>Edit.</b> Clear every surface, then put back only what earns its place. Free, and it does more than any purchase.</li>
-  <li><b>Light it.</b> Warm bulbs (2700K), three sources at three heights, and a dimmer wherever it is possible. Under $40 for most rooms.</li>
-  <li><b>Anchor it.</b> One large-size rug, and a colour palette of a dominant neutral plus one accent. This is where a room stops feeling like a rental.</li>
-  <li><b>Layer it.</b> Texture where colour would be busy: bouclé, linen, wood, brass, a basket, one plant. Never more than three objects per surface.</li>
- </ol>
+ <h2>{method_title}</h2>
+ {method_html}
 
- <div class="callout"><h4>The rule behind all of it</h4><p>Spend on the things your eye lands on — the rug, the lighting, the bedding — and save on the things it does not. A $25 throw in the right texture beats a $200 lamp you cannot see.</p></div>
+ <div class="callout"><h4>{callout_title}</h4><p>{callout_body}</p></div>
 
- <h2>What we are known for</h2>
- <ul>
-  <li><b>Get the Look for Less</b> — a designer look broken into a shopping list and a total. <a href="{post_url('warm-minimalist-living-room-under-250')}">Start with the warm minimalist living room</a>.</li>
-  <li><b>One Room, Three Budgets</b> — the same room at $150, $500 and $1,500. <a href="{post_url('one-room-three-budgets-cozy-bedroom')}">See the bedroom</a>.</li>
-  <li><b>Room guides</b> — layout, light and styling rules by room. <a href="blog.html#living-room">Living room</a>, <a href="blog.html#small-space">small space</a>, <a href="blog.html#color">colour</a>.</li>
- </ul>
+ <h2>{known_for_title}</h2>
+ {known_html}
 </div></section>
 
 <section class="section"><div class="container">
- <div class="sec-head"><div><p class="eyebrow">Start somewhere</p><h2>Pick your first project</h2></div></div>
+ <div class="sec-head"><div><p class="eyebrow">{picks_eyebrow}</p><h2>{picks_title}</h2></div>{f'<a href="{picks_link_url}">{picks_link_text}</a>' if picks_link_text else ''}</div>
  <div class="grid">{cards}</div>
 </div></section>
 
 <section class="section"><div class="container narrow prosebox">
- <h2 style="margin-top:0">What is coming next</h2>
- <p class="muted">Kitchen and dining styling, storage that looks like decor, a fall and holiday decorating series, and more One Room Three Budgets makeovers — including a home office and an entryway.</p>
- <p class="muted">The best way to see them first is the weekly email: one room idea, one budget swap and one thing worth buying, every Sunday.</p>
+ <h2 style="margin-top:0">{coming_title}</h2>
+ {coming_html}
 </div></section>
 
 {newsletter()}
 """
-    desc = "New here? These are the guides to read first: free layout fixes, colour palettes, small-space ideas and budget looks for less. Start decorating in an afternoon."
-    return page("start-here.html", f"Start Here — How to Decorate on a Budget | {BRAND}", desc, body, 0,
+    desc = cfg.get("description") or "New here? These are the guides to read first: free layout fixes, colour palettes, small-space ideas and budget looks for less. Start decorating in an afternoon."
+    return page("start-here.html", title, desc, body, 0,
                 schema=json.dumps({"@context": "https://schema.org", "@type": "AboutPage", "name": "Start Here",
                                    "url": DOMAIN + "/start-here.html",
                                    "publisher": {"@type": "Organization", "name": BRAND}}))
 
 
 def page_about():
+    cfg = PAGES_SETTINGS.get("about") or {}
+    title = cfg.get("title") or f"About {BRAND} — Budget-First Home Decor"
+    h1 = cfg.get("h1") or f"About {BRAND}"
+    eyebrow = cfg.get("eyebrow") or "About"
+    lede = cfg.get("lede") or f"{BRAND} is a home decor site for people who want a room that looks considered — on a normal budget, in a normal apartment, without a renovation."
+    sections = cfg.get("sections") or []
+    if sections:
+        sec_html = ""
+        for sec in sections:
+            if not isinstance(sec, dict):
+                continue
+            heading = sec.get("heading") or ""
+            body_md = sec.get("body") or ""
+            is_callout = sec.get("callout")
+            body_html = md_to_html(body_md) if body_md else ""
+            if is_callout:
+                sec_html += f'<div class="callout"><h4>{heading}</h4>{body_html}</div>'
+            else:
+                if heading:
+                    sec_html += f'<h2>{heading}</h2>'
+                sec_html += body_html
+    else:
+        sec_html = f"""
+ <h2>Why this site exists</h2><p>Interior design content usually shows you the after photo and hides the invoice...</p>
+"""
     body = f"""
 <section class="section tight"><div class="container narrow">
- <p class="eyebrow">About</p>
- <h1>About {BRAND}</h1>
- <p class="lede">{BRAND} is a home decor site for people who want a room that looks considered — on a normal budget, in a normal apartment, without a renovation.</p>
+ <p class="eyebrow">{eyebrow}</p>
+ <h1>{h1}</h1>
+ <p class="lede">{lede}</p>
 </div></section>
 
 <section class="section"><div class="container narrow article">
- <h2>Why this site exists</h2>
- <p>Interior design content usually shows you the after photo and hides the invoice. We do the opposite. Every guide includes the price ranges, the order to buy things in, and the things we would not spend money on.</p>
- <p>The site started in 2026 as a way to organise our own decorating notes: which purchases changed a room, which ones photographed well but annoyed us within a month, and which "designer" looks could be recreated with a shopping list instead of a contractor.</p>
-
- <h2>Who it is for</h2>
- <ul>
-  <li>Renters who cannot drill, paint or replace anything.</li>
-  <li>First-apartment and small-space dwellers who need every purchase to earn its footprint.</li>
-  <li>Anyone who wants a warm, calm, lived-in home rather than a showroom.</li>
- </ul>
-
- <h2>How we choose what to recommend</h2>
- <ol class="steps">
-  <li><b>Texture and warmth first.</b> Matte finishes, natural materials and warm tones. We avoid glossy, printed and cold-toned decor even when it is popular.</li>
-  <li><b>Scale matters as much as style.</b> An undersized rug or a tiny lamp is the most common expensive mistake, so we recommend sizes before products.</li>
-  <li><b>Real prices.</b> We list typical street prices, and we say when something is only worth buying on sale.</li>
-  <li><b>No paid placements.</b> Brands cannot buy a mention, a ranking or a positive review. If we ever publish a sponsored post, it is labelled at the top of the page.</li>
- </ol>
-
- <div class="callout"><h4>How {BRAND} makes money</h4><p>Two ways only: display advertising, and affiliate commission when you buy through one of our links — at no extra cost to you. Both are explained in our <a href="affiliate-disclosure.html">Affiliate &amp; Advertising Disclosure</a>. Affiliate income never changes what we recommend.</p></div>
-
- <h2>Our editorial standards</h2>
- <ul>
-  <li><b>We test or own the products we feature</b> wherever possible. When we have not used something ourselves, we say so.</li>
-  <li><b>Illustrations on this site are original artwork</b> created for {BRAND}. We do not publish other people's photographs as our own.</li>
-  <li><b>We correct mistakes.</b> If a price, size or recommendation changes, the guide is updated and the date on the page changes with it.</li>
-  <li><b>Some images are AI-assisted.</b> Where a graphic is generated rather than photographed by us, it is decorative only — it is never used to misrepresent a product you could buy.</li>
- </ul>
-
- <h2>Where we are</h2>
- <p>{BRAND} is written and run by a small team based in Lagos, Nigeria, for readers in the United States, United Kingdom, Canada and Australia. We link to retailers that ship to those countries and we price our recommendations in dollars.</p>
-
- <h2>Work with us</h2>
- <p>We partner with brands on sponsored placements, product features and affiliate campaigns — always labelled, always relevant to a budget-conscious reader. Email <a href="mailto:{EMAIL}">{EMAIL}</a> or use the <a href="contact.html">contact page</a> and tell us what you have in mind.</p>
+ {sec_html}
 </div></section>
 
 {newsletter()}
 """
-    desc = f"About {BRAND}: a budget-first home decor site for renters and small-space dwellers. Our editorial standards, how we make money, and how to work with us."
-    return page("about.html", f"About {BRAND} — Budget-First Home Decor", desc, body, 0,
+    desc = cfg.get("description") or f"About {BRAND}: a budget-first home decor site for renters and small-space dwellers. Our editorial standards, how we make money, and how to work with us."
+    return page("about.html", title, desc, body, 0,
                 schema=json.dumps({"@context": "https://schema.org", "@type": "AboutPage", "name": f"About {BRAND}",
                                    "url": DOMAIN + "/about.html", "publisher": {"@type": "Organization", "name": BRAND}}))
 
 
 def page_contact():
+    cfg = PAGES_SETTINGS.get("contact") or {}
+    title = cfg.get("title") or f"Contact & Work With Us | {BRAND}"
+    h1 = cfg.get("h1") or "Get in touch"
+    eyebrow = cfg.get("eyebrow") or "Contact"
+    lede = cfg.get("lede") or "Questions about a guide, a product recommendation, or working together? Send a message — we read everything and reply to most emails within two business days."
+    form_title = cfg.get("form_title") or "Send a message"
+    form_note = cfg.get("form_note") or f"This form uses your Formspree ID from Site settings."
+    other_title = cfg.get("other_title") or "Other ways to reach us"
+    other_body_md = cfg.get("other_body") or ""
+    other_html = md_to_html(other_body_md) if other_body_md else f"""<p><b>Email:</b> <a href="mailto:{EMAIL}">{EMAIL}</a></p><p><b>Pinterest:</b> Follow {BRAND}</p>"""
+    faq_title = cfg.get("faq_title") or "Common questions"
+    faqs = cfg.get("faqs") or []
+    faq_html = ""
+    for f in faqs:
+        if not isinstance(f, dict):
+            continue
+        q = f.get("q","")
+        a = f.get("a","")
+        if q and a:
+            faq_html += f"<details><summary>{q}</summary><p>{a}</p></details>"
+    if not faq_html:
+        faq_html = """<details><summary>Can I ask you to recommend a product for my room?</summary><p>Yes — send the room...</p></details>"""
+
     body = f"""
 <section class="section tight"><div class="container narrow">
- <p class="eyebrow">Contact</p>
- <h1>Get in touch</h1>
- <p class="lede">Questions about a guide, a product recommendation, or working together? Send a message — we read everything and reply to most emails within two business days.</p>
+ <p class="eyebrow">{eyebrow}</p>
+ <h1>{h1}</h1>
+ <p class="lede">{lede}</p>
 </div></section>
 
 <section class="section"><div class="container">
  <div class="panel split">
   <div class="pad">
-   <h2 style="margin-top:0">Send a message</h2>
+   <h2 style="margin-top:0">{form_title}</h2>
    <form action="https://formspree.io/f/{theme.FORMSPREE_ID}" method="POST">
     <div class="form-row"><label for="name">Your name</label><input id="name" name="name" type="text" required></div>
     <div class="form-row"><label for="email">Email</label><input id="email" name="email" type="email" required></div>
@@ -945,104 +1027,118 @@ def page_contact():
      </select></div>
     <div class="form-row"><label for="msg">Message</label><textarea id="msg" name="message" required></textarea></div>
     <button class="btn" type="submit">Send message</button>
-    <p class="muted" style="margin-top:14px">This form is not connected yet — replace <code>{theme.FORMSPREE_ID}</code> with your free <a href="https://formspree.io" rel="noopener" target="_blank">Formspree</a> form ID, or swap in any form service. Until then, email works.</p>
+    <p class="muted" style="margin-top:14px">{form_note} <a href="https://formspree.io" rel="noopener" target="_blank">Formspree</a> form ID.</p>
    </form>
   </div>
   <div class="pad" style="background:#FBF6EF">
-   <h2 style="margin-top:0">Other ways to reach us</h2>
-   <p><b>Email:</b> <a href="mailto:{EMAIL}">{EMAIL}</a></p>
-   <p><b>Pinterest:</b> <a href="https://www.pinterest.com/" rel="noopener" target="_blank">Follow {BRAND}</a> — the fastest place to see new guides.</p>
-   <p><b>Response time:</b> 1–2 business days, Lagos time (WAT).</p>
-   <hr>
-   <h3>Work with {BRAND}</h3>
-   <p class="muted">Our readers are decorating on a budget: renters, small-space dwellers and first-home buyers in the US, UK, Canada and Australia. We work with brands on:</p>
-   <ul class="muted">
-    <li>Sponsored placements and editorially-labelled features</li>
-    <li>Product photography and styling for brand accounts</li>
-    <li>Pinterest and affiliate campaigns built on our guides</li>
-   </ul>
-   <p class="muted"><b>What we do not do:</b> guest posts, link insertions, paid do-follow links, or unlabelled advertorial. Requests for these are declined.</p>
+   <h2 style="margin-top:0">{other_title}</h2>
+   {other_html}
    <div class="btnrow"><a class="btn sm ghost" href="affiliate-disclosure.html">See our disclosure</a></div>
   </div>
  </div>
 </div></section>
 
 <section class="section"><div class="container narrow">
- <h2>Common questions</h2>
+ <h2>{faq_title}</h2>
  <div class="faq">
-  <details><summary>Can I ask you to recommend a product for my room?</summary><p>Yes — send the room, the rough budget and one photo if you have it. We answer as many as we can, and the best ones become guides.</p></details>
-  <details><summary>Do you accept guest posts?</summary><p>No. All guides are written in-house. We do consider original, unpublished photography collaborations.</p></details>
-  <details><summary>I found a broken link or a wrong price. Where do I report it?</summary><p>Email us with the page name. Prices move constantly, so corrections are genuinely helpful and we fix them quickly.</p></details>
-  <details><summary>How do I get my product considered?</summary><p>Email a one-paragraph pitch with a link and a price. We buy most of what we feature. If a product is sent for review it is disclosed in the post.</p></details>
+  {faq_html}
  </div>
 </div></section>
 """
-    desc = f"Contact {BRAND}: reader questions, corrections, press and brand partnerships. Email {EMAIL} — replies within two business days."
+    desc = cfg.get("description") or f"Contact {BRAND}: reader questions, corrections, press and brand partnerships. Email {EMAIL} — replies within two business days."
     schema = json.dumps({"@context": "https://schema.org", "@type": "ContactPage", "name": f"Contact {BRAND}",
                          "url": DOMAIN + "/contact.html", "publisher": {"@type": "Organization", "name": BRAND}})
-    return page("contact.html", f"Contact & Work With Us | {BRAND}", desc, body, 0, schema=schema)
+    return page("contact.html", title, desc, body, 0, schema=schema)
 
 
 def page_shop():
-    def room(title, slug, tone, motif, items):
-        lis = "".join(
-            f'<li><span><b><a href="{amz(n)}" target="_blank" rel="nofollow sponsored noopener">{n}</a></b>'
-            f'<span class="d">{note}</span></span><span class="p">{price}</span></li>'
-            for n, note, price in items)
-        return f"""<div class="post-hero narrow" style="aspect-ratio:16/9;margin-bottom:0">{art_raw(motif, tone)}<div class="tag"><span>{title} &middot; shoppable</span></div></div>
-<div class="shop"><h3>{title}</h3>
-<p class="muted">Typical prices at the time of writing. Links go to Amazon search results — see our <a href="affiliate-disclosure.html">disclosure</a>.</p>
+    cfg = PAGES_SETTINGS.get("shop-my-home") or {}
+    title = cfg.get("title") or f"Shop My Home — Budget Decor We Actually Use | {BRAND}"
+    h1 = cfg.get("h1") or "Shop the looks (and how our links work)"
+    eyebrow = cfg.get("eyebrow") or "Shop my home"
+    lede = cfg.get("lede") or f"These are the pieces we actually use in our own rooms, at the price we would pay. If you buy through a link here, {BRAND} may earn a small commission — at no extra cost to you. It never changes what makes the list."
+    # buttons
+    btns_cfg = cfg.get("buttons") or [{"label":"See the budget looks","url":"/blog.html#get-the-look","style":"primary"},{"label":"Read the disclosure","url":"/affiliate-disclosure.html","style":"ghost"}]
+    btn_html = ""
+    for b in btns_cfg:
+        if not isinstance(b, dict):
+            continue
+        label = b.get("label","")
+        url = _resolve_home_url(b.get("url",""))
+        style = (b.get("style") or "primary").lower()
+        cls = "btn" if style=="primary" else "btn ghost"
+        if label and url:
+            btn_html += f'<a class="{cls}" href="{url}">{label}</a>'
+
+    def room_from_cfg(rc):
+        # rc is dict with title, slug, tone, motif, note, items
+        t_title = rc.get("title") or "Room"
+        slug = rc.get("slug") or "living-room"
+        tone = int(rc.get("tone") or 0)
+        motif = rc.get("motif") or "arch"
+        note = rc.get("note") or "Typical prices at the time of writing."
+        items = rc.get("items") or []
+        lis = ""
+        for it in items:
+            if not isinstance(it, dict):
+                continue
+            n = it.get("name","")
+            note_it = it.get("note","")
+            price = it.get("price","")
+            if not n:
+                continue
+            lis += f'<li><span><b><a href="{amz(n)}" target="_blank" rel="nofollow sponsored noopener">{n}</a></b><span class="d">{note_it}</span></span><span class="p">{price}</span></li>'
+        return f"""<div class="post-hero narrow" style="aspect-ratio:16/9;margin-bottom:0">{art_raw(motif, tone)}<div class="tag"><span>{t_title} &middot; shoppable</span></div></div>
+<div class="shop"><h3>{t_title}</h3>
+<p class="muted">{note} Links go to Amazon search results — see our <a href="affiliate-disclosure.html">disclosure</a>.</p>
 <ul>{lis}</ul></div>"""
-    living = room("Warm minimalist living room", "living-room", 4, "arch", [
-        ("Chunky knit throw, oat", "50×60 in, visible stitch — the single best value item in the room", "$25–40"),
-        ("2 bouclé cushion covers, 18×18 in", "Reuse your existing inserts; covers only", "$24"),
-        ("Ribbed ceramic vase", "Matte, unglazed look — with two faux stems", "$18–26"),
-        ("Acacia wood serving tray", "16–18 in; groups three objects so surfaces look styled", "$20–28"),
-        ("Warm 2700K LED bulbs, 4-pack", "Cheapest design upgrade that exists", "$12"),
-        ("Washable rug, 8×10 low pile", "Warm neutral; front legs of every seat must sit on it", "$90–150"),
-    ])
-    bedroom = room("Cozy layered bedroom", "bedroom", 1, "portrait", [
-        ("Washed cotton duvet cover", "Oat or warm white — pre-washed, not sateen", "$45–70"),
-        ("Ribbed ceramic table lamps, pair", "Linen shade, 20–24 in tall, warm bulb", "$70–95"),
-        ("Oatmeal linen curtains, 96 in", "Two panels per window, hung at ceiling height", "$35–60 each"),
-        ("Bouclé lumbar pillow", "14×24 in in cream or camel", "$18–28"),
-        ("Storage bench, upholstered", "Hinged lid earns its footprint at the end of the bed", "$90–130"),
-    ])
-    small = room("Small apartment essentials", "small-space", 2, "flat", [
-        ("8×10 washable rug", "Unifies small rooms instead of chopping them into zones", "$90–150"),
-        ("Wall mirror, 24×36 in", "Hang opposite the biggest window, not opposite a blank wall", "$45–70"),
-        ("Plug-in wall sconce", "Second light height with no wiring and no landlord", "$30–45"),
-        ("Over-the-door storage rack, slim", "Cleaning supplies, shoes or pantry overflow", "$25–35"),
-        ("Woven basket, 16 in", "Plants, throws or magazines — texture that hides clutter", "$20–28"),
-    ])
+
+    rooms_cfg = cfg.get("rooms")
+    if rooms_cfg:
+        rooms_html = "".join(room_from_cfg(r) for r in rooms_cfg if isinstance(r, dict))
+    else:
+        # fallback old hardcoded
+        def room_old(title, slug, tone, motif, items):
+            lis = "".join(f'<li><span><b><a href="{amz(n)}" target="_blank" rel="nofollow sponsored noopener">{n}</a></b><span class="d">{note}</span></span><span class="p">{price}</span></li>' for n, note, price in items)
+            return f"""<div class="post-hero narrow" style="aspect-ratio:16/9;margin-bottom:0">{art_raw(motif, tone)}<div class="tag"><span>{title} &middot; shoppable</span></div></div><div class="shop"><h3>{title}</h3><p class="muted">Typical prices...</p><ul>{lis}</ul></div>"""
+        rooms_html = room_old("Warm minimalist living room", "living-room", 4, "arch", [("Chunky knit throw, oat","50×60 in","$25–40")]) + room_old("Cozy layered bedroom","bedroom",1,"portrait",[("Washed cotton duvet cover","Oat","$45–70")])
+
+    how_title = cfg.get("how_to_title") or "How to shop a room without wasting money"
+    how_steps = cfg.get("how_to_steps") or []
+    if how_steps:
+        steps_html = "".join(f'<li><b>{s.get("title","")}</b> {s.get("body","")}</li>' for s in how_steps if isinstance(s, dict))
+        steps_html = f"<ol class='steps'>{steps_html}</ol>"
+    else:
+        steps_html = "<ol class='steps'><li><b>Buy the anchor first.</b> The rug...</li></ol>"
+
+    sizing_title = cfg.get("sizing_title") or "Sizing before shopping"
+    sizing_body = cfg.get("sizing_body") or "Measure your room..."
+    not_title = cfg.get("not_link_title") or "What we do not link to"
+    not_body = cfg.get("not_link_body") or "We do not recommend dropshipped decor..."
+
     body = f"""
 <section class="section tight"><div class="container narrow">
- <p class="eyebrow">Shop my home</p>
- <h1>Shop the looks (and how our links work)</h1>
- <p class="lede">These are the pieces we actually use in our own rooms, at the price we would pay. If you buy through a link here, {BRAND} may earn a small commission — at no extra cost to you. It never changes what makes the list.</p>
- <div class="btnrow"><a class="btn" href="blog.html#get-the-look">See the budget looks</a><a class="btn ghost" href="affiliate-disclosure.html">Read the disclosure</a></div>
+ <p class="eyebrow">{eyebrow}</p>
+ <h1>{h1}</h1>
+ <p class="lede">{lede}</p>
+ <div class="btnrow">{btn_html}</div>
 </div></section>
 
-<section class="section"><div class="container narrow">{living}{bedroom}{small}</div></section>
+<section class="section"><div class="container narrow">{rooms_html}</div></section>
 
 <section class="section"><div class="container narrow">
- <h2>How to shop a room without wasting money</h2>
- <ol class="steps">
-  <li><b>Buy the anchor first.</b> The rug sets the palette and the warmth of everything above it. Buy it before cushions, art or accessories.</li>
-  <li><b>Buy textiles before objects.</b> Throws, covers and curtains change how a room feels more than any ornament, and they are usually the cheapest items on the list.</li>
-  <li><b>Buy lighting third.</b> Two warm bulbs and one extra lamp will do more than a new side table.</li>
-  <li><b>Buy decor last</b> — and only after you have edited the surfaces. Shop with 30% empty space in mind.</li>
- </ol>
- <div class="callout"><h4>Sizing before shopping</h4><p>Measure your room, your sofa and your window before you open a single product page. Most disappointing budget purchases are a sizing mistake, not a quality one: rugs that are too small, curtains that are too short, lamps that are too short for the table they sit on.</p></div>
+ <h2>{how_title}</h2>
+ {steps_html}
+ <div class="callout"><h4>{sizing_title}</h4><p>{sizing_body}</p></div>
 
- <h2>What we do not link to</h2>
- <p class="muted">We do not recommend dropshipped decor with no review history, printed wood-grain finishes, mirrored furniture with bevelled edges, or decorative sets of four. If it only looks good in a product render, it does not make the list.</p>
+ <h2>{not_title}</h2>
+ <p class="muted">{not_body}</p>
 </div></section>
 
 {newsletter()}
 """
-    desc = "Shoppable budget decor: the pieces we actually use in living rooms, bedrooms and small apartments, with typical prices and how our affiliate links work."
-    return page("shop-my-home.html", f"Shop My Home — Budget Decor We Actually Use | {BRAND}", desc, body, 0,
+    desc = cfg.get("description") or "Shoppable budget decor: the pieces we actually use in living rooms, bedrooms and small apartments, with typical prices and how our affiliate links work."
+    return page("shop-my-home.html", title, desc, body, 0,
                 schema=json.dumps({"@context": "https://schema.org", "@type": "CollectionPage", "name": "Shop My Home",
                                    "url": DOMAIN + "/shop-my-home.html",
                                    "publisher": {"@type": "Organization", "name": BRAND}}))
