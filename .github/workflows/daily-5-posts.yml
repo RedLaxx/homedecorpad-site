@@ -1,0 +1,158 @@
+name: Daily 5 Posts — 5 categories every 3 hours
+
+on:
+  schedule:
+    # 5 posts daily, each from different category, every 3 hours starting 3 AM UTC
+    - cron: '0 3 * * *'   # 3 AM UTC -> living-room
+    - cron: '0 6 * * *'   # 6 AM UTC -> bedroom
+    - cron: '0 9 * * *'   # 9 AM UTC -> small-space
+    - cron: '0 12 * * *'  # 12 PM UTC -> color
+    - cron: '0 15 * * *'  # 3 PM UTC -> kitchen-dining
+  workflow_dispatch:
+    inputs:
+      count:
+        description: 'How many posts to generate (1-5)'
+        required: false
+        default: '1'
+        type: choice
+        options:
+          - '1'
+          - '5'
+      force_category:
+        description: 'Force specific category (optional)'
+        required: false
+        type: choice
+        options:
+          - ''
+          - 'living-room'
+          - 'bedroom'
+          - 'small-space'
+          - 'color'
+          - 'kitchen-dining'
+          - 'get-the-look'
+          - 'finds'
+          - 'diy'
+          - 'wall-decor'
+          - 'organization'
+      force_title:
+        description: 'Optional custom title'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          pip install pyyaml pillow
+
+      - name: Determine category from hour (for scheduled runs)
+        id: cat
+        run: |
+          HOUR=$(date -u +%H)
+          HOUR=${HOUR#0}
+          echo "Current UTC hour: $HOUR"
+          if [ -n "${{ inputs.force_category }}" ]; then
+            CAT="${{ inputs.force_category }}"
+            echo "Forced category: $CAT"
+          elif [ "${{ github.event_name }}" = "schedule" ]; then
+            case $HOUR in
+              3) CAT="living-room" ;;
+              6) CAT="bedroom" ;;
+              9) CAT="small-space" ;;
+              12) CAT="color" ;;
+              15) CAT="kitchen-dining" ;;
+              *) CAT="" ;;
+            esac
+            echo "Scheduled hour $HOUR -> category $CAT"
+          else
+            CAT=""
+          fi
+          echo "category=$CAT" >> $GITHUB_OUTPUT
+          echo "hour=$HOUR" >> $GITHUB_OUTPUT
+
+      - name: Generate post(s)
+        run: |
+          COUNT="${{ inputs.count }}"
+          if [ -z "$COUNT" ]; then COUNT="1"; fi
+          CAT="${{ steps.cat.outputs.category }}"
+          HOUR="${{ steps.cat.outputs.hour }}"
+          TITLE="${{ inputs.force_title }}"
+
+          echo "Generating $COUNT post(s), category=$CAT, hour=$HOUR, title=$TITLE"
+
+          if [ -n "$TITLE" ]; then
+            python3 _build/generate_daily_5.py --count 1 --title "$TITLE"
+          elif [ "$COUNT" = "5" ]; then
+            python3 _build/generate_daily_5.py --count 5
+          elif [ -n "$CAT" ]; then
+            python3 _build/generate_daily_5.py --count 1 --category "$CAT" --hour "$HOUR"
+          else
+            python3 _build/generate_daily_5.py --count 1 --hour "$HOUR"
+          fi
+
+          echo "Generated files:"
+          ls -lt content/posts/*.md | head -10
+          echo "Pinnable images:"
+          ls -lt assets/uploads/pinnable/*.jpg | head -10
+
+      - name: Build site (verify 1500+ words, SEO, internal links)
+        run: |
+          python3 _build/build.py
+          echo "Checking word counts:"
+          for f in $(ls -t content/posts/*.md | head -5); do
+            WC=$(grep -c "word_count" "$f" || wc -w < "$f")
+            echo "$f: $WC"
+            # Verify 1500+ words in frontmatter
+            python3 -c "
+import yaml
+text=open('$f',encoding='utf-8').read()
+fm=yaml.safe_load(text.split('---')[1])
+wc=fm.get('word_count',0)
+print(f\"  frontmatter word_count: {wc}\")
+assert wc >= 1500, f'Word count {wc} < 1500'
+"
+          done
+
+      - name: Commit and push
+        run: |
+          git config user.name "HomeDecorPad Bot"
+          git config user.email "bot@homedecorpad.com"
+          git add content/posts/ assets/uploads/pinnable/ content/queue/
+          if git diff --cached --quiet; then
+            echo "No new posts — nothing to commit"
+            exit 0
+          fi
+          LATEST=$(ls -t content/posts/*.md | head -1)
+          TITLE=$(grep -m1 "^title:" "$LATEST" | cut -d' ' -f2-)
+          CAT=$(grep -m1 "^category:" "$LATEST" | cut -d' ' -f2-)
+          COUNT=$(git diff --cached --name-only | grep "content/posts/" | wc -l)
+          git commit -m "Daily auto: $COUNT post(s) — $CAT — $TITLE [auto] [skip ci? no]"
+          git push origin main
+          echo "Pushed $COUNT new post(s)"
+
+      - name: Summary
+        run: |
+          echo "### Daily 5 Posts — Generated" >> $GITHUB_STEP_SUMMARY
+          echo "Hour UTC: $(date -u +%H) -> Category: ${{ steps.cat.outputs.category }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          ls -t content/posts/*.md | head -5 | while read f; do
+            echo "- $(basename $f) — $(grep -m1 title: $f)" >> $GITHUB_STEP_SUMMARY
+          done
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Pinnable images (1000x1500):" >> $GITHUB_STEP_SUMMARY
+          ls assets/uploads/pinnable/*.jpg | wc -l | xargs echo "- Total pinnable:" >> $GITHUB_STEP_SUMMARY
