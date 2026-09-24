@@ -16,6 +16,7 @@ related:
   - amazon-home-finds-look-expensive
 draft: false
 hero_image: /assets/uploads/hero-light-1500x1000.jpg
+featured_image: /assets/uploads/hero-light-1500x1000.jpg
 
 ---
 

@@ -16,6 +16,7 @@ related:
   - small-apartment-decor-ideas
 draft: false
 hero_image: /assets/uploads/hero-sage-pillows-1500x1000.jpg
+featured_image: /assets/uploads/hero-sage-pillows-1500x1000.jpg
 
 ---
 

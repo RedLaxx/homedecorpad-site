@@ -125,10 +125,14 @@ content:
               label: Basket & plant
             - name: plain
               label: Simple object
-      - name: hero_image
-        label: Hero photo (optional)
+      - name: featured_image
+        label: Featured image — upload (shows on cards, slider & post hero)
         type: image
-        description: Upload a real photo to replace the illustration. Leave empty to use the illustration. Photos you upload yourself perform better than generated art.
+        description: Main photo for this post. Used on blog cards, homepage slider, and at top of the post. 1500x1000px recommended. Leave empty to use illustration. You can upload any of the hero variations from assets/uploads/.
+      - name: hero_image
+        label: Hero photo (legacy — use Featured image above)
+        type: image
+        description: Old field — kept for backwards compatibility. Use Featured image above instead. If both set, Featured image wins.
       - name: related
         label: Related posts (optional)
         type: string

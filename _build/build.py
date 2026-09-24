@@ -194,6 +194,8 @@ def load_posts():
     for slug, cat, fm, body_md in staged:
         html, faq = md_engine.render(body_md, lambda h, d=2: resolve_link(h, d))
         html = drop_missing_images(html, slug)
+        # featured_image is new primary field, hero_image kept for backwards compat
+        feat_img = str(fm.get("featured_image") or fm.get("hero_image") or "").strip()
         out.append({
             "slug": slug, "cat": cat,
             "title": str(fm.get("title") or slug),
@@ -203,7 +205,8 @@ def load_posts():
             "intro": str(fm.get("intro") or ""),
             "tags": list(fm.get("tags") or []),
             "motif": str(fm.get("motif") or CAT[cat]["motif"]),
-            "hero_image": str(fm.get("hero_image") or "").strip(),
+            "hero_image": feat_img,
+            "featured_image": feat_img,
             "related": list(fm.get("related") or []),
             "body": html, "faq": faq,
         })
@@ -457,16 +460,18 @@ def _encode_asset(u):
 
 
 def hero_available(p):
-    if not p.get("hero_image"):
+    img = p.get("featured_image") or p.get("hero_image") or ""
+    if not img:
         return False
-    rel = urllib_parse.unquote(str(p["hero_image"])).lstrip("/")
+    rel = urllib_parse.unquote(str(img)).lstrip("/")
     return os.path.exists(os.path.join(ROOT, rel))
 
 
 def cover_html(p, depth=0, cls_art="c4x3"):
-    """Card artwork: an uploaded hero photo when the editor set one, else the illustration."""
+    """Card artwork: an uploaded featured photo when the editor set one, else the illustration."""
     if hero_available(p):
-        return (f'<div class="cover {cls_art}"><img src="{asset_url(p["hero_image"], depth)}" alt="" '
+        img = p.get("featured_image") or p.get("hero_image") or ""
+        return (f'<div class="cover {cls_art}"><img src="{asset_url(img, depth)}" alt="" '
                 f'style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>')
     return art(p["motif"], CAT[p["cat"]]["tone"], cls_art)
 
@@ -927,7 +932,8 @@ def page_post(p):
     depth = 2  # /blog/<cat>/<slug>.html
     c = CAT[p["cat"]]
     body_html = p["body"]
-    hero = (f'<img src="{asset_url(p["hero_image"], depth)}" '
+    feat_img = p.get("featured_image") or p.get("hero_image") or ""
+    hero = (f'<img src="{asset_url(feat_img, depth)}" '
             f'alt="{_html.escape(p["title"], quote=True)}" style="width:100%;height:100%;object-fit:cover">') \
         if hero_available(p) else art_raw(p["motif"], c["tone"])
     pin_title = p["title"][:100]

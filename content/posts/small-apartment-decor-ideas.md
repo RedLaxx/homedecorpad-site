@@ -16,6 +16,7 @@ related:
   - ikea-hacks-custom-living-room
 draft: false
 hero_image: /assets/uploads/hero-cream-pillows-1500x1000.jpg
+featured_image: /assets/uploads/hero-cream-pillows-1500x1000.jpg
 
 ---
 

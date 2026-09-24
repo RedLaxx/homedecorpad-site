@@ -17,6 +17,7 @@ related:
   - one-room-three-budgets-cozy-bedroom
 draft: false
 hero_image: /assets/uploads/hero-1500x1000.jpg
+featured_image: /assets/uploads/hero-1500x1000.jpg
 
 ---
 
