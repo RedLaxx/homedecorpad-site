@@ -1,80 +1,98 @@
 title: Start Here — How to Decorate on a Budget
 h1: Make your home look designed — without a designer budget
 eyebrow: Start here
-lede: HomeDecorPad is a small library of decor ideas that are actually finishable. Every guide answers three questions: what do I do first, what does it cost, and what can I skip?
+lede: 'HomeDecorPad is a small library of decor ideas that are actually finishable.
+  Every guide answers three questions: what do I do first, what does it cost, and
+  what can I skip?'
 buttons:
-  - label: Browse all guides
-    url: /blog.html
-    style: primary
-  - label: Shop the looks
-    url: /shop-my-home.html
-    style: ghost
+- label: Browse all guides
+  url: /blog.html
+  style: primary
+- label: Shop the looks
+  url: /shop-my-home.html
+  style: ghost
 how_it_works_title: How this site works
-how_it_works_body: |
-  Most decor content is aimed at people with a renovation budget. This site is built for the opposite: renters, first apartments, and anyone furnishing a room with a number in mind.
+how_it_works_body: 'Most decor content is aimed at people with a renovation budget.
+  This site is built for the opposite: renters, first apartments, and anyone furnishing
+  a room with a number in mind.
 
-  - **Free fixes before purchases.** Layout, light and editing come first because they change a room the most and cost the least.
-  - **Prices and order of operations.** We tell you what to buy first, so you never spend your budget on the wrong piece.
-  - **Honest about the cheap stuff.** We will tell you when a budget item is not worth it — and what we would return.
 
+  - **Free fixes before purchases.** Layout, light and editing come first because
+  they change a room the most and cost the least.
+
+  - **Prices and order of operations.** We tell you what to buy first, so you never
+  spend your budget on the wrong piece.
+
+  - **Honest about the cheap stuff.** We will tell you when a budget item is not worth
+  it — and what we would return.
+
+  '
 method_title: The four-step method we use in every room
 method_steps:
-  - title: Edit.
-    body: Clear every surface, then put back only what earns its place. Free, and it does more than any purchase.
-  - title: Light it.
-    body: Warm bulbs (2700K), three sources at three heights, and a dimmer wherever it is possible. Under $40 for most rooms.
-  - title: Anchor it.
-    body: One large-size rug, and a colour palette of a dominant neutral plus one accent. This is where a room stops feeling like a rental.
-  - title: Layer it.
-    body: Texture where colour would be busy: bouclé, linen, wood, brass, a basket, one plant. Never more than three objects per surface.
-
+- title: Edit.
+  body: Clear every surface, then put back only what earns its place. Free, and it
+    does more than any purchase.
+- title: Light it.
+  body: Warm bulbs (2700K), three sources at three heights, and a dimmer wherever
+    it is possible. Under $40 for most rooms.
+- title: Anchor it.
+  body: One large-size rug, and a colour palette of a dominant neutral plus one accent.
+    This is where a room stops feeling like a rental.
+- title: Layer it.
+  body: 'Texture where colour would be busy: bouclé, linen, wood, brass, a basket,
+    one plant. Never more than three objects per surface.'
 callout_title: The rule behind all of it
-callout_body: Spend on the things your eye lands on — the rug, the lighting, the bedding — and save on the things it does not. A $25 throw in the right texture beats a $200 lamp you cannot see.
-
+callout_body: Spend on the things your eye lands on — the rug, the lighting, the bedding
+  — and save on the things it does not. A $25 throw in the right texture beats a $200
+  lamp you cannot see.
 known_for_title: What we are known for
 known_for_items:
-  - text: Get the Look for Less — a designer look broken into a shopping list and a total.
-    link_label: Start with the warm minimalist living room
-    link_url: post:warm-minimalist-living-room-under-250
-  - text: One Room, Three Budgets — the same room at $150, $500 and $1,500.
-    link_label: See the bedroom
-    link_url: post:one-room-three-budgets-cozy-bedroom
-  - text: Room guides — layout, light and styling rules by room.
-    link_label: Living room, small space, colour
-    link_url: /blog.html
-
+- text: Get the Look for Less — a designer look broken into a shopping list and a
+    total.
+  link_label: Start with the warm minimalist living room
+  link_url: post:warm-minimalist-living-room-under-250
+- text: One Room, Three Budgets — the same room at $150, $500 and $1,500.
+  link_label: See the bedroom
+  link_url: post:one-room-three-budgets-cozy-bedroom
+- text: Room guides — layout, light and styling rules by room.
+  link_label: Living room, small space, colour
+  link_url: /blog.html
 picks_title: Pick your first project
 picks_eyebrow: Start somewhere
-picks_link_text: ""
-picks_link_url: ""
+picks_link_text: ''
+picks_link_url: ''
 picks:
-  - slug: living-room-layout-mistakes
-    title: Fix the room before you shop it
-    kicker: Living room
-    description: Twelve free layout fixes that make a room feel bigger and more finished.
-  - slug: home-decor-color-palettes-2027
-    title: Pick your palette
-    kicker: Color & paint
-    description: Eight 60/30/10 palettes with proportions that actually work at home.
-  - slug: small-apartment-decor-ideas
-    title: Make a small space feel bigger
-    kicker: Small space
-    description: Ten moves that add up in a 500 sq ft rental.
-  - slug: warm-minimalist-living-room-under-250
-    title: Get a designer look for less
-    kicker: Get the look
-    description: A complete warm minimalist living room for under $250.
-  - slug: renter-friendly-wall-decor-ideas
-    title: Decorate without losing your deposit
-    kicker: Wall decor
-    description: Seven damage-free ideas that genuinely stay on the wall.
-  - slug: amazon-home-finds-look-expensive
-    title: Buy the right pieces
-    kicker: Home finds
-    description: Eleven finds under $60 that read far more expensive than they are.
-
+- slug: living-room-layout-mistakes
+  title: Fix the room before you shop it
+  kicker: Living room
+  description: Twelve free layout fixes that make a room feel bigger and more finished.
+- slug: home-decor-color-palettes-2027
+  title: Pick your palette
+  kicker: Color & paint
+  description: Eight 60/30/10 palettes with proportions that actually work at home.
+- slug: small-apartment-decor-ideas
+  title: Make a small space feel bigger
+  kicker: Small space
+  description: Ten moves that add up in a 500 sq ft rental.
+- slug: warm-minimalist-living-room-under-250
+  title: Get a designer look for less
+  kicker: Get the look
+  description: A complete warm minimalist living room for under $250.
+- slug: renter-friendly-wall-decor-ideas
+  title: Decorate without losing your deposit
+  kicker: Wall decor
+  description: Seven damage-free ideas that genuinely stay on the wall.
+- slug: amazon-home-finds-look-expensive
+  title: Buy the right pieces
+  kicker: Home finds
+  description: Eleven finds under $60 that read far more expensive than they are.
 coming_next_title: What is coming next
-coming_next_body: |
-  Kitchen and dining styling, storage that looks like decor, a fall and holiday decorating series, and more One Room Three Budgets makeovers — including a home office and an entryway.
+coming_next_body: 'Kitchen and dining styling, storage that looks like decor, a fall
+  and holiday decorating series, and more One Room Three Budgets makeovers — including
+  a home office and an entryway.
 
-  The best way to see them first is the weekly email: one room idea, one budget swap and one thing worth buying, every Sunday.
+
+  The best way to see them first is the weekly email: one room idea, one budget swap
+  and one thing worth buying, every Sunday.
+
+  '

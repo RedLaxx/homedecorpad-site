@@ -1,93 +1,101 @@
 title: Shop My Home — Budget Decor We Actually Use
 h1: Shop the looks (and how our links work)
 eyebrow: Shop my home
-lede: These are the pieces we actually use in our own rooms, at the price we would pay. If you buy through a link here, HomeDecorPad may earn a small commission — at no extra cost to you. It never changes what makes the list.
+lede: These are the pieces we actually use in our own rooms, at the price we would
+  pay. If you buy through a link here, HomeDecorPad may earn a small commission —
+  at no extra cost to you. It never changes what makes the list.
 buttons:
-  - label: See the budget looks
-    url: /blog.html#get-the-look
-    style: primary
-  - label: Read the disclosure
-    url: /affiliate-disclosure.html
-    style: ghost
+- label: See the budget looks
+  url: /blog.html#get-the-look
+  style: primary
+- label: Read the disclosure
+  url: /affiliate-disclosure.html
+  style: ghost
 rooms:
-  - title: Warm minimalist living room
-    slug: living-room
-    tone: 4
-    motif: arch
-    note: Typical prices at the time of writing. Links go to Amazon search results — see our disclosure.
-    items:
-      - name: Chunky knit throw, oat
-        note: 50×60 in, visible stitch — the single best value item in the room
-        price: $25–40
-      - name: 2 bouclé cushion covers, 18×18 in
-        note: Reuse your existing inserts; covers only
-        price: $24
-      - name: Ribbed ceramic vase
-        note: Matte, unglazed look — with two faux stems
-        price: $18–26
-      - name: Acacia wood serving tray
-        note: 16–18 in; groups three objects so surfaces look styled
-        price: $20–28
-      - name: Warm 2700K LED bulbs, 4-pack
-        note: Cheapest design upgrade that exists
-        price: $12
-      - name: Washable rug, 8×10 low pile
-        note: Warm neutral; front legs of every seat must sit on it
-        price: $90–150
-  - title: Cozy layered bedroom
-    slug: bedroom
-    tone: 1
-    motif: portrait
-    items:
-      - name: Washed cotton duvet cover
-        note: Oat or warm white — pre-washed, not sateen
-        price: $45–70
-      - name: Ribbed ceramic table lamps, pair
-        note: Linen shade, 20–24 in tall, warm bulb
-        price: $70–95
-      - name: Oatmeal linen curtains, 96 in
-        note: Two panels per window, hung at ceiling height
-        price: $35–60 each
-      - name: Bouclé lumbar pillow
-        note: 14×24 in in cream or camel
-        price: $18–28
-      - name: Storage bench, upholstered
-        note: Hinged lid earns its footprint at the end of the bed
-        price: $90–130
-  - title: Small apartment essentials
-    slug: small-space
-    tone: 2
-    motif: flat
-    items:
-      - name: 8×10 washable rug
-        note: Unifies small rooms instead of chopping them into zones
-        price: $90–150
-      - name: Wall mirror, 24×36 in
-        note: Hang opposite the biggest window, not opposite a blank wall
-        price: $45–70
-      - name: Plug-in wall sconce
-        note: Second light height with no wiring and no landlord
-        price: $30–45
-      - name: Over-the-door storage rack, slim
-        note: Cleaning supplies, shoes or pantry overflow
-        price: $25–35
-      - name: Woven basket, 16 in
-        note: Plants, throws or magazines — texture that hides clutter
-        price: $20–28
-
+- title: Warm minimalist living room
+  slug: living-room
+  tone: 4
+  motif: arch
+  note: Typical prices at the time of writing. Links go to Amazon search results —
+    see our disclosure.
+  items:
+  - name: Chunky knit throw, oat
+    note: 50×60 in, visible stitch — the single best value item in the room
+    price: $25–40
+  - name: 2 bouclé cushion covers, 18×18 in
+    note: Reuse your existing inserts; covers only
+    price: $24
+  - name: Ribbed ceramic vase
+    note: Matte, unglazed look — with two faux stems
+    price: $18–26
+  - name: Acacia wood serving tray
+    note: 16–18 in; groups three objects so surfaces look styled
+    price: $20–28
+  - name: Warm 2700K LED bulbs, 4-pack
+    note: Cheapest design upgrade that exists
+    price: $12
+  - name: Washable rug, 8×10 low pile
+    note: Warm neutral; front legs of every seat must sit on it
+    price: $90–150
+- title: Cozy layered bedroom
+  slug: bedroom
+  tone: 1
+  motif: portrait
+  items:
+  - name: Washed cotton duvet cover
+    note: Oat or warm white — pre-washed, not sateen
+    price: $45–70
+  - name: Ribbed ceramic table lamps, pair
+    note: Linen shade, 20–24 in tall, warm bulb
+    price: $70–95
+  - name: Oatmeal linen curtains, 96 in
+    note: Two panels per window, hung at ceiling height
+    price: $35–60 each
+  - name: Bouclé lumbar pillow
+    note: 14×24 in in cream or camel
+    price: $18–28
+  - name: Storage bench, upholstered
+    note: Hinged lid earns its footprint at the end of the bed
+    price: $90–130
+- title: Small apartment essentials
+  slug: small-space
+  tone: 2
+  motif: flat
+  items:
+  - name: 8×10 washable rug
+    note: Unifies small rooms instead of chopping them into zones
+    price: $90–150
+  - name: Wall mirror, 24×36 in
+    note: Hang opposite the biggest window, not opposite a blank wall
+    price: $45–70
+  - name: Plug-in wall sconce
+    note: Second light height with no wiring and no landlord
+    price: $30–45
+  - name: Over-the-door storage rack, slim
+    note: Cleaning supplies, shoes or pantry overflow
+    price: $25–35
+  - name: Woven basket, 16 in
+    note: Plants, throws or magazines — texture that hides clutter
+    price: $20–28
 how_to_title: How to shop a room without wasting money
 how_to_steps:
-  - title: Buy the anchor first.
-    body: The rug sets the palette and the warmth of everything above it. Buy it before cushions, art or accessories.
-  - title: Buy textiles before objects.
-    body: Throws, covers and curtains change how a room feels more than any ornament, and they are usually the cheapest items on the list.
-  - title: Buy lighting third.
-    body: Two warm bulbs and one extra lamp will do more than a new side table.
-  - title: Buy decor last
-    body: and only after you have edited the surfaces. Shop with 30% empty space in mind.
-
+- title: Buy the anchor first.
+  body: The rug sets the palette and the warmth of everything above it. Buy it before
+    cushions, art or accessories.
+- title: Buy textiles before objects.
+  body: Throws, covers and curtains change how a room feels more than any ornament,
+    and they are usually the cheapest items on the list.
+- title: Buy lighting third.
+  body: Two warm bulbs and one extra lamp will do more than a new side table.
+- title: Buy decor last
+  body: and only after you have edited the surfaces. Shop with 30% empty space in
+    mind.
 sizing_title: Sizing before shopping
-sizing_body: Measure your room, your sofa and your window before you open a single product page. Most disappointing budget purchases are a sizing mistake, not a quality one: rugs that are too small, curtains that are too short, lamps that are too short for the table they sit on.
-
+sizing_body: 'Measure your room, your sofa and your window before you open a single
+  product page. Most disappointing budget purchases are a sizing mistake, not a quality
+  one: rugs that are too small, curtains that are too short, lamps that are too short
+  for the table they sit on.'
 not_link_title: What we do not link to
-not_link_body: We do not recommend dropshipped decor with no review history, printed wood-grain finishes, mirrored furniture with bevelled edges, or decorative sets of four. If it only looks good in a product render, it does not make the list.
+not_link_body: We do not recommend dropshipped decor with no review history, printed
+  wood-grain finishes, mirrored furniture with bevelled edges, or decorative sets
+  of four. If it only looks good in a product render, it does not make the list.

@@ -881,7 +881,7 @@ def page_start_here():
         if not isinstance(item, dict):
             continue
         slug = item.get("slug","")
-        title = item.get("title","")
+        pick_title = item.get("title","")
         kicker = item.get("kicker","")
         sub = item.get("description","")
         if not slug or slug not in POST_BY_SLUG:
@@ -889,7 +889,7 @@ def page_start_here():
         p_ = POST_BY_SLUG[slug]
         cards += (f'<article class="card">{cover_html(p_, 0, "c3x2")}'
                   f'<div class="body"><span class="chip">{kicker or CAT[p_["cat"]]["name"]}</span>'
-                  f'<h3><a href="{post_url(slug)}">{title or p_["title"]}</a></h3><p>{sub or p_["dek"]}</p>'
+                  f'<h3><a href="{post_url(slug)}">{pick_title or p_["title"]}</a></h3><p>{sub or p_["dek"]}</p>'
                   f'<div class="btnrow cardbtn"><a class="btn sm ghost" href="{post_url(slug)}">View post</a></div>'
                   f'<div class="meta"><span>{read_label(p_)}</span></div></div></article>')
 
