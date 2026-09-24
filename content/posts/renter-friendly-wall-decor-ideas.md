@@ -15,6 +15,8 @@ related:
   - small-apartment-decor-ideas
   - amazon-home-finds-look-expensive
 draft: false
+hero_image: /assets/uploads/hero-light-1500x1000.jpg
+
 ---
 
 Most “damage-free” wall ideas online forget the part where a command strip fails at 2am and takes your favourite print with it. These seven are the ones that hold, come down clean, and actually look like design rather than a workaround.

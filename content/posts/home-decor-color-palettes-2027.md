@@ -15,6 +15,8 @@ related:
   - one-room-three-budgets-cozy-bedroom
   - small-apartment-decor-ideas
 draft: false
+hero_image: /assets/uploads/hero-sage-pillows-1500x1000.jpg
+
 ---
 
 The colour trends for the coming season are warm, green-adjacent and heavily wood-based. The good news for anyone on a budget: you do not need to commit to a repaint. Most of these palettes work as textiles, one painted wall, or a few well-chosen accessories against the warm white you already have.

@@ -16,6 +16,8 @@ related:
   - renter-friendly-wall-decor-ideas
   - one-room-three-budgets-cozy-bedroom
 draft: false
+hero_image: /assets/uploads/hero-1500x1000.jpg
+
 ---
 
 Before spending another dollar on decor, spend twenty minutes rethinking where the furniture sits. Layout is the cheapest design decision you will make, and it affects how the room feels more than any object in it.

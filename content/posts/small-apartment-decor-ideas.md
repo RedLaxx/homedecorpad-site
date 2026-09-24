@@ -15,6 +15,8 @@ related:
   - living-room-layout-mistakes
   - ikea-hacks-custom-living-room
 draft: false
+hero_image: /assets/uploads/hero-cream-pillows-1500x1000.jpg
+
 ---
 
 Every small-space post tells you to use mirrors and light colors. Both are true and both are incomplete. The reason tiny apartments feel cramped is almost always visual noise: many small objects, many small rugs, many small light sources. Fix the noise and the room grows.

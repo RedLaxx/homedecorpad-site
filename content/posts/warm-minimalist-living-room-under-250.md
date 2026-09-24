@@ -15,6 +15,8 @@ related:
   - living-room-layout-mistakes
   - amazon-home-finds-look-expensive
 draft: false
+hero_image: /assets/uploads/hero-1200x800.jpg
+
 ---
 
 Most “budget living room” posts hand you twenty items. This one hands you six. That is the entire trick: warm minimalist rooms look expensive because every object that made it in there is doing a job, and the budget went into texture instead of quantity.
