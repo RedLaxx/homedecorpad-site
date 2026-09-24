@@ -247,15 +247,20 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 .fbot a{color:#C9BFB2;text-decoration:underline}
 .disc{font-size:13px;color:#A79C8F;margin-top:14px;max-width:none}
 
-/* comments - Giscus */
+/* comments - Giscus + Cusdis tabbed */
 .comments{margin:48px 0 0;padding-top:36px;border-top:1px solid var(--line)}
 .comments-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
 .comments-head h2{margin:0;font-size:clamp(22px,2.8vw,28px)}
 .comments-note{font-size:13.5px;color:var(--muted);max-width:48ch}
 .giscus{margin-top:18px}
 .giscus-frame{border:0;width:100%}
-/* when disabled */
 .comments-disabled{background:#fff;border:1px dashed var(--line);border-radius:14px;padding:20px 22px;color:var(--muted);font-size:14.5px}
+.comment-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 18px;border-bottom:1px solid var(--line);padding-bottom:12px}
+.comment-tabs button{font:inherit;font-size:13.5px;padding:10px 18px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;font-weight:500}
+.comment-tabs button.active,.comment-tabs button:hover{border-color:var(--terra);color:var(--terra-d);background:#FFF8F4}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+.cusdis{margin-top:8px}
 
 /* consent */
 .consent{position:fixed;z-index:80;left:14px;right:14px;bottom:14px;max-width:960px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 44px rgba(60,40,20,.2);padding:16px 18px;display:none;gap:14px;align-items:center;flex-wrap:wrap}
@@ -796,29 +801,46 @@ def consent(rel=""):
 
 
 def comments_section(rel=""):
-    """Comment widget — supports Giscus (GitHub login) and Cusdis (anonymous, no login)."""
+    """Comment widget — supports Giscus (GitHub login) and Cusdis (anonymous, no login). Tabbed when both enabled."""
     system = (COMMENT_SYSTEM or "giscus").lower()
 
-    # Explicit off
     if system == "none":
         return ""
 
-    # --- CUSDIS: anonymous, no login ---
-    if system == "cusdis" or CUSDIS_ENABLED:
+    # Helpers
+    def giscus_html():
+        if not GISCUS_ENABLED:
+            return ""
+        if not GISCUS_CATEGORY_ID:
+            return f"""<div class="comments-disabled">
+  <p><b>Giscus setup needed:</b> Go to <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, enter <code>{GISCUS_REPO}</code>, copy IDs into Site settings → Giscus.</p>
+</div>"""
+        return f"""<div class="giscus"></div>
+ <script src="https://giscus.app/client.js"
+        data-repo="{GISCUS_REPO}"
+        data-repo-id="{GISCUS_REPO_ID}"
+        data-category="{GISCUS_CATEGORY}"
+        data-category-id="{GISCUS_CATEGORY_ID}"
+        data-mapping="{GISCUS_MAPPING}"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="{GISCUS_THEME}"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+ </script>"""
+
+    def cusdis_html():
+        if not (CUSDIS_ENABLED or system in ("cusdis","both")):
+            return ""
         if not CUSDIS_APP_ID:
-            return f"""<section class="comments" id="comments"><div class="container narrow">
- <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div>
- <p class="comments-note">Anonymous comments — no login needed.</p></div>
- <div class="comments-disabled">
-  <p><b>Setup needed for anonymous comments:</b> Get a free App ID at <a href="https://cusdis.com" target="_blank" rel="noopener">cusdis.com</a> → Dashboard → New Website → paste App ID into Pages CMS → Site settings → Cusdis App ID, and set Comment system to Cusdis.</p>
-  <p style="margin:0">Or switch back to Giscus (requires GitHub login) by setting Comment system to Giscus.</p>
- </div>
-</div></section>"""
-        # Normal Cusdis embed — anonymous, no login required
-        return f"""<section class="comments" id="comments"><div class="container narrow">
- <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div>
- <p class="comments-note">No login needed — just your name and comment. We moderate to keep it friendly.</p></div>
- <div id="cusdis_thread"
+            return f"""<div class="comments-disabled">
+  <p><b>Anonymous comments setup:</b> Get free App ID at <a href="https://cusdis.com" target="_blank" rel="noopener">cusdis.com</a> → New Website → paste App ID into Site settings → Cusdis App ID.</p>
+  <p style="margin:8px 0 0" class="muted">Once saved, anonymous comments work with no login. Takes 1 minute.</p>
+</div>"""
+        return f"""<div id="cusdis_thread"
   data-host="{CUSDIS_HOST}"
   data-app-id="{CUSDIS_APP_ID}"
   data-page-id="page"
@@ -835,41 +857,66 @@ def comments_section(rel=""):
     el.setAttribute('data-page-title', document.title);
   }})();
  </script>
- <script async defer src="{CUSDIS_HOST}/js/cusdis.es.js"></script>
- <noscript><p class="muted">Enable JavaScript to view comments.</p></noscript>
+ <script async defer src="{CUSDIS_HOST}/js/cusdis.es.js"></script>"""
+
+    # --- BOTH: tabbed, Cusdis on top (as requested) ---
+    if system == "both" or (GISCUS_ENABLED and CUSDIS_ENABLED):
+        g_html = giscus_html()
+        c_html = cusdis_html()
+        # If both empty, nothing
+        if not g_html and not c_html:
+            return ""
+        return f"""<section class="comments" id="comments"><div class="container narrow">
+ <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div>
+ <p class="comments-note">Anonymous comments on top — no login needed. GitHub comments below for those who prefer it.</p></div>
+
+ <div class="comment-tabs">
+  <button class="tab active" data-tab="cusdis" onclick="switchCommentTab('cusdis')">💬 Anonymous — no login</button>
+  <button class="tab" data-tab="giscus" onclick="switchCommentTab('giscus')">🐙 GitHub — with login</button>
+ </div>
+
+ <div id="tab-cusdis" class="tab-pane active">
+  <div class="cusdis">{c_html}</div>
+ </div>
+ <div id="tab-giscus" class="tab-pane">
+  {g_html}
+  <noscript><p class="muted">Enable JavaScript to view GitHub comments via Giscus.</p></noscript>
+ </div>
+
+ <script>
+ function switchCommentTab(which){{
+   document.querySelectorAll('.comment-tabs .tab').forEach(b=>b.classList.toggle('active', b.getAttribute('data-tab')===which));
+   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.toggle('active', p.id==='tab-'+which));
+   try{{localStorage.setItem('hdp-comment-tab', which);}}catch(e){{}}
+ }}
+ (function(){{
+   try{{
+     var saved=localStorage.getItem('hdp-comment-tab');
+     if(saved) switchCommentTab(saved);
+   }}catch(e){{}}
+ }})();
+ </script>
 </div></section>"""
 
-    # --- GISCUS: requires GitHub login ---
-    if not GISCUS_ENABLED and system != "giscus":
-        return ""
-    if not GISCUS_CATEGORY_ID:
+    # --- CUSDIS only ---
+    if system == "cusdis" or (CUSDIS_ENABLED and not GISCUS_ENABLED):
+        c_html = cusdis_html()
+        if not c_html:
+            return ""
         return f"""<section class="comments" id="comments"><div class="container narrow">
- <div class="comments-head"><h2>Comments</h2><p class="comments-note">Comments are enabled but need a category ID from giscus.app</p></div>
- <div class="comments-disabled">
-  <p><b>Setup needed:</b> Go to <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, enter <code>{GISCUS_REPO}</code>, pick a category, copy the IDs into Pages CMS → Site settings → Giscus.</p>
-  <p style="margin:0">Once saved, the site rebuilds and comments appear here. For anonymous comments (no login), set Comment system to Cusdis in Site settings and add your Cusdis App ID.</p>
- </div>
+ <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div>
+ <p class="comments-note">No login needed — just your name and comment.</p></div>
+ <div class="cusdis">{c_html}</div>
 </div></section>"""
+
+    # --- GISCUS only ---
+    g_html = giscus_html()
+    if not g_html:
+        return ""
     return f"""<section class="comments" id="comments"><div class="container narrow">
  <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div>
- <p class="comments-note">Requires GitHub login. For anonymous comments without login, switch to Cusdis in Site settings.</p></div>
- <div class="giscus"></div>
- <script src="https://giscus.app/client.js"
-        data-repo="{GISCUS_REPO}"
-        data-repo-id="{GISCUS_REPO_ID}"
-        data-category="{GISCUS_CATEGORY}"
-        data-category-id="{GISCUS_CATEGORY_ID}"
-        data-mapping="{GISCUS_MAPPING}"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="top"
-        data-theme="{GISCUS_THEME}"
-        data-lang="en"
-        crossorigin="anonymous"
-        async>
- </script>
- <noscript><p class="muted">Enable JavaScript to view comments powered by <a href="https://giscus.app" target="_blank" rel="noopener">Giscus</a>.</p></noscript>
+ <p class="comments-note">Share your take — requires GitHub login. For anonymous, switch to Both in Site settings.</p></div>
+ {g_html}
 </div></section>"""
 
 

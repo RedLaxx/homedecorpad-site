@@ -299,13 +299,15 @@ content:
       - name: comment_system
         label: Comment system
         type: select
-        description: giscus = requires GitHub login. cusdis = anonymous, no login (needs App ID). none = off.
+        description: giscus = GitHub login. cusdis = anonymous no login. both = tabbed with Cusdis on top (recommended).
         options:
           values:
+            - name: both
+              label: Both — Anonymous on top, GitHub below (recommended)
             - name: giscus
-              label: Giscus (GitHub login required)
+              label: Giscus only (GitHub login required)
             - name: cusdis
-              label: Cusdis (anonymous, no login)
+              label: Cusdis only (anonymous, no login)
             - name: none
               label: Off
       - name: cusdis_enabled

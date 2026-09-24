@@ -36,10 +36,11 @@ social:
   youtube: ""
 
 # Comments — choose system:
-# - giscus: requires GitHub login, free, no ads, uses Discussions (you already enabled)
+# - both: tabbed — Cusdis (anonymous, no login) on top, Giscus (GitHub) below — recommended
+# - giscus: requires GitHub login, free, no ads, uses Discussions
 # - cusdis: anonymous, no login, free, no ads, needs app ID from cusdis.com
 # - none: no comments
-comment_system: giscus
+comment_system: both
 
 # Giscus (GitHub login required)
 giscus_enabled: true
@@ -51,7 +52,7 @@ giscus_mapping: pathname
 giscus_theme: light
 
 # Cusdis (anonymous, no login) — get free App ID at https://cusdis.com
-cusdis_enabled: false
+cusdis_enabled: true
 cusdis_app_id: ""
 cusdis_host: https://cusdis.com
 cusdis_theme: light
