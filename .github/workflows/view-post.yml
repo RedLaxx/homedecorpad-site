@@ -1,15 +1,15 @@
-# One-click "View post" button inside Pages CMS.
-# Appears in the post editor header (scope: entry) because .pages.yml
-# defines: actions: [{ name: view-post, label: View post, workflow: view-post.yml, scope: entry, confirm: false }]
+# One-click "View post/page" button inside Pages CMS — v4 canonical clean URLs
+#
+# .pages.yml defines:
+#   posts: actions: [{ name: view-post, label: View Post, workflow: view-post.yml, scope: entry }]
+#   pages: actions: [{ name: view-page, label: View Page, workflow: view-post.yml, scope: entry }]
+#   custom-pages: actions: [{ name: view-page, label: View Page, workflow: view-post.yml, scope: entry }]
 #
 # Flow:
-# 1. You click "View post" in Pages CMS (top-right of the post editor)
-# 2. This workflow runs (~10s), computes https://.../blog/<category>/<slug>.html from the payload
-# 3. GitHub shows "View deployment" button + clickable link in the summary
-#
-# INSTALL: GitHub blocks PATs from pushing .github/workflows/*, so create this file
-# in the GitHub web UI: go to https://github.com/RedLaxx/homedecorpad-site/new/main?filename=.github%2Fworkflows%2Fview-post.yml
-# paste this whole file, Commit directly to main.
+# 1. Click "View Post" or "View Page" in Pages CMS editor
+# 2. Workflow computes canonical live URL (clean without .html or /index.html)
+# 3. Sets environment URL to canonical — button opens live page directly
+# 4. Also shows preview URL in summary for drafts
 
 name: View post
 
@@ -34,11 +34,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Compute live post URL
+      - name: Compute canonical URL
         id: compute
         run: |
           python3 - <<'PY'
-          import json, os, re
+          import json, os, re, urllib.parse, pathlib, yaml
+
           raw = os.environ.get('PAYLOAD_JSON','')
           try:
               payload = json.loads(raw) if raw else {}
@@ -50,6 +51,13 @@ jobs:
           data = ctx.get('data', {}) or {}
           path = ctx.get('path', '') or ''
 
+          # normalize path to content/...
+          if path and 'content/' in path:
+              path = path[path.index('content/'):]
+
+          if not path:
+              path = 'content/posts/unknown.md'
+
           slug = (data.get('slug') or '').strip()
           category = (data.get('category') or '').strip()
           title = (data.get('title') or '').strip()
@@ -57,20 +65,32 @@ jobs:
           def slugify(s):
               s = s.lower()
               s = re.sub(r'[^a-z0-9]+', '-', s)
-              return s.strip('-')
+              return s.strip('-') or 'page'
 
           if not slug:
-              m = re.search(r'([^/]+)\.md$', path)
+              m = re.search(r'([^/]+)\.(md|yml|yaml)$', path)
               if m:
                   slug = slugify(m.group(1))
           if not slug and title:
               slug = slugify(title)
           if not slug:
               slug = 'unknown'
-          if not category:
-              category = 'living-room'
+          if not category and 'content/posts/' in path:
+              # Try to read category from frontmatter file if exists
+              try:
+                  fm_text = pathlib.Path(path).read_text(encoding='utf-8') if pathlib.Path(path).exists() else ""
+                  if fm_text.startswith("---"):
+                      end = fm_text.find("---", 3)
+                      if end != -1:
+                          fm = yaml.safe_load(fm_text[3:end])
+                          if fm and fm.get("category"):
+                              category = fm["category"]
+              except Exception:
+                  pass
+              if not category:
+                  category = 'living-room'
 
-          # Try to read domain from content/site.yml without yaml lib
+          # Base domain — try to read from content/site.yml, fallback to GitHub Pages
           base = 'https://redlaxx.github.io/homedecorpad-site'
           try:
               with open('content/site.yml','r', encoding='utf-8') as f:
@@ -80,27 +100,93 @@ jobs:
                       d = m.group(1).strip().rstrip('/')
                       if d.startswith('http'):
                           base = d
-          except Exception as e:
-              print(f"Could not read domain: {e}")
+          except Exception:
+              pass
 
-          url = f"{base}/blog/{category}/{slug}.html"
+          # For canonical, we use clean URLs without .html (GitHub Pages serves /about for /about.html)
+          # Home: base or base/ (clean)
+          # Pages: base/{page_name} (e.g. /about, /blog, /start-here)
+          # Custom pages: base/{slug} (clean)
+          # Posts: base/blog/{category}/{slug} (clean)
+
+          if 'content/custom-pages/' in path:
+              canonical = f"{slug}"
+              live_url = f"{base}/{slug}"
+              live_html = f"{base}/{slug}.html"
+          elif 'content/pages/' in path:
+              page_name = path.split('/')[-1].rsplit('.',1)[0]
+              mapping_clean = {
+                  'start-here': 'start-here',
+                  'about': 'about',
+                  'contact': 'contact',
+                  'shop-my-home': 'shop-my-home',
+                  'blog': 'blog',
+                  'home': '',
+              }
+              mapping_html = {
+                  'start-here': 'start-here.html',
+                  'about': 'about.html',
+                  'contact': 'contact.html',
+                  'shop-my-home': 'shop-my-home.html',
+                  'blog': 'blog.html',
+                  'home': 'index.html',
+              }
+              canonical = mapping_clean.get(page_name, page_name)
+              live_file = mapping_html.get(page_name, f"{page_name}.html")
+              if canonical == "":
+                  live_url = base
+              else:
+                  live_url = f"{base}/{canonical}"
+              live_html = f"{base}/{live_file}"
+          elif 'content/posts/' in path:
+              canonical = f"blog/{category}/{slug}"
+              live_url = f"{base}/{canonical}"
+              live_html = f"{base}/{canonical}.html"
+          elif 'content/home.yml' in path:
+              canonical = ""
+              live_url = base
+              live_html = f"{base}/index.html"
+          else:
+              canonical = slug
+              live_url = f"{base}/{slug}"
+              live_html = f"{base}/{slug}.html"
+
+          preview_url = f"{base}/preview.html?path={urllib.parse.quote(path)}"
+
           print(f"path={path}")
           print(f"category={category} slug={slug}")
-          print(f"url={url}")
+          print(f"canonical={canonical}")
+          print(f"live_url (clean)={live_url}")
+          print(f"live_html={live_html}")
+          print(f"preview={preview_url}")
 
           gh_out = os.environ.get('GITHUB_OUTPUT')
           if gh_out:
               with open(gh_out, 'a') as out:
-                  out.write(f"url={url}\n")
+                  # Environment URL = canonical clean URL (what user asked for)
+                  out.write(f"url={live_url}\n")
+                  out.write(f"canonical={canonical}\n")
+                  out.write(f"live_url={live_url}\n")
+                  out.write(f"live_html={live_html}\n")
+                  out.write(f"preview_url={preview_url}\n")
+
           gh_summary = os.environ.get('GITHUB_STEP_SUMMARY')
           if gh_summary:
               with open(gh_summary, 'a') as s:
-                  s.write(f"### View post\n\n**{title or slug}**\n\n[{url}]({url})\n\n---\n\n*Category:* `{category}`  \n*Slug:* `{slug}`  \n*Source:* `{path}`\n")
+                  s.write(f"### View — {title or slug}\n\n")
+                  s.write(f"**Canonical (button link):** [{live_url}]({live_url})\n\n")
+                  s.write(f"**Live (.html):** [{live_html}]({live_html})\n\n")
+                  s.write(f"**Preview (drafts):** [{preview_url}]({preview_url})\n\n")
+                  s.write(f"---\n\n*Slug:* `{slug}`  \n*Category:* `{category}`  \n*Source:* `{path}`  \n*Canonical:* `{canonical or '/'}`\n\n")
           PY
         env:
           PAYLOAD_JSON: ${{ inputs.payload }}
 
-      - name: Show URL
+      - name: Show URLs
         run: |
-          echo "Live URL: ${{ steps.compute.outputs.url }}"
-          echo "::notice title=View post::${{ steps.compute.outputs.url }}"
+          echo "Canonical (button): ${{ steps.compute.outputs.url }}"
+          echo "Live clean: ${{ steps.compute.outputs.live_url }}"
+          echo "Live html: ${{ steps.compute.outputs.live_html }}"
+          echo "Preview: ${{ steps.compute.outputs.preview_url }}"
+          echo "::notice title=View Post/Page (canonical)::${{ steps.compute.outputs.url }}"
+          echo "::notice title=Preview (drafts)::${{ steps.compute.outputs.preview_url }}"
