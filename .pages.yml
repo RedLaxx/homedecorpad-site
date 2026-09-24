@@ -159,7 +159,7 @@ content:
           A "## Frequently asked questions" section with ### question headings becomes an accordion with FAQ markup for Google.
     actions:
       - name: view-post
-        label: View post
+        label: View Post
         workflow: view-post.yml
         scope: entry
         confirm: false
@@ -258,7 +258,7 @@ content:
         description: Markdown — headings, bold, links, lists, images all work. This is the main page content.
     actions:
       - name: view-page
-        label: View page
+        label: View Page
         workflow: view-post.yml
         scope: entry
         confirm: false
@@ -297,6 +297,12 @@ content:
     label: Home page
     type: file
     path: content/home.yml
+    actions:
+      - name: view-page
+        label: View Page
+        workflow: view-post.yml
+        scope: entry
+        confirm: false
     fields:
       - name: hero_eyebrow
         label: Hero — eyebrow
@@ -619,22 +625,52 @@ content:
         label: Start Here page
         type: file
         path: content/pages/start-here.yml
+        actions:
+          - name: view-page
+            label: View Page
+            workflow: view-post.yml
+            scope: entry
+            confirm: false
       - name: about
         label: About page
         type: file
         path: content/pages/about.yml
+        actions:
+          - name: view-page
+            label: View Page
+            workflow: view-post.yml
+            scope: entry
+            confirm: false
       - name: contact
         label: Contact page
         type: file
         path: content/pages/contact.yml
+        actions:
+          - name: view-page
+            label: View Page
+            workflow: view-post.yml
+            scope: entry
+            confirm: false
       - name: shop
         label: Shop My Home page
         type: file
         path: content/pages/shop-my-home.yml
+        actions:
+          - name: view-page
+            label: View Page
+            workflow: view-post.yml
+            scope: entry
+            confirm: false
       - name: blog
         label: Blog listing page
         type: file
         path: content/pages/blog.yml
+        actions:
+          - name: view-page
+            label: View Page
+            workflow: view-post.yml
+            scope: entry
+            confirm: false
         fields:
           - name: title
             label: SEO Title
