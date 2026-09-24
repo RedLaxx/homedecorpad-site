@@ -24,6 +24,12 @@ GISCUS_CATEGORY = "General"
 GISCUS_CATEGORY_ID = ""
 GISCUS_MAPPING = "pathname"
 GISCUS_THEME = "light"
+# Cusdis anonymous comments
+COMMENT_SYSTEM = "giscus"
+CUSDIS_ENABLED = False
+CUSDIS_APP_ID = ""
+CUSDIS_HOST = "https://cusdis.com"
+CUSDIS_THEME = "light"
 # Canonical domain. Override when deploying elsewhere, e.g.:
 #   SITE_DOMAIN="https://redlaxx.github.io/HomeDecorPad" python3 _build/build.py
 DOMAIN = os.environ.get("SITE_DOMAIN", "https://homedecorpad.com").rstrip("/")
@@ -790,22 +796,63 @@ def consent(rel=""):
 
 
 def comments_section(rel=""):
-    """Giscus comment widget — shows when enabled in Site settings."""
-    if not GISCUS_ENABLED:
+    """Comment widget — supports Giscus (GitHub login) and Cusdis (anonymous, no login)."""
+    system = (COMMENT_SYSTEM or "giscus").lower()
+
+    # Explicit off
+    if system == "none":
         return ""
-    # If category ID is missing, show a helpful placeholder instead of broken widget
+
+    # --- CUSDIS: anonymous, no login ---
+    if system == "cusdis" or CUSDIS_ENABLED:
+        if not CUSDIS_APP_ID:
+            return f"""<section class="comments" id="comments"><div class="container narrow">
+ <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div>
+ <p class="comments-note">Anonymous comments — no login needed.</p></div>
+ <div class="comments-disabled">
+  <p><b>Setup needed for anonymous comments:</b> Get a free App ID at <a href="https://cusdis.com" target="_blank" rel="noopener">cusdis.com</a> → Dashboard → New Website → paste App ID into Pages CMS → Site settings → Cusdis App ID, and set Comment system to Cusdis.</p>
+  <p style="margin:0">Or switch back to Giscus (requires GitHub login) by setting Comment system to Giscus.</p>
+ </div>
+</div></section>"""
+        # Normal Cusdis embed — anonymous, no login required
+        return f"""<section class="comments" id="comments"><div class="container narrow">
+ <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div>
+ <p class="comments-note">No login needed — just your name and comment. We moderate to keep it friendly.</p></div>
+ <div id="cusdis_thread"
+  data-host="{CUSDIS_HOST}"
+  data-app-id="{CUSDIS_APP_ID}"
+  data-page-id="page"
+  data-page-url="url"
+  data-page-title="title"
+  data-theme="{CUSDIS_THEME}"
+ ></div>
+ <script>
+  (function(){{
+    var el=document.getElementById('cusdis_thread');
+    if(!el)return;
+    el.setAttribute('data-page-id', location.pathname);
+    el.setAttribute('data-page-url', location.href);
+    el.setAttribute('data-page-title', document.title);
+  }})();
+ </script>
+ <script async defer src="{CUSDIS_HOST}/js/cusdis.es.js"></script>
+ <noscript><p class="muted">Enable JavaScript to view comments.</p></noscript>
+</div></section>"""
+
+    # --- GISCUS: requires GitHub login ---
+    if not GISCUS_ENABLED and system != "giscus":
+        return ""
     if not GISCUS_CATEGORY_ID:
         return f"""<section class="comments" id="comments"><div class="container narrow">
  <div class="comments-head"><h2>Comments</h2><p class="comments-note">Comments are enabled but need a category ID from giscus.app</p></div>
  <div class="comments-disabled">
   <p><b>Setup needed:</b> Go to <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>, enter <code>{GISCUS_REPO}</code>, pick a category, copy the IDs into Pages CMS → Site settings → Giscus.</p>
-  <p style="margin:0">Once saved, the site rebuilds and comments appear here. No ads, free, uses GitHub Discussions.</p>
+  <p style="margin:0">Once saved, the site rebuilds and comments appear here. For anonymous comments (no login), set Comment system to Cusdis in Site settings and add your Cusdis App ID.</p>
  </div>
 </div></section>"""
-    # Normal Giscus embed
     return f"""<section class="comments" id="comments"><div class="container narrow">
  <div class="comments-head"><div><p class="eyebrow">Join the conversation</p><h2>Comments</h2></div>
- <p class="comments-note">Share your take, ask a question, or tell us what you tried. No account needed beyond GitHub — free, no ads.</p></div>
+ <p class="comments-note">Requires GitHub login. For anonymous comments without login, switch to Cusdis in Site settings.</p></div>
  <div class="giscus"></div>
  <script src="https://giscus.app/client.js"
         data-repo="{GISCUS_REPO}"

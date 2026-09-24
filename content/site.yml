@@ -35,8 +35,13 @@ social:
   facebook: ""
   youtube: ""
 
-# Comments — Giscus (GitHub Discussions). Free, no ads.
-# Discussions now enabled, using General category.
+# Comments — choose system:
+# - giscus: requires GitHub login, free, no ads, uses Discussions (you already enabled)
+# - cusdis: anonymous, no login, free, no ads, needs app ID from cusdis.com
+# - none: no comments
+comment_system: giscus
+
+# Giscus (GitHub login required)
 giscus_enabled: true
 giscus_repo: RedLaxx/homedecorpad-site
 giscus_repo_id: R_kgDOUoGanw
@@ -44,3 +49,9 @@ giscus_category: General
 giscus_category_id: DIC_kwDOUoGan84DGS2E
 giscus_mapping: pathname
 giscus_theme: light
+
+# Cusdis (anonymous, no login) — get free App ID at https://cusdis.com
+cusdis_enabled: false
+cusdis_app_id: ""
+cusdis_host: https://cusdis.com
+cusdis_theme: light

@@ -296,6 +296,42 @@ content:
               label: auto (follows user)
             - name: transparent_dark
               label: transparent_dark
+      - name: comment_system
+        label: Comment system
+        type: select
+        description: giscus = requires GitHub login. cusdis = anonymous, no login (needs App ID). none = off.
+        options:
+          values:
+            - name: giscus
+              label: Giscus (GitHub login required)
+            - name: cusdis
+              label: Cusdis (anonymous, no login)
+            - name: none
+              label: Off
+      - name: cusdis_enabled
+        label: Enable anonymous comments (Cusdis)
+        type: boolean
+        description: Tick to allow anonymous comments without login. Needs Cusdis App ID below.
+      - name: cusdis_app_id
+        label: Cusdis — App ID
+        type: string
+        description: Get free ID at https://cusdis.com — Dashboard → New Website → copy App ID
+      - name: cusdis_host
+        label: Cusdis — host
+        type: string
+        description: Usually https://cusdis.com, or your self-hosted URL
+      - name: cusdis_theme
+        label: Cusdis — theme
+        type: select
+        description: Theme for Cusdis widget
+        options:
+          values:
+            - name: light
+              label: light
+            - name: dark
+              label: dark
+            - name: auto
+              label: auto
 
 settings:
   content:

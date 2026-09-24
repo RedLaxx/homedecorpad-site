@@ -56,7 +56,7 @@ theme.GA4_ID = str(SETTINGS.get("ga4_id") or "").strip()
 theme.PINTEREST_VERIFY = str(SETTINGS.get("pinterest_verify") or "").strip()
 _social = SETTINGS.get("social")
 theme.SOCIAL = {k: str(v or "").strip() for k, v in _social.items()} if isinstance(_social, dict) else {}
-# Giscus comments
+# Giscus / Cusdis comments
 theme.GISCUS_ENABLED = bool(SETTINGS.get("giscus_enabled"))
 theme.GISCUS_REPO = str(SETTINGS.get("giscus_repo") or "RedLaxx/homedecorpad-site").strip()
 theme.GISCUS_REPO_ID = str(SETTINGS.get("giscus_repo_id") or "R_kgDOUoGanw").strip()
@@ -64,6 +64,11 @@ theme.GISCUS_CATEGORY = str(SETTINGS.get("giscus_category") or "General").strip(
 theme.GISCUS_CATEGORY_ID = str(SETTINGS.get("giscus_category_id") or "").strip()
 theme.GISCUS_MAPPING = str(SETTINGS.get("giscus_mapping") or "pathname").strip()
 theme.GISCUS_THEME = str(SETTINGS.get("giscus_theme") or "light").strip()
+theme.COMMENT_SYSTEM = str(SETTINGS.get("comment_system") or "giscus").strip()
+theme.CUSDIS_ENABLED = bool(SETTINGS.get("cusdis_enabled"))
+theme.CUSDIS_APP_ID = str(SETTINGS.get("cusdis_app_id") or "").strip()
+theme.CUSDIS_HOST = str(SETTINGS.get("cusdis_host") or "https://cusdis.com").strip().rstrip("/")
+theme.CUSDIS_THEME = str(SETTINGS.get("cusdis_theme") or "light").strip()
 
 POSTS, POST_BY_SLUG, REL = [], {}, {}
 
