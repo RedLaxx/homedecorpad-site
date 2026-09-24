@@ -1,0 +1,25 @@
+# Header & Navigation — editable in Pages CMS → Header & Navigation
+logo_text: ""
+logo_image: ""
+nav_links:
+  - label: Home
+    url: /index.html
+    style: default
+  - label: Start Here
+    url: /start-here.html
+    style: default
+  - label: Decor Ideas
+    url: /blog.html
+    style: default
+  - label: Shop My Home
+    url: /shop-my-home.html
+    style: outline
+  - label: About
+    url: /about.html
+    style: default
+  - label: Contact
+    url: /contact.html
+    style: default
+pinterest_url: https://www.pinterest.com/
+pinterest_label: Pinterest
+show_pinterest: true

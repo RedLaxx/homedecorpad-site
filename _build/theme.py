@@ -16,6 +16,8 @@ GA4_ID = ""
 PINTEREST_VERIFY = ""
 FORMSPREE_ID = "YOUR_FORM_ID"
 AMAZON_TAG = "YOUR-AMAZON-TAG-20"
+HOME = {}
+NAV = {}
 # Giscus comments — set from content/site.yml via build.py
 GISCUS_ENABLED = False
 GISCUS_REPO = "RedLaxx/homedecorpad-site"
@@ -749,6 +751,64 @@ FOOTER_CATS = [
 
 
 def header(rel="", current=""):
+    # Use editable navigation from content/navigation.yml if present, else fallback to hardcoded NAV
+    nav_cfg = NAV if isinstance(NAV, dict) and NAV.get("nav_links") else {}
+    links_cfg = nav_cfg.get("nav_links") if nav_cfg else None
+    if links_cfg:
+        links = ""
+        for item in links_cfg:
+            if not isinstance(item, dict):
+                continue
+            label = (item.get("label") or "").strip()
+            url = (item.get("url") or "").strip()
+            style = (item.get("style") or "default").lower()
+            if not label or not url:
+                continue
+            # normalize url: /index.html -> index.html for rel handling, but keep as is for href
+            # handle post:slug syntax via simple conversion
+            href = url
+            if href.startswith("post:"):
+                # will be resolved later? For header we keep as blog/category/slug
+                # best effort: just link to blog page search
+                slug = href[5:].strip()
+                # try to find category if available via global? fallback to blog.html#{slug}
+                href = f"blog.html#{slug}"
+            # handle leading slash
+            if href.startswith("/"):
+                href = href.lstrip("/")
+            # for rel prefix
+            full_href = f"{rel}{href}" if not href.startswith(("http://","https://")) else href
+            # style handling
+            cls = ""
+            if style == "outline":
+                cls = ' class="pin"'
+            elif style == "primary":
+                cls = ' class="btn sm" style="text-transform:none;letter-spacing:0;padding:8px 16px"'
+            # current page detection
+            cur = ' aria-current="page"' if href.split("#")[0] == current else ""
+            links += f'<a href="{full_href}"{cls}{cur}>{label}</a>'
+        # Pinterest button from config
+        show_pin = nav_cfg.get("show_pinterest", True)
+        pin_url = (nav_cfg.get("pinterest_url") or "https://www.pinterest.com/").strip()
+        pin_label = (nav_cfg.get("pinterest_label") or "Pinterest").strip()
+        if show_pin and pin_url:
+            links += f'<a class="pin" href="{pin_url}" target="_blank" rel="noopener">{pin_label}</a>'
+        # logo
+        logo_text = (nav_cfg.get("logo_text") or "").strip() or BRAND
+        logo_img = (nav_cfg.get("logo_image") or "").strip()
+        if logo_img:
+            # image logo
+            clean_logo = logo_img.lstrip("/")
+            logo_html = f'<img src="{rel}{clean_logo}" alt="{logo_text}" style="height:32px;width:auto">'
+        else:
+            logo_html = f"{ICON['logo']}<span>{logo_text}</span>"
+        return f"""<header class="site-header">
+ <div class="container hdr">
+  <a class="brand" href="{rel}index.html">{logo_html}</a>
+  <nav class="nav" aria-label="Main">{links}</nav>
+ </div>
+</header>"""
+    # fallback to old hardcoded NAV
     links = ""
     for href, label in NAV:
         cls = ' class="pin"' if href == "shop-my-home.html" else ""

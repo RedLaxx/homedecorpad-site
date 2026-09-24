@@ -224,6 +224,231 @@ content:
     type: file
     path: content/redirects.yml
 
+  - name: home
+    label: Home page
+    type: file
+    path: content/home.yml
+    fields:
+      - name: hero_eyebrow
+        label: Hero — eyebrow
+        type: string
+      - name: hero_title
+        label: Hero — title
+        type: string
+        required: true
+      - name: hero_lede
+        label: Hero — lede (paragraph under title)
+        type: text
+        required: true
+      - name: hero_image
+        label: Hero — image (optional, replaces illustration)
+        type: image
+        description: Upload a photo to replace the drawn hero art. Leave empty to use illustration.
+      - name: hero_motif
+        label: Hero — illustration (if no image)
+        type: select
+        options:
+          values:
+            - name: hero
+              label: Hero (default)
+            - name: arch
+              label: Arch & console
+            - name: sofa
+              label: Sofa & artwork
+            - name: shelf
+              label: Shelves & vases
+            - name: flat
+              label: Minimal room
+            - name: finds
+              label: Shopping finds
+            - name: basket
+              label: Basket & plant
+      - name: hero_buttons
+        label: Hero — buttons
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Label
+            type: string
+            required: true
+          - name: url
+            label: URL
+            type: string
+            required: true
+            description: e.g. /start-here.html or /blog.html or post:slug
+          - name: style
+            label: Style
+            type: select
+            options:
+              values:
+                - name: primary
+                  label: Primary (filled)
+                - name: ghost
+                  label: Ghost (outline)
+                - name: outline
+                  label: Outline (Pinterest style)
+      - name: trust_badges
+        label: Hero — trust badges (under buttons)
+        type: string
+        list: true
+        description: e.g. Budget-first picks
+      - name: browse_title
+        label: Browse by room — title
+        type: string
+      - name: browse_link_text
+        label: Browse by room — link text
+        type: string
+      - name: browse_link_url
+        label: Browse by room — link URL
+        type: string
+      - name: featured_eyebrow
+        label: Featured — eyebrow
+        type: string
+      - name: featured_title
+        label: Featured — title
+        type: string
+      - name: latest_eyebrow
+        label: Latest — eyebrow
+        type: string
+      - name: latest_title
+        label: Latest — title
+        type: string
+      - name: latest_link_text
+        label: Latest — link text
+        type: string
+      - name: latest_link_url
+        label: Latest — link URL
+        type: string
+      - name: latest_count
+        label: Latest — number of posts to show
+        type: number
+      - name: signature_eyebrow
+        label: Signature series — eyebrow
+        type: string
+      - name: signature_title
+        label: Signature series — title
+        type: string
+      - name: signature_description
+        label: Signature series — description
+        type: text
+      - name: signature_image
+        label: Signature series — image (optional)
+        type: image
+      - name: signature_motif
+        label: Signature series — illustration
+        type: select
+        options:
+          values:
+            - name: arch
+              label: Arch & console
+            - name: sofa
+              label: Sofa
+            - name: shelf
+              label: Shelves
+            - name: flat
+              label: Minimal room
+            - name: basket
+              label: Basket
+            - name: finds
+              label: Finds
+            - name: hero
+              label: Hero
+      - name: signature_links
+        label: Signature series — links
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Label
+            type: string
+            required: true
+          - name: url
+            label: URL
+            type: string
+            required: true
+            description: e.g. post:one-room-three-budgets-cozy-bedroom or /blog.html
+      - name: start_here_eyebrow
+        label: Start here — eyebrow
+        type: string
+      - name: start_here_title
+        label: Start here — title
+        type: string
+      - name: start_here_link_text
+        label: Start here — link text
+        type: string
+      - name: start_here_link_url
+        label: Start here — link URL
+        type: string
+      - name: start_here_cards
+        label: Start here — cards (2 cards)
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: description
+            label: Description
+            type: text
+          - name: link_text
+            label: Link text
+            type: string
+          - name: link_url
+            label: Link URL
+            type: string
+            description: e.g. post:living-room-layout-mistakes
+
+  - name: header
+    label: Header & Navigation
+    type: file
+    path: content/navigation.yml
+    fields:
+      - name: logo_text
+        label: Logo text (optional override)
+        type: string
+        description: Leave empty to use brand from Site settings
+      - name: logo_image
+        label: Logo image (optional, replaces icon)
+        type: image
+        description: Square PNG recommended. Leave empty to use default icon.
+      - name: nav_links
+        label: Navigation links
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Label
+            type: string
+            required: true
+          - name: url
+            label: URL
+            type: string
+            required: true
+            description: e.g. /index.html, /blog.html, /shop-my-home.html, /about.html
+          - name: style
+            label: Style
+            type: select
+            options:
+              values:
+                - name: default
+                  label: Default (uppercase)
+                - name: outline
+                  label: Outline button (like Shop My Home)
+                - name: primary
+                  label: Primary button (filled)
+      - name: pinterest_url
+        label: Pinterest URL
+        type: string
+        description: e.g. https://www.pinterest.com/yourhandle/
+      - name: pinterest_label
+        label: Pinterest button label
+        type: string
+      - name: show_pinterest
+        label: Show Pinterest button
+        type: boolean
+
   - name: site
     label: Site settings
     type: file

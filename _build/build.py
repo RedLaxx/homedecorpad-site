@@ -41,14 +41,43 @@ def load_settings():
         data, _ = md_engine.parse_frontmatter("---\n" + open(path, encoding="utf-8").read() + "\n---")
     return data
 
+def load_yaml_file(fname):
+    """Load a simple yaml file (home.yml, navigation.yml) with or without frontmatter."""
+    path = os.path.join(CONTENT, fname)
+    if not os.path.exists(path):
+        return {}
+    raw = open(path, encoding="utf-8").read()
+    fm, _ = md_engine.parse_frontmatter(raw)
+    if fm:
+        return fm
+    # plain yaml fallback
+    try:
+        import yaml as _yaml
+        return _yaml.safe_load(raw) or {}
+    except Exception:
+        # very simple key: value parser for flat files
+        data = {}
+        for line in raw.splitlines():
+            line=line.strip()
+            if not line or line.startswith("#"):
+                continue
+            if ":" in line:
+                k,v=line.split(":",1)
+                data[k.strip()]=v.strip().strip("\"'")
+        return data
+
 
 SETTINGS = load_settings()
+HOME_SETTINGS = load_yaml_file("home.yml")
+NAV_SETTINGS = load_yaml_file("navigation.yml")
 LEGAL_EFFECTIVE = fmt_date(SETTINGS.get("legal_effective_date"), LAUNCH_DATE)
 LEGAL_UPDATED = fmt_date(SETTINGS.get("legal_updated_date"), LAUNCH_DATE)
 theme.BRAND = BRAND = SETTINGS.get("brand") or "HomeDecorPad"
 DOMAIN = (os.environ.get("SITE_DOMAIN") or SETTINGS.get("domain") or "https://homedecorpad.com").rstrip("/")
 theme.DOMAIN = DOMAIN
 theme.EMAIL = EMAIL = SETTINGS.get("email") or "hello@homedecorpad.com"
+theme.HOME = HOME_SETTINGS
+theme.NAV = NAV_SETTINGS
 TAG = theme.AMAZON_TAG = SETTINGS.get("amazon_tag") or "YOUR-AMAZON-TAG-20"
 theme.FORMSPREE_ID = SETTINGS.get("formspree_id") or "YOUR_FORM_ID"
 theme.ADSENSE_CLIENT = str(SETTINGS.get("adsense_client") or "").strip()
@@ -418,37 +447,79 @@ def page(path, title, desc, body, depth=0, canonical="", schema="", current="", 
 
 
 # ----------------------------------------------------------------------- pages
+def _resolve_home_url(u, depth=0):
+    """Resolve home.yml URL that may be /path, post:slug, or full http."""
+    if not u:
+        return ""
+    u = str(u).strip()
+    if u.startswith("post:"):
+        try:
+            return post_url(u[5:].strip(), depth)
+        except Exception:
+            return f"blog.html#{u[5:].strip()}"
+    if u.startswith(("http://","https://","#","mailto:")):
+        return u
+    # strip leading /
+    return u.lstrip("/")
+
 def page_home():
-    feat = POSTS[0]
-    rest = POSTS[1:7]
-    hero_art = f'<div class="art">{art_raw("hero", 4)}</div>'
+    h = HOME_SETTINGS or {}
+    feat = POSTS[0] if POSTS else None
+    # counts
+    latest_count = int(h.get("latest_count") or 6)
+    rest = POSTS[1:1+latest_count] if POSTS else []
+
+    # hero
+    hero_eyebrow = h.get("hero_eyebrow") or "Home decor ideas · looks for less"
+    hero_title = h.get("hero_title") or "Designer-looking rooms without the designer budget."
+    hero_lede = h.get("hero_lede") or "Practical room ideas, shoppable budget swaps and paint palettes you can recreate this weekend — for real homes with real budgets."
+    hero_image = (h.get("hero_image") or "").strip()
+    hero_motif = (h.get("hero_motif") or "hero").strip()
+    # hero art: image if exists else illustration
+    if hero_image:
+        # check if file exists
+        rel = hero_image.lstrip("/")
+        if os.path.exists(os.path.join(ROOT, rel)):
+            hero_art = f'<div class="art"><img src="{asset_url(hero_image,0)}" alt="" style="width:100%;height:100%;object-fit:cover" loading="eager"></div>'
+        else:
+            hero_art = f'<div class="art">{art_raw(hero_motif, 4)}</div>'
+    else:
+        hero_art = f'<div class="art">{art_raw(hero_motif, 4)}</div>'
+
+    # hero buttons
+    btns_cfg = h.get("hero_buttons") or [
+        {"label":"Start here","url":"/start-here.html","style":"primary"},
+        {"label":"Browse all decor ideas","url":"/blog.html","style":"ghost"},
+    ]
+    btn_html = ""
+    for b in btns_cfg:
+        if not isinstance(b, dict):
+            continue
+        label = (b.get("label") or "").strip()
+        url = _resolve_home_url(b.get("url") or "")
+        style = (b.get("style") or "primary").lower()
+        if not label or not url:
+            continue
+        cls = "btn" if style=="primary" else "btn ghost" if style=="ghost" else "btn"
+        if style=="outline":
+            cls="btn ghost"
+        btn_html += f'<a class="{cls}" href="{url}">{label}</a>'
+
+    # trust badges
+    badges = h.get("trust_badges") or ["Budget-first picks","Renter friendly","New ideas weekly"]
+    trust_html = "".join(f'<span>{ICON["check"]}{b}</span>' for b in badges if b)
+
+    # browse by room
+    browse_title = h.get("browse_title") or "Browse by room"
+    browse_link_text = h.get("browse_link_text") or "All 10 room guides →"
+    browse_link_url = _resolve_home_url(h.get("browse_link_url") or "/blog.html")
     chips = "".join(f'<a href="blog.html#{c["slug"]}">{c["name"]}</a>' for c in CATS[:8])
-    body = f"""
-<section class="container hero">
- <div>
-  <p class="eyebrow">Home decor ideas &middot; looks for less</p>
-  <h1>Designer-looking rooms without the designer budget.</h1>
-  <p class="lede">Practical room ideas, shoppable budget swaps and paint palettes you can recreate this weekend — for real homes with real budgets.</p>
-  <div class="btnrow">
-   <a class="btn" href="start-here.html">Start here</a>
-   <a class="btn ghost" href="blog.html">Browse all decor ideas</a>
-  </div>
-  <div class="trust">
-   <span>{ICON['check']}Budget-first picks</span>
-   <span>{ICON['check']}Renter friendly</span>
-   <span>{ICON['check']}New ideas weekly</span>
-  </div>
- </div>
- {hero_art}
-</section>
 
-<section class="section tight"><div class="container">
- <div class="sec-head"><h2 style="font-size:22px">Browse by room</h2><a href="blog.html">All 10 room guides →</a></div>
- <div class="cats">{chips}</div>
-</div></section>
-
-<section class="section" id="categories"><div class="container">
- <div class="sec-head"><div><p class="eyebrow">Featured</p><h2>This week's idea</h2></div></div>
+    # featured
+    featured_eyebrow = h.get("featured_eyebrow") or "Featured"
+    featured_title = h.get("featured_title") or "This week's idea"
+    if feat:
+        feat_html = f"""
  <article class="feature">
   {cover_html(feat, 0, 'c3x2')}
   <div class="body">
@@ -458,39 +529,110 @@ def page_home():
    <div class="meta"><span>{d(feat['date'])}</span><i></i><span>{read_label(feat)}</span></div>
    <div class="btnrow"><a class="btn sm" href="{post_url(feat['slug'])}">View post</a></div>
   </div>
- </article>
+ </article>"""
+    else:
+        feat_html = "<p>No posts yet.</p>"
+
+    # latest
+    latest_eyebrow = h.get("latest_eyebrow") or "Latest"
+    latest_title = h.get("latest_title") or "Fresh decor ideas"
+    latest_link_text = h.get("latest_link_text") or "See everything →"
+    latest_link_url = _resolve_home_url(h.get("latest_link_url") or "/blog.html")
+
+    # signature
+    sig_eyebrow = h.get("signature_eyebrow") or "Signature series"
+    sig_title = h.get("signature_title") or "One room, three budgets"
+    sig_desc = h.get("signature_description") or "Every room, styled three ways — a $150 refresh, a $500 upgrade and a full makeover. You get the exact shopping list and the order to buy things in, so you never waste money on the wrong piece first."
+    sig_image = (h.get("signature_image") or "").strip()
+    sig_motif = (h.get("signature_motif") or "arch").strip()
+    if sig_image and os.path.exists(os.path.join(ROOT, sig_image.lstrip("/"))):
+        sig_cover = f'<div class="cover"><img src="{asset_url(sig_image,0)}" alt="" style="width:100%;height:100%;object-fit:cover"></div>'
+    else:
+        sig_cover = f'<div class="cover">{art_raw(sig_motif, 5)}</div>'
+    sig_links_cfg = h.get("signature_links") or [
+        {"label":"Cozy bedroom: $150 / $500 / $1,500","url":"post:one-room-three-budgets-cozy-bedroom"},
+        {"label":"Warm minimalist living room under $250","url":"post:warm-minimalist-living-room-under-250"},
+        {"label":"All Get the Look for Less guides","url":"/blog.html#get-the-look"},
+    ]
+    sig_links_html = ""
+    for l in sig_links_cfg:
+        if not isinstance(l, dict):
+            continue
+        label = (l.get("label") or "").strip()
+        url = _resolve_home_url(l.get("url") or "")
+        if label and url:
+            sig_links_html += f'<li><a href="{url}">{label}</a></li>'
+
+    # start here
+    sh_eyebrow = h.get("start_here_eyebrow") or "Start here"
+    sh_title = h.get("start_here_title") or "New to the site? Read these first"
+    sh_link_text = h.get("start_here_link_text") or "How it works →"
+    sh_link_url = _resolve_home_url(h.get("start_here_link_url") or "/start-here.html")
+    sh_cards_cfg = h.get("start_here_cards") or [
+        {"title":"Fix the room before you shop it","description":"Twelve layout mistakes that make a room feel small — every fix is free.","link_text":"Read the layout guide →","link_url":"post:living-room-layout-mistakes"},
+        {"title":"Choose the palette","description":"Eight neutral-anchored colour palettes with proportions that actually work at home.","link_text":"See the palettes →","link_url":"post:home-decor-color-palettes-2027"},
+    ]
+    sh_cards_html = ""
+    for c in sh_cards_cfg:
+        if not isinstance(c, dict):
+            continue
+        title = (c.get("title") or "").strip()
+        desc = (c.get("description") or "").strip()
+        lt = (c.get("link_text") or "").strip()
+        lu = _resolve_home_url(c.get("link_url") or "")
+        if not title:
+            continue
+        sh_cards_html += f'<div class="prosebox"><h3 style="margin-top:0">{title}</h3><p class="muted">{desc}</p><p><a href="{lu}">{lt}</a></p></div>'
+
+    body = f"""
+<section class="container hero">
+ <div>
+  <p class="eyebrow">{hero_eyebrow}</p>
+  <h1>{hero_title}</h1>
+  <p class="lede">{hero_lede}</p>
+  <div class="btnrow">
+   {btn_html}
+  </div>
+  <div class="trust">
+   {trust_html}
+  </div>
+ </div>
+ {hero_art}
+</section>
+
+<section class="section tight"><div class="container">
+ <div class="sec-head"><h2 style="font-size:22px">{browse_title}</h2><a href="{browse_link_url}">{browse_link_text}</a></div>
+ <div class="cats">{chips}</div>
+</div></section>
+
+<section class="section" id="categories"><div class="container">
+ <div class="sec-head"><div><p class="eyebrow">{featured_eyebrow}</p><h2>{featured_title}</h2></div></div>
+ {feat_html}
 </div></section>
 
 <section class="section"><div class="container">
- <div class="sec-head"><div><p class="eyebrow">Latest</p><h2>Fresh decor ideas</h2></div><a href="blog.html">See everything →</a></div>
+ <div class="sec-head"><div><p class="eyebrow">{latest_eyebrow}</p><h2>{latest_title}</h2></div><a href="{latest_link_url}">{latest_link_text}</a></div>
  <div class="grid">{''.join(card(p) for p in rest)}</div>
 </div></section>
 
 <section class="section"><div class="container">
  <div class="panel split">
-  <div class="cover">{art_raw('arch', 5)}</div>
+  {sig_cover}
   <div class="pad">
-   <p class="eyebrow">Signature series</p>
-   <h2>One room, three budgets</h2>
-   <p class="muted">Every room, styled three ways — a $150 refresh, a $500 upgrade and a full makeover. You get the exact shopping list and the order to buy things in, so you never waste money on the wrong piece first.</p>
+   <p class="eyebrow">{sig_eyebrow}</p>
+   <h2>{sig_title}</h2>
+   <p class="muted">{sig_desc}</p>
    <ul>
-    <li><a href="{post_url('one-room-three-budgets-cozy-bedroom')}">Cozy bedroom: $150 / $500 / $1,500</a></li>
-    <li><a href="{post_url('warm-minimalist-living-room-under-250')}">Warm minimalist living room under $250</a></li>
-    <li><a href="blog.html#get-the-look">All Get the Look for Less guides</a></li>
+    {sig_links_html}
    </ul>
   </div>
  </div>
 </div></section>
 
 <section class="section"><div class="container">
- <div class="sec-head"><div><p class="eyebrow">Start here</p><h2>New to the site? Read these first</h2></div><a href="start-here.html">How it works →</a></div>
+ <div class="sec-head"><div><p class="eyebrow">{sh_eyebrow}</p><h2>{sh_title}</h2></div><a href="{sh_link_url}">{sh_link_text}</a></div>
  <div class="grid two">
-  <div class="prosebox"><h3 style="margin-top:0">Fix the room before you shop it</h3>
-   <p class="muted">Twelve layout mistakes that make a room feel small — every fix is free.</p>
-   <p><a href="{post_url('living-room-layout-mistakes')}">Read the layout guide →</a></p></div>
-  <div class="prosebox"><h3 style="margin-top:0">Choose the palette</h3>
-   <p class="muted">Eight neutral-anchored colour palettes with proportions that actually work at home.</p>
-   <p><a href="{post_url('home-decor-color-palettes-2027')}">See the palettes →</a></p></div>
+  {sh_cards_html}
  </div>
 </div></section>
 
