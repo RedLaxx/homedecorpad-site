@@ -42,8 +42,8 @@ jobs:
         with:
           python-version: "3.12"
 
-     - name: Install deps (Pillow + PyYAML for comments)
-  run: pip install --quiet pillow pyyaml
+      - name: Install deps (Pillow + PyYAML for comments)
+        run: pip install --quiet pillow pyyaml
         continue-on-error: true
 
       - name: Build the site
