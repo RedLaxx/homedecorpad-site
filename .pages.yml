@@ -618,7 +618,7 @@ content:
             type: string
 
   - name: pages
-    label: Pages (Shop, Start Here, About, Contact, Blog)
+    label: Pages (Shop Now, Shop, Start Here, About, Contact, Blog)
     type: group
     items:
       - name: start-here
@@ -655,6 +655,16 @@ content:
         label: Shop My Home page
         type: file
         path: content/pages/shop-my-home.yml
+        actions:
+          - name: view-page
+            label: View Page
+            workflow: view-post.yml
+            scope: entry
+            confirm: false
+      - name: shop-now
+        label: Shop Now page (30 Trending)
+        type: file
+        path: content/pages/shop-now.yml
         actions:
           - name: view-page
             label: View Page

@@ -73,7 +73,7 @@ NAV_SETTINGS = load_yaml_file("navigation.yml")
 FOOTER_SETTINGS = load_yaml_file("footer.yml")
 # Load editable pages
 PAGES_SETTINGS = {}
-for _pname in ["start-here", "about", "contact", "shop-my-home", "blog"]:
+for _pname in ["start-here", "about", "contact", "shop-my-home", "shop-now", "blog"]:
     _data = load_yaml_file(f"pages/{_pname}.yml")
     if _data:
         PAGES_SETTINGS[_pname] = _data
@@ -1373,6 +1373,115 @@ def page_shop():
                                    "publisher": {"@type": "Organization", "name": BRAND}}))
 
 
+def page_shop_now():
+    cfg = PAGES_SETTINGS.get("shop-now") or {}
+    title = cfg.get("title") or f"Shop Now — 30 Trending Home Decor Finds for 2026-2027 | {BRAND}"
+    h1 = cfg.get("h1") or "Shop Now — 30 Pinterest-Predicted Finds"
+    eyebrow = cfg.get("eyebrow") or "Shop Now — Trending before Jan 2027"
+    lede = cfg.get("lede") or "Pinterest Predicts 2026 says Neo Deco, FunHaus, Cool Blue and Extra Celestial will dominate through January 2027. We hunted IKEA, Amazon and more for the 30 shoppable pieces."
+    desc = cfg.get("description") or "30 trending home decor products from IKEA, Amazon and more predicted by Pinterest to trend before Jan 2027."
+    intro_title = cfg.get("intro_title") or "Pinterest Predicts 2026 → Jan 2027"
+    intro_body = cfg.get("intro_body") or "Neo Deco, FunHaus, Cool Blue, Extra Celestial — 30 products."
+
+    btns_cfg = cfg.get("buttons") or []
+    btn_html = ""
+    for b in btns_cfg:
+        if not isinstance(b, dict):
+            continue
+        label = b.get("label","")
+        url = _resolve_home_url(b.get("url",""))
+        style = (b.get("style") or "primary").lower()
+        cls = "btn" if style=="primary" else "btn ghost"
+        if label and url:
+            btn_html += f'<a class="{cls}" href="{url}">{label}</a>'
+
+    products = cfg.get("products") or []
+    cards_html = ""
+    for prod in products:
+        if not isinstance(prod, dict):
+            continue
+        name = prod.get("name","")
+        if not name:
+            continue
+        trend = prod.get("trend","")
+        price = prod.get("price","")
+        store = prod.get("store","")
+        image = prod.get("image","")
+        url = prod.get("url","")
+        amazon_url = prod.get("amazon_url","")
+        desc_p = prod.get("desc","")
+
+        # fix amazon tag if placeholder
+        if "YOUR-AMAZON-TAG-20" in url and TAG != "YOUR-AMAZON-TAG-20":
+            url = url.replace("YOUR-AMAZON-TAG-20", TAG)
+        if amazon_url and "YOUR-AMAZON-TAG-20" in amazon_url and TAG != "YOUR-AMAZON-TAG-20":
+            amazon_url = amazon_url.replace("YOUR-AMAZON-TAG-20", TAG)
+
+        img_src = asset_url(image, 0) if image else ""
+        img_tag = f'<img src="{img_src}" alt="{_html.escape(name, quote=True)}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover">' if img_src else '<div style="width:100%;height:100%;background:#F1E8DB;display:flex;align-items:center;justify-content:center;color:#999">No image</div>'
+
+        # buttons: primary is main url, secondary is amazon alt if different
+        btns = ""
+        if url:
+            label_btn = f"Shop at {store}" if store and "Amazon" not in store else "Shop on Amazon" if "amazon" in url.lower() else "Shop Now"
+            if "ikea" in url.lower():
+                label_btn = "Shop at IKEA"
+            elif "amazon" in url.lower():
+                label_btn = "Shop on Amazon"
+            btns += f'<a class="btn sm" href="{url}" target="_blank" rel="nofollow sponsored noopener" style="background:#1A1A1A;color:#fff;border:1.5px solid #1A1A1A;border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;text-decoration:none;display:inline-block">{_html.escape(label_btn)}</a>'
+        if amazon_url and amazon_url != url:
+            btns += f'<a class="btn sm ghost" href="{amazon_url}" target="_blank" rel="nofollow sponsored noopener" style="border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600">Amazon alt</a>'
+
+        cards_html += f'''
+<article class="card" style="display:flex;flex-direction:column;overflow:hidden">
+  <div class="cover c4x3" style="background:#F7F3EF;overflow:hidden">{img_tag}</div>
+  <div class="body" style="padding:16px 18px 18px;display:flex;flex-direction:column;flex:1">
+    {f'<span class="chip" style="background:#FFF0E8;border:1px solid #FADAC9;color:#B5533C;font-size:11px;padding:4px 9px;border-radius:999px;width:fit-content;margin-bottom:8px">{_html.escape(trend)}</span>' if trend else ''}
+    <h3 style="font-size:17.5px;line-height:1.3;margin:0 0 6px"><a href="{url}" target="_blank" rel="nofollow sponsored noopener" style="color:var(--ink);border:0">{_html.escape(name)}</a></h3>
+    <p class="muted" style="font-size:14px;line-height:1.5;margin:0 0 12px;flex:1">{_html.escape(desc_p)}</p>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;gap:12px">
+      <span style="font-weight:700;color:#3A5A40;font-size:15px">{_html.escape(str(price))}</span>
+      <span style="font-size:11.5px;color:#999">{_html.escape(store)}</span>
+    </div>
+    <div class="btnrow" style="margin-top:12px;gap:8px">{btns}</div>
+  </div>
+</article>
+'''
+
+    body = f"""
+<section class="section tight"><div class="container narrow">
+ <p class="eyebrow">{_html.escape(eyebrow)}</p>
+ <h1>{_html.escape(h1)}</h1>
+ <p class="lede">{_html.escape(lede)}</p>
+ <div class="btnrow">{btn_html}</div>
+</div></section>
+
+<section class="section" style="padding-top:18px"><div class="container narrow">
+ <div style="background:#FFF8F0;border:1px solid #F0D9C5;border-radius:16px;padding:18px 20px;margin:0 0 28px;font-size:15px;line-height:1.6">
+  <b>{_html.escape(intro_title)}:</b> {_html.escape(intro_body)} We sourced 30 real products from <b>IKEA, Amazon, CB2, West Elm</b> with affiliate links.
+ </div>
+</div></section>
+
+<section class="section" style="padding-top:0"><div class="container">
+ <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px">{cards_html}</div>
+</div></section>
+
+<section class="section"><div class="container narrow">
+ <div style="background:#F6F5F2;border:1px solid #E8E0D8;border-radius:16px;padding:20px 22px;margin:0">
+  <h3 style="margin:0 0 8px;font-size:19px">How we picked these 30</h3>
+  <p style="margin:0;font-size:14.5px;line-height:1.6;color:#555">We cross-referenced <b>Pinterest Predicts 2026</b> (Neo Deco +100% bar cart, +80% red marble, +40% pendant, +35% brass/banquette; FunHaus +130% circus interior, +40% striped; Cool Blue +50% icy blue; Extra Celestial +115% opalescent; Laced Up +105% lace; Cabbage Crush), <b>Pinterest Spring 2026</b> (aubergine kitchen +495%, sage/cream +410%, moody blue +325%, Calacatta Viola +260%, white oak/black +625%, reading nook +245%), and <b>IKEA 2026 Style Guide</b> (Joycore, Floral Daydream, Art of Storage, Rebel Pink, STOCKHOLM 2025). All images are saved to <code>/assets/uploads/shop-now/</code>.</p>
+  <p style="margin:12px 0 0;font-size:13px;color:#777">Affiliate disclosure: {BRAND} may earn a commission if you buy through links — at no extra cost to you. See <a href="affiliate-disclosure">disclosure</a>. Amazon tag: <code>{TAG}</code> — edit in Site settings.</p>
+ </div>
+</div></section>
+
+{newsletter()}
+"""
+    return page("shop-now.html", title, desc, body, 0, canonical="shop-now",
+                schema=json.dumps({"@context": "https://schema.org", "@type": "CollectionPage", "name": "Shop Now — 30 Trending Finds",
+                                   "url": DOMAIN + "/shop-now",
+                                   "publisher": {"@type": "Organization", "name": BRAND}}))
+
+
 def page_custom(p):
     """Render a custom page from content/custom-pages/ — /slug.html"""
     slug = p["slug"]
@@ -1909,7 +2018,7 @@ def check_links():
 
 
 def main():
-    pages = [page_home(), page_blog(), page_start_here(), page_about(), page_contact(), page_shop()]
+    pages = [page_home(), page_blog(), page_start_here(), page_about(), page_contact(), page_shop(), page_shop_now()]
     pages += [page_post(p) for p in POSTS]
     pages += [page_custom(p) for p in CUSTOM_PAGES]
     pages += legal_pages()
