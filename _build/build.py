@@ -1553,7 +1553,8 @@ def legal_pages():
 <section class="section" style="padding-top:18px"><div class="container narrow article">{html_block}</div></section>
 """
         desc = f"{label} for {BRAND} (homedecorpad.com) — written in plain English, covering cookies, data, ads, affiliate links and your choices."
-        pages.append(page(out_name, f"{label} | {BRAND}", desc, body, 0, canonical=out_name.replace(".html",""),
+        # Write as .html file for correct MIME type, but canonical clean without .html
+        pages.append(page(f"{out_name}.html", f"{label} | {BRAND}", desc, body, 0, canonical=out_name,
                           schema=json.dumps({"@context": "https://schema.org", "@type": "WebPage", "name": label,
                                              "url": f"{DOMAIN}/{out_name}"})))
     return pages
