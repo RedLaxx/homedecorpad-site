@@ -138,10 +138,10 @@ content:
         type: image
         description: Old field — kept for backwards compatibility. Use Featured image above instead. If both set, Featured image wins.
       - name: related
-        label: Related posts (optional)
+        label: Related posts (optional — auto-generates if empty)
         type: string
         list: true
-        description: Slugs of other posts, e.g. small-apartment-decor-ideas. Shown as "Keep reading" at the bottom.
+        description: Auto-generated from same category + tags if you leave this empty. Only fill to override, e.g. small-apartment-decor-ideas. Shown as "Keep reading" at bottom — always 3 posts.
       - name: draft
         label: Draft
         type: boolean

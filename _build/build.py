@@ -979,8 +979,48 @@ def page_post(p):
         if hero_available(p) else art_raw(p["motif"], c["tone"])
     pin_title = p["title"][:100]
     pin_desc = (p["dek"] + " " + " ".join("#" + t.replace(" ", "") for t in p["tags"][:3]))[:480]
-    rel = REL.get(p["slug"], [])[:3]
-    rel_cards = "".join(card(POST_BY_SLUG[s], depth) for s in rel if s in POST_BY_SLUG)
+
+    # --- Related ideas: auto-generate if manual related is empty or incomplete ---
+    manual_rel = REL.get(p["slug"], []) or []
+    manual_valid = [s for s in manual_rel if s in POST_BY_SLUG and s != p["slug"]]
+
+    def auto_related():
+        # Exclude current and already manually chosen
+        excluded = set(manual_valid) | {p["slug"]}
+        # Candidates from same category first, then others
+        same_cat = [cand for cand in POSTS if cand["cat"] == p["cat"] and cand["slug"] not in excluded]
+        other_cat = [cand for cand in POSTS if cand["cat"] != p["cat"] and cand["slug"] not in excluded]
+
+        p_tags = set(t.lower().strip() for t in (p.get("tags") or []) if t)
+        # Score by tag overlap, then date (newest first)
+        def score_list(lst):
+            scored = []
+            for cand in lst:
+                cand_tags = set(t.lower().strip() for t in (cand.get("tags") or []) if t)
+                overlap = len(p_tags & cand_tags) if p_tags else 0
+                # date is YYYY-MM-DD, lexicographically sortable newest first
+                scored.append((overlap, cand["date"], cand))
+            # sort by overlap desc, date desc
+            scored.sort(key=lambda x: (x[0], x[1]), reverse=True)
+            return [c[2] for c in scored]
+
+        ordered = score_list(same_cat) + score_list(other_cat)
+        return ordered
+
+    # Build final related list: manual first, then auto to fill up to 3
+    related_posts = []
+    for slug in manual_valid:
+        if slug in POST_BY_SLUG:
+            related_posts.append(POST_BY_SLUG[slug])
+    if len(related_posts) < 3:
+        for cand in auto_related():
+            if cand not in related_posts and cand["slug"] != p["slug"]:
+                related_posts.append(cand)
+            if len(related_posts) >= 3:
+                break
+
+    rel_cards = "".join(card(rp, depth) for rp in related_posts[:3])
+
     home_href = '../'*depth if depth else './'
     body = f"""
 <article>
