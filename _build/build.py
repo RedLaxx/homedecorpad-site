@@ -179,7 +179,9 @@ def load_posts():
         if not fm.get("title") or not fm.get("date"):
             print(f"  ! skipping content/posts/{fn} — it has no title/date frontmatter")
             continue
-        slug = slugify(fm.get("slug") or fn[:-3])
+        # AUTO slug: frontmatter slug override, else filename (which Pages CMS auto-generates from title), else title itself
+        raw_slug = (fm.get("slug") or "").strip() or fn[:-3] or fm.get("title") or "post"
+        slug = slugify(raw_slug)
         cat = str(fm.get("category") or "living-room")
         if cat not in CAT:
             raise SystemExit(f"{fn}: unknown category '{cat}'. "
@@ -331,7 +333,8 @@ def load_custom_pages():
             continue
         if fm.get("draft") is True:
             continue
-        slug = slugify(fm.get("slug") or fn.rsplit(".",1)[0])
+        raw_slug = (fm.get("slug") or "").strip() or fn.rsplit(".",1)[0] or fm.get("title") or "page"
+        slug = slugify(raw_slug)
         # avoid collision with existing hardcoded pages
         if slug in ("index","blog","start-here","about","contact","shop-my-home","privacy-policy","cookie-policy","terms-of-use","disclaimer","affiliate-disclosure","404"):
             print(f"  ! skipping custom-pages/{fn} — slug '{slug}' collides with built-in page")

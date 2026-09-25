@@ -17,7 +17,7 @@ content:
     # Hidden on create and edit so the address cannot be changed by accident in the UI.
     # If you need a different URL, use the optional "URL slug" field below.
     filename:
-      template: "{primary}.md"
+      template: "{fields.title}.md"
       field: false
     exclude:
       - README.md
@@ -35,15 +35,12 @@ content:
         options:
           maxlength: 100
       - name: slug
-        label: URL slug (optional — leave empty)
+        label: URL slug (auto from title — leave empty)
         type: string
         description: |
-          Leave this empty. The address is generated from the title automatically
-          when you create the post, e.g. "5 Small Entryway Ideas" becomes
-          /blog/living-room/5-small-entryway-ideas.html
-          Only fill it in if you want this post to live at a different address.
-          Changing it later is safe — the old address gets a redirect.
-        pattern: "^[a-z0-9-]+$"
+          AUTO-GENERATED — Leave this empty. Filename is created from title automatically
+          e.g. "5 Small Entryway Ideas" → 5-small-entryway-ideas.md → /blog/living-room/5-small-entryway-ideas.html
+          Only fill if you want a custom URL different from title. You can type anything (spaces, caps ok) — it will be auto-slugified.
         options:
           maxlength: 80
       - name: h1
@@ -208,7 +205,7 @@ content:
     path: content/custom-pages
     format: yaml-frontmatter
     filename:
-      template: "{primary}.md"
+      template: "{fields.title}.md"
       field: false
     exclude:
       - README.md
@@ -223,12 +220,11 @@ content:
         required: true
         description: e.g. Press Kit — HomeDecorPad — keep under 60 chars
       - name: slug
-        label: URL slug (optional — leave empty)
+        label: URL slug (auto from title — leave empty)
         type: string
         description: |
-          Leave empty — auto-generated from title, e.g. "Press Kit" → /press-kit.html
-          Only fill if you want a different URL, e.g. press → /press.html
-        pattern: "^[a-z0-9-]+$"
+          AUTO-GENERATED — Leave empty — auto-generated from title, e.g. "Press Kit" → /press-kit.html
+          Only fill if you want a different URL, e.g. press → /press.html — you can type anything, it will be auto-slugified.
         options:
           maxlength: 80
       - name: h1
