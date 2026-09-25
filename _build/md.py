@@ -303,6 +303,33 @@ def _shop_from_table(rows, resolve):
 
 
 AD_SLOT = '<div class="ad-slot">Ad slot &mdash; paste your AdSense unit here</div>'
+
+def _get_adsense_client():
+    """Check if AdSense is configured — if not, hide ad slots."""
+    try:
+        import theme as _theme
+        client = getattr(_theme, 'ADSENSE_CLIENT', '') or ''
+        client = str(client).strip()
+        if not client or 'YOUR' in client.upper() or client.lower() in ('your-ad-client', ''):
+            return ''
+        return client
+    except Exception:
+        return ''
+
+def _ad_slot_html():
+    """Return ad slot HTML only when AdSense client is configured, else empty."""
+    client = _get_adsense_client()
+    if not client:
+        return ''  # No ad code — don't display on frontend
+    return (
+        f'<div class="ad-slot">'
+        f'<ins class="adsbygoogle" style="display:block" '
+        f'data-ad-client="{client}" data-ad-slot="auto" '
+        f'data-ad-format="auto" data-full-width-responsive="true"></ins>'
+        f'<script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>'
+        f'</div>'
+    )
+
 FAQ_HEADING = re.compile(r"frequently asked questions|^faq$", re.I)
 
 
@@ -334,7 +361,7 @@ def _render_block(kind, arg, payload, resolve):
         name, _, rest = arg.partition(" ")
         title = rest.strip()
         if name == "ad":
-            return AD_SLOT
+            return _ad_slot_html()
         if name == "callout":
             head = f"<h4>{inline(title, resolve)}</h4>" if title else ""
             return f'<div class="callout">{head}{_inner(payload, resolve)}</div>'
@@ -406,13 +433,15 @@ def render(body, resolve, faq_heading=True):
     flush()
 
     # one ad slot per post, placed above the FAQ block or after the third heading
-    if not any("ad-slot" in p for p in parts):
+    # Only insert if AdSense client is configured — otherwise hide completely
+    ad_html = _ad_slot_html()
+    if ad_html and not any("ad-slot" in p for p in parts):
         faq_idx = next((n for n, p in enumerate(parts) if p.startswith('<div class="faq"')), None)
         h2s = [n for n, p in enumerate(parts) if p.startswith("<h2")]
         if faq_idx is not None and faq_idx > 2:
-            parts.insert(faq_idx, AD_SLOT)          # just above the FAQ block
+            parts.insert(faq_idx, ad_html)          # just above the FAQ block
         elif len(h2s) >= 3:
-            parts.insert(h2s[2], AD_SLOT)           # before the third section
+            parts.insert(h2s[2], ad_html)           # before the third section
         elif h2s:
-            parts.insert(h2s[-1] + 1, AD_SLOT)      # after the last section, never first
+            parts.insert(h2s[-1] + 1, ad_html)      # after the last section, never first
     return "\n".join(p for p in parts if p.strip()), faq

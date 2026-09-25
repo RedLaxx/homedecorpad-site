@@ -232,7 +232,6 @@ If you love the idea of a cozy corner, our [small apartment decor ideas that mak
 
 *Above: Warm wood, linen and one big rug — the 2026 formula for {cat.replace('-', ' ')}s that feel collected, not bought in one trip.*
 
-<div class="ad-slot">Advertisement — scroll to continue reading</div>
 """)
 
     # Section 3 — Budget version
@@ -282,7 +281,6 @@ If you're in a rental, our [renter-friendly wall decor ideas](post:renter-friend
 
 ![Real rental test at 10am and 7pm]({example_images[2]})
 
-<div class="ad-slot">Advertisement — your support keeps our testing independent</div>
 """)
 
     # Section 5 — The 20-minute version + Pinterest pinnable
