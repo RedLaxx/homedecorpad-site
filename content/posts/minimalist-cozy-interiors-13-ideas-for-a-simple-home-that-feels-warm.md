@@ -2,8 +2,13 @@
 title: "Minimalist Cozy Interiors: 13 Ideas for a Simple Home That Feels Warm"
 date: 2026-10-06
 category: living-room
-dek: "Most minimalist rooms look great in a photo and feel cold in person. These 13 cozy minimalist ideas add warmth with texture, lighting and fewer, better pieces — no clutter needed."
-intro: "Minimalist cozy design sits between stark and cluttered: a calm, uncluttered home that still makes you want to sink into the sofa with a blanket. Here are 13 ideas that actually work in real rentals and small spaces."
+dek: Most minimalist rooms look great in a photo and feel cold in person. These
+  13 cozy minimalist ideas add warmth with texture, lighting and fewer, better
+  pieces — no clutter needed.
+intro: "Minimalist cozy design sits between stark and cluttered: a calm,
+  uncluttered home that still makes you want to sink into the sofa with a
+  blanket. Here are 13 ideas that actually work in real rentals and small
+  spaces."
 tags:
   - minimalist
   - cozy interiors
@@ -16,10 +21,8 @@ tags:
 motif: sofa
 featured_image: /assets/uploads/minimalist-cozy-interiors/minimalist-cozy-interiors-01.jpg
 pinterest_image: /assets/uploads/minimalist-cozy-interiors/minimalist-cozy-interiors-01.jpg
+draft: false
 ---
-
-![Minimalist cozy living room with warm neutrals](/assets/uploads/minimalist-cozy-interiors/minimalist-cozy-interiors-01.jpg)
-
 Most minimalist rooms look great in a photo and feel a little cold in person. Most cozy rooms feel great to sit in but get cluttered fast. Minimalist cozy interior design sits between the two: a calm, uncluttered home that still makes you want to sink into the sofa with a blanket.
 
 This guide covers how to get there. You'll find ideas for color, texture, lighting, furniture, and each main room, plus the mistakes that make a simple home feel like a waiting room. Save the sections you like to a Pinterest board and come back to them while you shop or plan your next home renovation.
