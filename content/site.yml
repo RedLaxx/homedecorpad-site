@@ -23,7 +23,7 @@ formspree_id: YOUR_FORM_ID
 adsense_client: ""
 
 # Google Analytics 4 measurement ID, e.g. G-ABCDE12345
-ga4_id: ""
+ga4_id: "G-5LBZFLYV4G"
 
 # Pinterest domain verification code
 pinterest_verify: ""
