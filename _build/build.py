@@ -473,13 +473,24 @@ def hero_available(p):
     return os.path.exists(os.path.join(ROOT, rel))
 
 
-def cover_html(p, depth=0, cls_art="c4x3"):
-    """Card artwork: an uploaded featured photo when the editor set one, else the illustration."""
+def cover_html(p, depth=0, cls_art="c4x3", link=True):
+    """Card artwork: an uploaded featured photo when the editor set one, else the illustration.
+
+    The artwork is a link to the post (same URL as the title) so the feature
+    image is clickable everywhere it appears — home slider, feature block,
+    cards, related posts, 404 fallbacks.
+    """
     if hero_available(p):
         img = p.get("featured_image") or p.get("hero_image") or ""
-        return (f'<div class="cover {cls_art}"><img src="{asset_url(img, depth)}" alt="" '
-                f'style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>')
-    return art(p["motif"], CAT[p["cat"]]["tone"], cls_art)
+        inner = (f'<img src="{asset_url(img, depth)}" alt="" '
+                 f'style="width:100%;height:100%;object-fit:cover" loading="lazy">')
+    else:
+        inner = art_raw(p["motif"], CAT[p["cat"]]["tone"])
+    if not link:
+        return f'<div class="cover {cls_art}">{inner}</div>'
+    label = _html.escape(f"Read: {p['title']}", quote=True)
+    return (f'<a class="cover {cls_art}" href="{post_url(p["slug"], depth)}" '
+            f'aria-label="{label}">{inner}</a>')
 
 
 def card(p, depth=0, cls_art="c4x3", searchable=True):
