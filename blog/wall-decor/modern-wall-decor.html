@@ -50,9 +50,6 @@ h4{font-size:18px}
 p{margin:0 0 1.15em}
 a{color:var(--terra-d);text-decoration:none;border-bottom:1px solid rgba(181,83,60,.3)}
 a:hover{color:var(--terra);border-bottom-color:var(--terra)}
-a.cover{display:block;color:inherit;border:0;text-decoration:none;cursor:pointer}
-a.cover img,a.cover svg{transition:transform .35s ease}
-a.cover:hover img,a.cover:hover svg{transform:scale(1.035)}
 ul,ol{padding-left:22px;margin:0 0 1.2em}
 li{margin:.42em 0}
 li::marker{color:var(--terra)}
@@ -206,6 +203,8 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 .post-hero svg{width:100%;height:100%;display:block}
 .post-hero .tag{position:absolute;left:0;right:0;bottom:20px;display:flex;justify-content:center;padding:0 16px}
 .post-hero .tag span{background:rgba(251,248,243,.94);border-radius:12px;padding:11px 20px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--terra-d);box-shadow:0 8px 22px rgba(60,40,20,.14)}
+.post-hero .tag a{color:inherit;border:0}
+.post-hero .tag a:hover{color:var(--terra)}
 .article{max-width:768px;margin:0 auto}
 .article h2{font-size:clamp(22px,2.7vw,28px)}
 .article > p:first-of-type{font-size:18.5px;color:#4A423B}
@@ -400,7 +399,7 @@ function hdpCopy(btn, url){
 </script>
  </div>
  <div class="container narrow">
-  <div class="post-hero"><img src="../../assets/uploads/modern-wall-decor/modern-wall-decor-featured.jpg" alt="Modern Wall Decor: 15 Ideas Beyond the Gallery Wall" style="width:100%;height:100%;object-fit:cover"><div class="tag"><span>Wall Decor & Gallery Walls &middot; HomeDecorPad</span></div></div>
+  <div class="post-hero"><img src="../../assets/uploads/modern-wall-decor/modern-wall-decor-featured.jpg" alt="Modern Wall Decor: 15 Ideas Beyond the Gallery Wall" style="width:100%;height:100%;object-fit:cover"><div class="tag"><span><a href="../../blog#wall-decor">Wall Decor & Gallery Walls</a> &middot; HomeDecorPad</span></div></div>
  </div>
  <div class="container narrow article">
   <p>A gallery wall is a safe choice, but it isn't the only way to make a wall look finished. Modern wall decor tends to work by doing less: one big piece, a strong texture, a sculptural object or a single bold color. The result looks intentional and calm, and it often costs less than a wall full of frames.</p>
@@ -511,7 +510,7 @@ function hdpCopy(btn, url){
 <section class="section"><div class="container">
  <div class="sec-head"><div><p class="eyebrow">Keep reading</p><h2>Related ideas</h2></div><a href="../../blog">All guides →</a></div>
  <div class="grid"><article class="card" data-cat="wall-decor" data-text="wall decor ideas: 5 styles to try for every room five wall decor styles explained — kids&#x27; jungle, bohemian, feminine, cottage and modern minimal — plus universal hanging rules and the mistakes to skip. wall decor wall decor ideas gallery wall kids room decor bohemian decor modern wall decor">
- <a class="cover c4x3" href="../../blog/wall-decor/wall-decor-ideas-5-styles" aria-label="Read: Wall Decor Ideas: 5 Styles to Try for Every Room"><img src="../../assets/uploads/Wall%20Decor%20Ideas%205%20Styles%20to%20Try,%20From%20Kids'%20Jungle%20Rooms%20to%20Modern%20Minimal%20Featured.jpg" alt="" style="width:100%;height:100%;object-fit:cover" loading="lazy"></a>
+ <div class="cover c4x3"><img src="../../assets/uploads/Wall%20Decor%20Ideas%205%20Styles%20to%20Try,%20From%20Kids'%20Jungle%20Rooms%20to%20Modern%20Minimal%20Featured.jpg" alt="" style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>
  <div class="body">
   <span class="chip">Wall Decor & Gallery Walls</span>
   <h3><a href="../../blog/wall-decor/wall-decor-ideas-5-styles">Wall Decor Ideas: 5 Styles to Try for Every Room</a></h3>
@@ -519,7 +518,7 @@ function hdpCopy(btn, url){
   <div class="btnrow cardbtn"><a class="btn sm ghost" href="../../blog/wall-decor/wall-decor-ideas-5-styles">View post</a></div>
   <div class="meta"><span>10 October 2026</span><i></i><span>4 min read</span></div>
  </div></article><article class="card" data-cat="wall-decor" data-text="cottage wall decor: 15 cozy ideas for a soft modern cottage look 15 cottage wall decor ideas for a soft modern cottage look: plate walls, beadboard, botanical prints, floral wallpaper and more, with renter-friendly tips. cottage decor wall decor cottage wall decor modern cottage vintage decor plate wall">
- <a class="cover c4x3" href="../../blog/wall-decor/cottage-wall-decor" aria-label="Read: Cottage Wall Decor: 15 Cozy Ideas for a Soft Modern Cottage Look"><img src="../../assets/uploads/cottage-wall-decor/cottage-wall-decor-featured.jpg" alt="" style="width:100%;height:100%;object-fit:cover" loading="lazy"></a>
+ <div class="cover c4x3"><img src="../../assets/uploads/cottage-wall-decor/cottage-wall-decor-featured.jpg" alt="" style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>
  <div class="body">
   <span class="chip">Wall Decor & Gallery Walls</span>
   <h3><a href="../../blog/wall-decor/cottage-wall-decor">Cottage Wall Decor: 15 Cozy Ideas for a Soft Modern Cottage Look</a></h3>
@@ -527,7 +526,7 @@ function hdpCopy(btn, url){
   <div class="btnrow cardbtn"><a class="btn sm ghost" href="../../blog/wall-decor/cottage-wall-decor">View post</a></div>
   <div class="meta"><span>11 October 2026</span><i></i><span>10 min read</span></div>
  </div></article><article class="card" data-cat="wall-decor" data-text="feminine wall decor: 14 soft, elegant ideas for bedrooms and living rooms 14 feminine wall decor ideas for bedrooms and living rooms: arched mirrors, floral art, picture molding, sconces and more, with renter-friendly tips. feminine decor wall decor bedroom decor floral wall art blush decor elegant decor">
- <a class="cover c4x3" href="../../blog/wall-decor/feminine-wall-decor" aria-label="Read: Feminine Wall Decor: 14 Soft, Elegant Ideas for Bedrooms and Living Rooms"><img src="../../assets/uploads/feminine-wall-decor/feminine-wall-decor-featured.jpg" alt="" style="width:100%;height:100%;object-fit:cover" loading="lazy"></a>
+ <div class="cover c4x3"><img src="../../assets/uploads/feminine-wall-decor/feminine-wall-decor-featured.jpg" alt="" style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>
  <div class="body">
   <span class="chip">Wall Decor & Gallery Walls</span>
   <h3><a href="../../blog/wall-decor/feminine-wall-decor">Feminine Wall Decor: 14 Soft, Elegant Ideas for Bedrooms and Living Rooms</a></h3>

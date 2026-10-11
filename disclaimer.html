@@ -50,9 +50,6 @@ h4{font-size:18px}
 p{margin:0 0 1.15em}
 a{color:var(--terra-d);text-decoration:none;border-bottom:1px solid rgba(181,83,60,.3)}
 a:hover{color:var(--terra);border-bottom-color:var(--terra)}
-a.cover{display:block;color:inherit;border:0;text-decoration:none;cursor:pointer}
-a.cover img,a.cover svg{transition:transform .35s ease}
-a.cover:hover img,a.cover:hover svg{transform:scale(1.035)}
 ul,ol{padding-left:22px;margin:0 0 1.2em}
 li{margin:.42em 0}
 li::marker{color:var(--terra)}
@@ -206,6 +203,8 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 .post-hero svg{width:100%;height:100%;display:block}
 .post-hero .tag{position:absolute;left:0;right:0;bottom:20px;display:flex;justify-content:center;padding:0 16px}
 .post-hero .tag span{background:rgba(251,248,243,.94);border-radius:12px;padding:11px 20px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--terra-d);box-shadow:0 8px 22px rgba(60,40,20,.14)}
+.post-hero .tag a{color:inherit;border:0}
+.post-hero .tag a:hover{color:var(--terra)}
 .article{max-width:768px;margin:0 auto}
 .article h2{font-size:clamp(22px,2.7vw,28px)}
 .article > p:first-of-type{font-size:18.5px;color:#4A423B}
