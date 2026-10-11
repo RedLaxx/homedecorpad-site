@@ -371,11 +371,11 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
  <p class="eyebrow">All decor ideas</p>
  <h1>Room guides, budget makeovers & home finds</h1>
  <p class="lede" style="max-width:62ch">Every guide is written to be used, not just saved: what to do first, what it costs, and what to skip. Newest posts first.</p>
- <p class="muted" style="font-size:13.5px;margin-top:8px">19 posts — newest first</p>
+ <p class="muted" style="font-size:13.5px;margin-top:8px"><span id="count">19 posts</span> — newest first</p>
  <div class="field" style="margin:24px 0 18px;max-width:520px">
   <input type="search" id="q" placeholder="Search: small apartment, rug, paint…" aria-label="Search guides">
  </div>
- <div class="cats" id="filters"><button type="button" class="on" data-f="all">All guides</button><button type="button" data-f="living-room">Living Room</button><button type="button" data-f="bedroom">Bedroom</button><button type="button" data-f="small-space">Small Space & Renters</button><button type="button" data-f="get-the-look">Get the Look for Less</button><button type="button" data-f="finds">Home Finds & Deals</button><button type="button" data-f="diy">IKEA Hacks & DIY</button><button type="button" data-f="color">Color & Paint</button><button type="button" data-f="wall-decor">Wall Decor & Gallery Walls</button><button type="button" data-f="kitchen-dining">Kitchen & Dining</button><button type="button" data-f="organization">Organization & Storage</button><button type="button" data-f="entryway">Entryway</button></div>
+ <div class="cats" id="filters"><button type="button" id="all" class="on" data-f="all">All guides</button><button type="button" id="living-room" data-f="living-room">Living Room</button><button type="button" id="bedroom" data-f="bedroom">Bedroom</button><button type="button" id="small-space" data-f="small-space">Small Space & Renters</button><button type="button" id="get-the-look" data-f="get-the-look">Get the Look for Less</button><button type="button" id="finds" data-f="finds">Home Finds & Deals</button><button type="button" id="diy" data-f="diy">IKEA Hacks & DIY</button><button type="button" id="color" data-f="color">Color & Paint</button><button type="button" id="wall-decor" data-f="wall-decor">Wall Decor & Gallery Walls</button><button type="button" id="kitchen-dining" data-f="kitchen-dining">Kitchen & Dining</button><button type="button" id="organization" data-f="organization">Organization & Storage</button><button type="button" id="entryway" data-f="entryway">Entryway</button></div>
  <p class="muted" id="empty" style="display:none">No guides match that search yet — try a room name like "bedroom" or a topic like "rug".</p>
 </div></section>
 
@@ -558,13 +558,25 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
     if(ok) shown++;
   });
   if(empty) empty.style.display=shown?'none':'block';
+  var cnt=document.getElementById('count');
+  if(cnt) cnt.textContent=shown+(shown===1?' post':' posts');
  }
- if(q) q.addEventListener('input',run);
- if(btns) btns.forEach(function(b){b.addEventListener('click',function(){
-  active=b.getAttribute('data-f');
-  btns.forEach(function(x){x.classList.toggle('on',x===b);});
+ function setActive(slug,syncHash){
+  active=slug;
+  btns.forEach(function(x){x.classList.toggle('on',x.getAttribute('data-f')===slug);});
   run();
- });});
+  if(syncHash&&window.history&&history.replaceState) history.replaceState(null,'',slug==='all'?'#all':'#'+slug);
+ }
+ var slugs=[];
+ if(btns) btns.forEach(function(b){slugs.push(b.getAttribute('data-f'));b.addEventListener('click',function(){setActive(b.getAttribute('data-f'),true);});});
+ function fromHash(){
+  var h=(location.hash||'').replace('#','');
+  if(slugs.indexOf(h)>-1) setActive(h,false);
+  else if(h==='') setActive('all',false);
+ }
+ fromHash();
+ window.addEventListener('hashchange',fromHash);
+ if(q) q.addEventListener('input',run);
 })();
 </script>
 
