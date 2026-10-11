@@ -61,6 +61,9 @@ h4{font-size:18px}
 p{margin:0 0 1.15em}
 a{color:var(--terra-d);text-decoration:none;border-bottom:1px solid rgba(181,83,60,.3)}
 a:hover{color:var(--terra);border-bottom-color:var(--terra)}
+a.cover{display:block;color:inherit;border:0;text-decoration:none;cursor:pointer}
+a.cover img,a.cover svg{transition:transform .35s ease}
+a.cover:hover img,a.cover:hover svg{transform:scale(1.035)}
 ul,ol{padding-left:22px;margin:0 0 1.2em}
 li{margin:.42em 0}
 li::marker{color:var(--terra)}
