@@ -90,6 +90,12 @@ These basics make wall decor look finished in any style.
 
 - Ignoring the light. Check how a wall looks in the morning and evening before you commit to a color or finish.
 
+## Save this guide for later
+
+Pin the image below to your wall decor board so you can find it when you are ready to shop.
+
+![Wall decor ideas pin with 5 styles to try for every room](/assets/uploads/pinnable/wall-decor-ideas-5-styles-1000x1500.jpg)
+
 ## Frequently asked questions
 
 ### How high should wall decor be hung?

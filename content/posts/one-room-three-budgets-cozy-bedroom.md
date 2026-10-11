@@ -78,6 +78,12 @@ Total: about $1,450. Note what is *not* on this list: matching nightstand sets, 
 - **Short curtains.** If the panel stops mid-wall, hang it higher or buy a longer one.
 - **Tiny rugs.** A 5×7 floating under a queen bed looks like a bath mat from the doorway.
 
+## Save this guide for later
+
+Pin the image below to your bedroom decor board so you can find it when you are ready to shop.
+
+![One room, three budgets pin with a cozy bedroom at every price](/assets/uploads/pinnable/one-room-three-budgets-cozy-bedroom-1000x1500.jpg)
+
 ## Frequently asked questions
 
 ### Should I buy the rug or the curtains first?

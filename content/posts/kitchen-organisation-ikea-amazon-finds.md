@@ -375,6 +375,12 @@ If you do one thing this weekend: decant your dry goods into KORKEN jars, then p
 VARIERA insert in your deepest cupboard. Those two take about an hour and change how the
 whole kitchen feels.
 
+## Save this guide for later
+
+Pin the image below to your kitchen organisation board so you can find it when you are ready to shop.
+
+![Kitchen organisation pin with 18 IKEA and Amazon buys for a tidy kitchen](/assets/uploads/pinnable/kitchen-organisation-ikea-amazon-finds-1000x1500.jpg)
+
 ## Frequently asked questions
 
 ### What is the first thing I should buy for a cluttered kitchen?

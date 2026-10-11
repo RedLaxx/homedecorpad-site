@@ -75,6 +75,12 @@ A freestanding screen, a bookcase styled from both sides, or a tall leaning ladd
 | Tension rod, 28–48 in, matte finish | For alcoves, windows and closet frames. | $15 |
 :::
 
+## Save this guide for later
+
+Pin the image below to your renting board so you can find it when you are ready to shop.
+
+![Renter-friendly wall decor pin with 7 ideas that won't cost your deposit](/assets/uploads/pinnable/renter-friendly-wall-decor-ideas-1000x1500.jpg)
+
 ## Frequently asked questions
 
 ### Will adhesive hooks really come off without marks?

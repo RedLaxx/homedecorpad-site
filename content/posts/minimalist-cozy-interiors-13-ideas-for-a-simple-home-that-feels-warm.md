@@ -169,6 +169,12 @@ For walls, pick one large piece or a small, tidy group, and leave space around i
 - **Ignoring scale:** Measure rugs and sofas — too small feels unfinished, too big crowds a small room.
 - **Copying a photo exactly:** Pinterest rooms are styled for a camera. Your home needs places for chargers, toys, laundry.
 
+## Save this guide for later
+
+Pin the image below to your home decor board so you can find it when you are ready to shop.
+
+![Minimalist cozy interiors pin with 13 ideas for a simple home that feels warm](/assets/uploads/pinnable/minimalist-cozy-interiors-13-ideas-for-a-simple-home-that-feels-warm-1000x1500.jpg)
+
 ## Final thoughts
 
 A minimalist cozy home comes down to a few decisions repeated consistently. Keep a warm, limited color palette. Put effort into texture and lighting. Buy fewer pieces and make them comfortable. Clear your surfaces and give everything a home.

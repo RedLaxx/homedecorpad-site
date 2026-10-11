@@ -78,6 +78,12 @@ A storage ottoman instead of a coffee table. A bench with a hinged lid at the en
 | Plug-in wall sconce or clamp lamp | No wiring required — perfect for renters who need a second light height. | $30–45 |
 :::
 
+## Save this guide for later
+
+Pin the image below to your small space board so you can find it when you are ready to shop.
+
+![Small apartment decor pin with 10 ideas that make 500 sq ft feel bigger](/assets/uploads/pinnable/small-apartment-decor-ideas-1000x1500.jpg)
+
 ## Frequently asked questions
 
 ### Should I use white furniture in a small apartment?

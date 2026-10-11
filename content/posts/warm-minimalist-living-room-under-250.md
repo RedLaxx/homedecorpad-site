@@ -84,6 +84,12 @@ Three details separate a styled room from a shopped one:
 
 Cold bulb temperatures (anything above 3000K), matching wood tones except where you have deliberately chosen one tone, tiny rugs, more than one accent color, and glossy finishes. Any one of these will pull a warm room toward “waiting room.”
 
+## Save this guide for later
+
+Pin the image below to your living room board so you can find it when you are ready to shop.
+
+![Warm minimalist living room pin with the look for under $250](/assets/uploads/pinnable/warm-minimalist-living-room-under-250-1000x1500.jpg)
+
 ## Frequently asked questions
 
 ### Is warm minimalist the same as boho or Scandi?

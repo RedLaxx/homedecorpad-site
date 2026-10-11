@@ -434,6 +434,12 @@ up, and a paper or rattan pendant. Those five do about 90% of the work — every
 this list is refinement.
 :::
 
+## Save this guide for later
+
+Pin the image below to your bedroom decor board so you can find it when you are ready to shop.
+
+![Boho bedroom pin with 22 IKEA and Amazon finds for a warm, layered space](/assets/uploads/pinnable/boho-bedroom-moodboard-ikea-amazon-finds-1000x1500.jpg)
+
 ## The takeaway
 
 A boho bedroom isn't a shopping list of random pretty things — it is one wood tone, a lot of

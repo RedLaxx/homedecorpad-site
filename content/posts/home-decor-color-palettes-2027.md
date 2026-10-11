@@ -84,6 +84,12 @@ Use 60% of the dominant colour, 30% of the support, and 10% of the accent — by
 4. **Check the trim together with the wall colour.** A warm white wall with a cool white trim is the most common expensive mistake in this list.
 :::
 
+## Save this guide for later
+
+Pin the image below to your color and paint board so you can find it when you are ready to shop.
+
+![Home decor color palettes pin for 2027](/assets/uploads/pinnable/home-decor-color-palettes-2027-1000x1500.jpg)
+
 ## Frequently asked questions
 
 ### Which palette adds the most resale value?

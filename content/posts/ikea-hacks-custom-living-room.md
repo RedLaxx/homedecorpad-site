@@ -82,6 +82,12 @@ Pair a cheap ceiling-mounted rail with the longest, cheapest linen-look panels y
 
 :::
 
+## Save this guide for later
+
+Pin the image below to your living room board so you can find it when you are ready to shop.
+
+![IKEA hacks pin with 5 ideas for a custom-looking living room](/assets/uploads/pinnable/5-ikea-hacks-for-a-custom-looking-living-room-1000x1500.jpg)
+
 ## Frequently asked questions
 
 ### Do replacement legs actually fit IKEA furniture?

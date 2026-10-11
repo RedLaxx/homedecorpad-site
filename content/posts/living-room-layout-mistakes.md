@@ -75,6 +75,12 @@ Every beautiful room has one slightly odd, personal object — a big bowl, a ske
 Empty the room’s centre, pull the seating into a conversation group, fix the rug and the curtain height, then add a second light source. Those four moves fix nine of the twelve mistakes above.
 :::
 
+## Save this guide for later
+
+Pin the image below to your living room board so you can find it when you are ready to shop.
+
+![Living room layout pin with 12 mistakes you can fix without buying anything](/assets/uploads/pinnable/living-room-layout-mistakes-1000x1500.jpg)
+
 ## Frequently asked questions
 
 ### How do I lay out a long, narrow living room?

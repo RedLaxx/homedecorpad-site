@@ -151,6 +151,12 @@ Start with peel-and-stick decals, a few printed leaf prints in thrifted frames a
 
 Yes. Jungle is a neutral theme. Stick to greens, creams and warm earth tones, and the room suits any child. Add stronger color through small accents later.
 
+## Save this guide for later
+
+Pin the image below to your nursery or playroom board so you can find it when you are ready to shop.
+
+![Kids jungle wall decor pin with 15 ideas for a nursery or playroom](/assets/uploads/pinnable/kids-jungle-wall-decor-1000x1500.jpg)
+
 ## Where to start
 
 Pick the wall behind the changing table or the play area. Choose one of the first three ideas, then add the smaller pieces over the next few weeks. For more styles, see our [wall decor series](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/wall-decor-ideas-5-styles).

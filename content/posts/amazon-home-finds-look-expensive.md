@@ -89,6 +89,12 @@ Anything with printed wood grain, mirrored surfaces with bevelled edges, “luxu
 5. **Keep the box for a week.** Style it in the room, live with it, and only then decide.
 :::
 
+## Save this guide for later
+
+Pin the image below to your home finds board so you can find it when you are ready to shop.
+
+![Amazon home finds pin with 11 buys that look way more expensive](/assets/uploads/pinnable/amazon-home-finds-look-expensive-1000x1500.jpg)
+
 ## Frequently asked questions
 
 ### Is cheap Amazon decor actually worth it?
