@@ -77,6 +77,8 @@ content:
               label: Kitchen & Dining
             - name: organization
               label: Organization & Storage
+            - name: entryway
+              label: Entryway
       - name: dek
         label: Summary
         type: text

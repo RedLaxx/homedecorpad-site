@@ -131,6 +131,8 @@ CATS = [
      "blurb": "Kitchen and dining styling for real, lived-in kitchens."},
     {"slug": "organization",  "name": "Organization & Storage",  "motif": "basket",   "tone": 2,
      "blurb": "Storage that looks like decor, not plastic tubs."},
+    {"slug": "entryway",      "name": "Entryway",                "motif": "arch",     "tone": 4,
+     "blurb": "Warm, practical entry and foyer ideas — mirrors, consoles, drop zones and first impressions."},
 ]
 CAT = {c["slug"]: c for c in CATS}
 SLUG_CAT = {}          # slug -> category, filled while loading so links resolve mid-render
