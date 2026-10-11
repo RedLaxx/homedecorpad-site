@@ -174,7 +174,9 @@ Center the mirror near eye level, around 57 inches (145 cm) from the floor, and 
 
 Limit the table to three to five objects, use a tray and lidded boxes to contain small items, and empty them regularly. Leave about a third of the surface bare.
 
-Save this guide for later. Pin the image below to your entryway or home decor board.
+## Save this guide for later
+
+Pin the image below to your entryway or home decor board.
 
 ![Entryway table decor pin with 15 ideas to style a console table](/assets/uploads/pinnable/entryway-table-decor-ideas-1000x1500.jpg)
 

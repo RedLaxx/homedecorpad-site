@@ -160,7 +160,9 @@ Shoes, bags, scarves, gloves, umbrellas, dog leashes, keys, mail and cleaning su
 
 Choose a color that matches the wall, hang a mirror above it, keep the top simple, or switch to a wall-mounted unit that leaves the floor visible.
 
-Save this guide for later. Pin the image below to your entryway or home organization board.
+## Save this guide for later
+
+Pin the image below to your entryway or home organization board.
 
 ![Entryway cabinet ideas pin with 13 stylish ways to hide the clutter](/assets/uploads/pinnable/entryway-cabinet-ideas-1000x1500.jpg)
 

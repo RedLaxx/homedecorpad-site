@@ -162,7 +162,9 @@ Edit hard. Keep walls light, choose fewer and larger pieces, use simple frames a
 
 Yes. Peel-and-stick floral wallpaper, leaning mirrors, removable hooks for plates and baskets, plug-in sconces and a freestanding shelf all work. Check your lease before painting or adding beadboard.
 
-Save this guide for later. Pin the image below to your cottage or home decor board.
+## Save this guide for later
+
+Pin the image below to your cottage or home decor board.
 
 ![Cottage wall decor pin with 15 cozy ideas for a soft modern cottage look](/assets/uploads/pinnable/cottage-wall-decor-1000x1500.jpg)
 

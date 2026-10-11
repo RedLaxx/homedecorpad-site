@@ -181,7 +181,9 @@ Terracotta, rust, sand, cream, olive and warm brown form the base. Add one darke
 
 Yes. Baskets, tapestries, a hung rug, a rattan mirror on a hook, a picture ledge and a plug-in sconce all work with little or no damage. Use removable hooks for light pieces, and check your lease before painting.
 
-Save this guide for later. Pin the image below to your boho home decor board.
+## Save this guide for later
+
+Pin the image below to your boho home decor board.
 
 ![Bohemian wall decor pin with 17 ideas using macramé, baskets and earthy textures](/assets/uploads/pinnable/bohemian-wall-decor-1000x1500.jpg)
 

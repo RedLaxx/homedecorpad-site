@@ -172,7 +172,9 @@ Aim for art about two-thirds the width of the furniture below it, such as a sofa
 
 Yes. Leaning art, peel-and-stick slat panels or wallpaper, plug-in sconces, removable hooks and freestanding shelves all work with little or no damage. Check your lease before painting.
 
-Save this guide for later. Pin the image below to your living room or home decor board.
+## Save this guide for later
+
+Pin the image below to your living room or home decor board.
 
 ![Modern wall decor pin with 15 ideas beyond the gallery wall](/assets/uploads/pinnable/modern-wall-decor-1000x1500.jpg)
 

@@ -163,7 +163,9 @@ Stick to a narrow palette, use fewer small details and choose better materials, 
 
 Yes. Leaning mirrors, framed prints on removable hooks, sheer drapery on a tension rod, plug-in sconces and peel-and-stick wallpaper all work with little or no damage. Check your lease before painting or adding molding.
 
-Save this guide for later. Pin the image below to your bedroom or living room ideas board.
+## Save this guide for later
+
+Pin the image below to your bedroom or living room ideas board.
 
 ![Feminine wall decor pin with 14 soft, elegant ideas for bedrooms and living rooms](/assets/uploads/pinnable/feminine-wall-decor-1000x1500.jpg)
 

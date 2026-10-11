@@ -173,7 +173,9 @@ Use a large mirror, keep the walls light, mount storage on the wall instead of t
 
 A lamp, a tray or bowl for keys, a small plant and a piece of art or a mirror above it cover most needs. Our guide to [entryway table decor](https://redlaxx.github.io/homedecorpad-site/blog/entryway/entryway-table-decor-ideas) has 15 ideas.
 
-Save this guide for later. Pin the image below to your entryway or home decor board.
+## Save this guide for later
+
+Pin the image below to your entryway or home decor board.
 
 ![How to decorate an entryway pin with a complete guide to a welcoming, organized entry](/assets/uploads/pinnable/how-to-decorate-an-entryway-1000x1500.jpg)
 
