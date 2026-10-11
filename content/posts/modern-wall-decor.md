@@ -178,4 +178,4 @@ Save this guide for later. Pin the image below to your living room or home decor
 
 ## Where to start
 
-Pick the wall you look at most and put one large piece on it. Live with it for a week, then add a sconce, a mirror or a texture if the wall still needs something. For more styles, see our [wall decor series](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/wall-decor-ideas) or the [cottage wall decor guide](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/cottage-wall-decor).
+Pick the wall you look at most and put one large piece on it. Live with it for a week, then add a sconce, a mirror or a texture if the wall still needs something. For more styles, see our [wall decor series](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/wall-decor-ideas-5-styles) or the [cottage wall decor guide](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/cottage-wall-decor).

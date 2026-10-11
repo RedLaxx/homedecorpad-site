@@ -187,4 +187,4 @@ Save this guide for later. Pin the image below to your boho home decor board.
 
 ## Where to start
 
-Pick one large piece, such as a macramé hanging or a rattan mirror, and hang it first. Add two or three baskets or a picture ledge a week later, once you can see what the wall still needs. For more styles, see our [wall decor series](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/wall-decor-ideas) or the [kids jungle wall decor guide](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/kids-jungle-wall-decor).
+Pick one large piece, such as a macramé hanging or a rattan mirror, and hang it first. Add two or three baskets or a picture ledge a week later, once you can see what the wall still needs. For more styles, see our [wall decor series](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/wall-decor-ideas-5-styles) or the [kids jungle wall decor guide](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/kids-jungle-wall-decor).

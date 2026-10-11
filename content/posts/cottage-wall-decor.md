@@ -168,4 +168,4 @@ Save this guide for later. Pin the image below to your cottage or home decor boa
 
 ## Where to start
 
-Pick one wall and one piece, such as a plate wall, a weathered mirror or a row of botanical prints, and hang it first. Add a basket, a peg rail or a dried flower bundle a week later, once you can see what the wall still needs. For more styles, see our [wall decor series](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/wall-decor-ideas) or the [feminine wall decor guide](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/feminine-wall-decor).
+Pick one wall and one piece, such as a plate wall, a weathered mirror or a row of botanical prints, and hang it first. Add a basket, a peg rail or a dried flower bundle a week later, once you can see what the wall still needs. For more styles, see our [wall decor series](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/wall-decor-ideas-5-styles) or the [feminine wall decor guide](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/feminine-wall-decor).

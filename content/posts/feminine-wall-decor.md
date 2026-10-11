@@ -169,4 +169,4 @@ Save this guide for later. Pin the image below to your bedroom or living room id
 
 ## Where to start
 
-Pick one piece that does the most work, such as an arched mirror or a large floral print, and hang it first. Add a pair of sconces or a ribbon bow a week later, once you can see what the wall still needs. For more styles, see our [wall decor series](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/wall-decor-ideas) or the [bohemian wall decor guide](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/bohemian-wall-decor).
+Pick one piece that does the most work, such as an arched mirror or a large floral print, and hang it first. Add a pair of sconces or a ribbon bow a week later, once you can see what the wall still needs. For more styles, see our [wall decor series](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/wall-decor-ideas-5-styles) or the [bohemian wall decor guide](https://redlaxx.github.io/homedecorpad-site/blog/wall-decor/bohemian-wall-decor).
