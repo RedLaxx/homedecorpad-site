@@ -172,6 +172,12 @@ It depends on your room. Place the chaise where it points toward open space, not
 
 Yes. A modular corner sofa is often the best choice for renters because you can rearrange it to suit future homes, and it's easier to move up stairs.
 
+## Save this guide for later
+
+Pin the image below to your small space or living room board so you can find it when you are ready to shop.
+
+![Corner sofa pin with 9 layouts for small living rooms](/assets/uploads/pinnable/corner-sofa-ideas-1000x1500.jpg)
+
 ## Final thoughts
 
 Start by measuring, then tape out your options and choose the layout that fits how you actually use the room, whether that's a reading nook, a movie-night spot, or a flexible space that changes with you.
