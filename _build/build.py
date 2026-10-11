@@ -884,8 +884,8 @@ def page_blog():
 
     chips_html = ""
     if show_filters:
-        chips = "".join(f'<button type="button" data-f="{c["slug"]}">{c["name"]}</button>' for c in CATS)
-        chips_html = f'<div class="cats" id="filters"><button type="button" class="on" data-f="all">All guides</button>{chips}</div>'
+        chips = "".join(f'<button type="button" id="{c["slug"]}" data-f="{c["slug"]}">{c["name"]}</button>' for c in CATS)
+        chips_html = f'<div class="cats" id="filters"><button type="button" id="all" class="on" data-f="all">All guides</button>{chips}</div>'
 
     if display_mode == "list":
         posts_html = '<div class="post-list" style="display:flex;flex-direction:column;gap:16px">'
@@ -907,7 +907,7 @@ def page_blog():
  <p class="eyebrow">{eyebrow}</p>
  <h1>{h1}</h1>
  <p class="lede" style="max-width:62ch">{lede}</p>
- <p class="muted" style="font-size:13.5px;margin-top:8px">{total} posts — newest first</p>
+ <p class="muted" style="font-size:13.5px;margin-top:8px"><span id="count">{total} posts</span> — newest first</p>
  <div class="field" style="margin:24px 0 18px;max-width:520px">
   <input type="search" id="q" placeholder="{search_placeholder}" aria-label="Search guides">
  </div>
@@ -945,13 +945,25 @@ def page_blog():
     if(ok) shown++;
   }});
   if(empty) empty.style.display=shown?'none':'block';
+  var cnt=document.getElementById('count');
+  if(cnt) cnt.textContent=shown+(shown===1?' post':' posts');
  }}
- if(q) q.addEventListener('input',run);
- if(btns) btns.forEach(function(b){{b.addEventListener('click',function(){{
-  active=b.getAttribute('data-f');
-  btns.forEach(function(x){{x.classList.toggle('on',x===b);}});
+ function setActive(slug,syncHash){{
+  active=slug;
+  btns.forEach(function(x){{x.classList.toggle('on',x.getAttribute('data-f')===slug);}});
   run();
- }});}});
+  if(syncHash&&window.history&&history.replaceState) history.replaceState(null,'',slug==='all'?'#all':'#'+slug);
+ }}
+ var slugs=[];
+ if(btns) btns.forEach(function(b){{slugs.push(b.getAttribute('data-f'));b.addEventListener('click',function(){{setActive(b.getAttribute('data-f'),true);}});}});
+ function fromHash(){{
+  var h=(location.hash||'').replace('#','');
+  if(slugs.indexOf(h)>-1) setActive(h,false);
+  else if(h==='') setActive('all',false);
+ }}
+ fromHash();
+ window.addEventListener('hashchange',fromHash);
+ if(q) q.addEventListener('input',run);
 }})();
 </script>
 """
