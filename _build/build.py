@@ -476,12 +476,19 @@ def hero_available(p):
 
 
 def cover_html(p, depth=0, cls_art="c4x3"):
-    """Card artwork: an uploaded featured photo when the editor set one, else the illustration."""
+    """Card artwork: an uploaded featured photo when the editor set one, else the illustration.
+    The whole cover is a link to the post (featured images are clickable everywhere)."""
     if hero_available(p):
         img = p.get("featured_image") or p.get("hero_image") or ""
-        return (f'<div class="cover {cls_art}"><img src="{asset_url(img, depth)}" alt="" '
-                f'style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>')
-    return art(p["motif"], CAT[p["cat"]]["tone"], cls_art)
+        inner = (f'<div class="cover {cls_art}"><img src="{asset_url(img, depth)}" alt="" '
+                 f'style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>')
+    else:
+        inner = art(p["motif"], CAT[p["cat"]]["tone"], cls_art)
+    slug = p.get("slug") or ""
+    if slug and (slug in SLUG_CAT or slug in POST_BY_SLUG):
+        return (f'<a class="coverlink" href="{post_url(slug, depth)}" tabindex="-1" '
+                f'aria-label="{_html.escape(str(p.get("title") or "Read the post"), quote=True)}">{inner}</a>')
+    return inner
 
 
 def card(p, depth=0, cls_art="c4x3", searchable=True):
