@@ -129,7 +129,7 @@ CATS = [
      "blurb": "Damage-free hanging, gallery layouts and wall styling that stays up."},
     {"slug": "kitchen-dining","name": "Kitchen & Dining",        "motif": "basket",   "tone": 3,
      "blurb": "Kitchen and dining styling for real, lived-in kitchens."},
-    {"slug": "organization",  "name": "Organization & Storage",  "motif": "basket",   "tone": 2,
+    {"slug": "organization",  "name": "Organization & Storage",      "motif": "basket",   "tone": 2,
      "blurb": "Storage that looks like decor, not plastic tubs."},
     {"slug": "entryway",      "name": "Entryway",                "motif": "arch",     "tone": 4,
      "blurb": "Warm, practical entry and foyer ideas — mirrors, consoles, drop zones and first impressions."},
@@ -520,11 +520,11 @@ def newsletter(depth=0, dark=True):
 </div></div></section>"""
 
 
-def page(path, title, desc, body, depth=0, canonical="", schema="", current="", og="assets/og-default.jpg"):
+def page(path, title, desc, body, depth=0, canonical="", schema="", current="", og="assets/og-default.jpg", og_type="website", extra_meta=""):
     canon = canonical or path
     if canon == "index.html":
         canon = ""            # the homepage canonical is the site root, never /index.html
-    out = (head(title, desc, rel="../" * depth, canonical=canon, schema=schema, current=current, og=og)
+    out = (head(title, desc, rel="../" * depth, canonical=canon, schema=schema, current=current, og=og, og_type=og_type, extra_meta=extra_meta)
            + "\n<main id=\"main\">\n" + body + "\n</main>\n"
            + footer("../" * depth) + consent("../" * depth) + "</body></html>\n")
     return path, out
@@ -986,6 +986,43 @@ def faq_schema(items):
     return json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": qs})
 
 
+SEARCH_JS = """
+(function(){
+ var D=[],inp=document.getElementById('s-q'),out=document.getElementById('s-results'),cnt=document.getElementById('s-count');
+ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+ function row(p){return '<article class="s-row">'+(p.img?'<img src="'+esc(p.img)+'" alt="" loading="lazy">':'')+'<div><span class="m">'+esc(p.cat)+'</span><p class="t"><a href="'+esc(p.url)+'">'+esc(p.title)+'</a></p><p class="d">'+esc(p.dek)+'</p></div></article>';}
+ function render(list,q){cnt.textContent=list.length+(list.length===1?' result':' results')+(q?' for \u201c'+q+'\u201d':'');out.innerHTML=list.length?list.map(row).join(''):'<div class="s-none">No guides match \u201c'+esc(q)+'\u201d yet \u2014 try a room like bedroom or entryway, or browse <a href="blog">all decor ideas</a>.</div>';}
+ function run(){var q=(inp.value||'').trim();var lq=q.toLowerCase();var list=!lq?D.slice():D.filter(function(p){return (p.title+' '+p.dek+' '+p.cat+' '+p.tags.join(' ')).toLowerCase().indexOf(lq)>-1;});render(list,q);if(window.history&&history.replaceState)history.replaceState(null,'',q?('?q='+encodeURIComponent(q)):location.pathname);}
+ var t=null;inp.addEventListener('input',function(){clearTimeout(t);t=setTimeout(run,120);});
+ fetch('search.json',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(d){D=d;var q=new URLSearchParams(location.search).get('q')||'';if(q)inp.value=q;run();inp.focus();}).catch(function(){out.innerHTML='<div class="s-none">Search is temporarily unavailable \u2014 <a href="blog">browse all guides</a>.</div>';});
+})();
+"""
+
+
+def page_search():
+    title = f"Search — {BRAND}"
+    desc = f"Search every {BRAND} guide by room, idea, color or product."
+    cat_pills = " ".join(f'<a href="blog#{c["slug"]}">{c["name"]}</a>' for c in CATS)
+    body = f"""
+<section class="section tight"><div class="container narrow">
+ <p class="eyebrow">Search</p>
+ <h1>Search the guides</h1>
+ <p class="lede" style="max-width:56ch">Find any post by room, idea or product — try \u201centryway bench\u201d, \u201csmall apartment\u201d or \u201cpaint colors\u201d.</p>
+ <div class="searchfield" style="max-width:560px;margin:24px 0 8px">
+  <input type="search" id="s-q" placeholder="Type to search all guides\u2026" aria-label="Search guides" autocomplete="off">
+ </div>
+ <p class="muted" id="s-count" role="status" aria-live="polite"></p>
+ <p class="muted pill-row" style="margin-top:10px">{cat_pills}</p>
+</div></section>
+<section class="section" style="padding-top:14px"><div class="container narrow">
+ <div id="s-results" class="s-list"></div>
+ <noscript><p class="muted">Search needs JavaScript. You can <a href="blog">browse all guides here</a> instead.</p></noscript>
+</div></section>
+<script>{SEARCH_JS}</script>
+"""
+    return page("search.html", title, desc, body, 0, canonical="search")
+
+
 def page_post(p):
     depth = 2  # /blog/<cat>/<slug>.html
     c = CAT[p["cat"]]
@@ -1090,9 +1127,17 @@ def page_post(p):
     if fs:
         schemas.append(json.loads(fs))
     schema = json.dumps(schemas[0]) if len(schemas) == 1 else json.dumps({"@context": "https://schema.org", "@graph": schemas})
+    pub = str(p["date"])
+    if "T" not in pub:
+        pub += "T00:00:00Z"
+    article_meta = (f'<meta property="article:published_time" content="{pub}">\n'
+                    f'<meta property="article:modified_time" content="{pub}">\n'
+                    f'<meta property="article:author" content="{BRAND}">\n'
+                    f'<meta property="article:section" content="{_html.escape(c["name"], quote=True)}">')
     return page(f"blog/{p['cat']}/{p['slug']}.html",
                 f"{p['title']} | {BRAND}", p["dek"], body, depth,
-                canonical=f"blog/{p['cat']}/{p['slug']}", schema=schema, og=f"assets/og-{p['cat']}.jpg")
+                canonical=f"blog/{p['cat']}/{p['slug']}", schema=schema, og=f"assets/og-{p['cat']}.jpg",
+                og_type="article", extra_meta=article_meta)
 
 
 def page_start_here():
@@ -1748,10 +1793,25 @@ def legal_pages():
 
 
 # ------------------------------------------------------------------- extras
+def write_search_index():
+    idx = []
+    for p in sorted(POSTS, key=lambda x: str(x.get("date")), reverse=True):
+        idx.append({
+            "title": p.get("title") or "",
+            "url": post_url(p["slug"], 0),
+            "dek": short(p.get("dek") or "", 150),
+            "cat": CAT[p["cat"]]["name"],
+            "tags": list(p.get("tags") or []),
+            "date": str(p.get("date") or ""),
+            "img": (p.get("featured_image") or p.get("hero_image") or "").lstrip("/"),
+        })
+    write("search.json", json.dumps(idx, ensure_ascii=False))
+
+
 def write_extras():
     urls = [("", "1.0", "weekly"), ("blog", "0.9", "weekly"), ("start-here", "0.8", "monthly"),
             ("shop-my-home", "0.8", "monthly"), ("about", "0.5", "yearly"),
-            ("contact", "0.5", "yearly")]
+            ("contact", "0.5", "yearly"), ("search", "0.4", "monthly")]
     urls += [(f"blog/{p['cat']}/{p['slug']}", "0.9", "monthly") for p in POSTS]
     urls += [("privacy-policy", "0.3", "yearly"), ("cookie-policy", "0.3", "yearly"),
              ("terms-of-use", "0.3", "yearly"), ("disclaimer", "0.3", "yearly"),
@@ -1777,6 +1837,7 @@ google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
 """)
     write("404.html", page_404()[1])
     write(".nojekyll", "")
+    write_search_index()
     for d_ in ("assets",):
         os.makedirs(os.path.join(ROOT, d_), exist_ok=True)
 
@@ -2074,7 +2135,7 @@ def check_links():
 
 
 def main():
-    pages = [page_home(), page_blog(), page_start_here(), page_about(), page_contact(), page_shop(), page_shop_now()]
+    pages = [page_home(), page_blog(), page_search(), page_start_here(), page_about(), page_contact(), page_shop(), page_shop_now()]
     pages += [page_post(p) for p in POSTS]
     pages += [page_custom(p) for p in CUSTOM_PAGES]
     pages += legal_pages()

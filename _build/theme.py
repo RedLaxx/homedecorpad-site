@@ -105,6 +105,16 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 .nav a:hover,.nav a[aria-current="page"]{color:var(--terra)}
 .nav a.pin{border:1.5px solid var(--terra);border-radius:999px;padding:8px 15px;color:var(--terra)}
 .nav a.pin:hover{background:var(--terra);color:#fff}
+.hdr-actions{display:flex;align-items:center;gap:10px}
+.search-btn{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--sand);border-radius:999px;padding:9px 16px;font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink);font-weight:500;background:#fff;border-bottom:1.5px solid var(--sand)}
+.search-btn:hover{border-color:var(--terra);color:var(--terra-d)}
+.search-btn svg{width:16px;height:16px;flex:0 0 16px}
+.menu-btn{display:none;align-items:center;justify-content:center;width:44px;height:44px;background:#fff;border:1.5px solid var(--sand);border-radius:12px;color:var(--ink);cursor:pointer;padding:0}
+.menu-btn:hover{border-color:var(--terra);color:var(--terra-d)}
+.menu-btn svg{width:22px;height:22px}
+.menu-btn .i-close{display:none}
+.site-header.nav-open .menu-btn .i-close{display:block}
+.site-header.nav-open .menu-btn .i-burger{display:none}
 
 /* hero */
 .hero{display:grid;grid-template-columns:1.04fr 1fr;gap:46px;align-items:center;padding:58px 0 44px}
@@ -144,6 +154,8 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
   .hero-slider .slide-img .cover{min-height:300px}
   .hero-static-below{grid-template-columns:1fr;gap:28px}
   .hero-static-below .art{order:-1}
+  .hero-slider .slide-body{padding:24px 22px 12px}
+  .hero-slider .dots{position:static;transform:none;margin:2px auto 16px;width:max-content}
 }
 
 /* chips */
@@ -346,8 +358,6 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 }
 @media (max-width:620px){
  .fgrid{grid-template-columns:1fr}
- .nav{width:100%;gap:14px;justify-content:flex-start}
- .nav a{font-size:12.5px}
  .hero .art{order:-1}
  .post-hero{border-radius:14px}
  .container{padding:0 24px}
@@ -362,7 +372,52 @@ label{display:block;font-size:14px;font-weight:600;margin:0 0 6px}
 @media (max-width:400px){
  .container{padding:0 22px}
  .hdr{padding:12px 0}
- .nav{gap:12px}
+}
+/* search page */
+.searchfield input{width:100%;font-size:17px;padding:15px 18px;border-radius:14px;border:1.5px solid var(--line);background:#fff;font-family:var(--sans)}
+.searchfield input:focus{outline:2px solid var(--terra);outline-offset:1px;border-color:var(--terra)}
+.s-list{display:flex;flex-direction:column;gap:14px}
+.s-row{display:flex;gap:16px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 16px 12px 12px;box-shadow:var(--shadow)}
+.s-row img{width:100px;height:76px;object-fit:cover;border-radius:10px;flex:0 0 100px;background:var(--oat)}
+.s-row .t{font-family:var(--serif);font-size:18.5px;margin:0 0 3px;line-height:1.25}
+.s-row .t a{color:var(--ink);border:0}
+.s-row .t a:hover{color:var(--terra-d)}
+.s-row .d{font-size:14px;color:var(--muted);margin:0;line-height:1.5}
+.s-row .m{font-size:11.5px;color:var(--terra-d);text-transform:uppercase;letter-spacing:.12em;font-weight:600;display:block;margin-bottom:2px}
+.s-none{background:#fff;border:1px dashed var(--line);border-radius:14px;padding:22px;color:var(--muted);text-align:center}
+
+@media(max-width:900px){
+ .menu-btn{display:inline-flex}
+ .hdr-actions{margin-left:auto;gap:8px}
+ .search-btn{width:44px;height:44px;padding:0;justify-content:center;border-radius:12px}
+ .search-btn .s-txt{display:none}
+ .nav{position:absolute;top:100%;left:0;right:0;margin:0;display:none;flex-direction:column;align-items:stretch;gap:0;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 20px 38px rgba(70,50,30,.14);padding:6px 24px 14px;z-index:70}
+ .site-header.nav-open .nav{display:flex}
+ .nav a{font-size:15px;padding:14px 2px;border-bottom:1px solid var(--line);letter-spacing:.05em}
+ .nav a.pin{border:1.5px solid var(--terra);text-align:center;margin-top:12px;padding:12px}
+}
+@media(max-width:620px){
+ body{font-size:16px;overflow-x:clip}
+ .container{padding:0 20px}
+ .lede{font-size:17px}
+ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+ input,textarea,select{font-size:16px}
+ .btn{padding:13px 24px}
+ .faq summary{font-size:17.5px;padding:2px 0}
+ .faq details{padding:13px 16px}
+ .pincta{flex-direction:column;align-items:flex-start}
+ .hero-slider .slide-body{padding:20px 20px 10px}
+ .hero-slider .arrow{width:38px;height:38px;font-size:20px}
+ .fbot{flex-direction:column;align-items:flex-start;gap:8px}
+ .author{gap:12px;padding:16px}
+ .author .av{width:52px;height:52px;flex:0 0 52px}
+ .share-btn{padding:10px 14px}
+ .hdr{min-height:64px;padding:10px 0;gap:10px}
+ .brand{font-size:20px}
+ .brand svg{width:28px;height:28px;flex:0 0 28px}
+ .s-row{gap:12px;padding:10px 12px}
+ .s-row img{width:78px;height:62px;flex:0 0 78px}
+ .s-row .t{font-size:17px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 """
@@ -823,6 +878,36 @@ FOOTER_CATS = [
 ]
 
 
+ICON_SEARCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>'
+ICON_BURGER = '<svg class="i-burger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
+ICON_CLOSE = '<svg class="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>'
+HDR_JS = """
+<script>
+(function(){
+ var h=document.querySelector('.site-header'),b=document.querySelector('.menu-btn');
+ if(!h||!b)return;
+ b.addEventListener('click',function(e){e.stopPropagation();var o=h.classList.toggle('nav-open');b.setAttribute('aria-expanded',o?'true':'false');});
+ document.addEventListener('click',function(e){if(h.classList.contains('nav-open')&&!h.contains(e.target)){h.classList.remove('nav-open');b.setAttribute('aria-expanded','false');}});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&h.classList.contains('nav-open')){h.classList.remove('nav-open');b.setAttribute('aria-expanded','false');b.focus();}});
+ Array.prototype.forEach.call(h.querySelectorAll('.nav a'),function(a){a.addEventListener('click',function(){h.classList.remove('nav-open');b.setAttribute('aria-expanded','false');});});
+})();
+</script>
+"""
+
+
+def _hdr_html(links, logo_html, brand_href, rel=""):
+    return f"""<header class="site-header">
+ <div class="container hdr">
+  <a class="brand" href="{brand_href}">{logo_html}</a>
+  <nav class="nav" id="site-nav" aria-label="Main">{links}</nav>
+  <div class="hdr-actions">
+   <a class="search-btn" href="{rel}search" aria-label="Search">{ICON_SEARCH}<span class="s-txt">Search</span></a>
+   <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">{ICON_BURGER}{ICON_CLOSE}</button>
+  </div>
+ </div>
+{HDR_JS}</header>"""
+
+
 def header(rel="", current=""):
     # Use editable navigation from content/navigation.yml if present, else fallback to hardcoded NAV
     def clean_home_href(href, rel):
@@ -891,12 +976,7 @@ def header(rel="", current=""):
         else:
             logo_html = f"{ICON['logo']}<span>{logo_text}</span>"
         brand_href = rel if rel else "./"
-        return f"""<header class="site-header">
- <div class="container hdr">
-  <a class="brand" href="{brand_href}">{logo_html}</a>
-  <nav class="nav" aria-label="Main">{links}</nav>
- </div>
-</header>"""
+        return _hdr_html(links, logo_html, brand_href, rel)
     # fallback to old hardcoded NAV
     links = ""
     for href, label in NAV:
@@ -912,12 +992,7 @@ def header(rel="", current=""):
         cur = ' aria-current="page"' if cur_href == cur_current else ""
         links += f'<a href="{full_href}"{cls}{cur}>{label}</a>'
     brand_href = rel if rel else "./"
-    return f"""<header class="site-header">
- <div class="container hdr">
-  <a class="brand" href="{brand_href}">{ICON['logo']}<span>{BRAND}</span></a>
-  <nav class="nav" aria-label="Main">{links}<a class="pin" href="https://www.pinterest.com/" target="_blank" rel="noopener">Pinterest</a></nav>
- </div>
-</header>"""
+    return _hdr_html(links, f"{ICON['logo']}<span>{BRAND}</span>", brand_href, rel)
 
 
 def footer(rel=""):
@@ -1254,8 +1329,9 @@ def _snippets():
     return ad, ga, pv
 
 
-def head(title, desc, rel="", canonical="", schema="", extra="", current="", og="assets/og-default.jpg"):
+def head(title, desc, rel="", canonical="", schema="", extra="", current="", og="assets/og-default.jpg", og_type="website", extra_meta=""):
     adsense_snippet, ga4_snippet, pinterest_snippet = _snippets()
+    claim = f'<meta name="p:domain_verify" content="{PINTEREST_VERIFY}">' if PINTEREST_VERIFY else ""
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1265,12 +1341,13 @@ def head(title, desc, rel="", canonical="", schema="", extra="", current="", og=
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{DOMAIN}/{canonical}">
 <meta name="robots" content="index,follow,max-image-preview:large">
-<meta property="og:type" content="website">
+<meta property="og:type" content="{og_type}">
 <meta property="og:site_name" content="{BRAND}">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{DOMAIN}/{canonical}">
 <meta property="og:image" content="{DOMAIN}/{og}">
+{extra_meta}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{desc}">
