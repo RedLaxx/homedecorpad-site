@@ -178,6 +178,11 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 .c3x2{aspect-ratio:3/2}
 .c16x9{aspect-ratio:16/9}
 .c1x1{aspect-ratio:1/1}
+a.coverlink{display:block;border:0;color:inherit;cursor:pointer}
+a.coverlink:hover{border:0}
+a.coverlink .cover{transition:transform .35s ease}
+.card a.coverlink:hover .cover{transform:scale(1.02)}
+.hero-slider .slide-img .coverlink,.feature a.coverlink,.panel a.coverlink{height:100%}
 
 /* feature */
 .feature{display:grid;grid-template-columns:1.1fr 1fr;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
