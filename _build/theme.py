@@ -16,6 +16,7 @@ GA4_ID = ""
 PINTEREST_VERIFY = ""
 FORMSPREE_ID = "YOUR_FORM_ID"
 AMAZON_TAG = "YOUR-AMAZON-TAG-20"
+KIT_FORM_ID = ""
 HOME = {}
 NAV = {}
 FOOTER = {}
@@ -105,8 +106,6 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 .nav a:hover,.nav a[aria-current="page"]{color:var(--terra)}
 .nav a.pin{border:1.5px solid var(--terra);border-radius:999px;padding:8px 15px;color:var(--terra)}
 .nav a.pin:hover{background:var(--terra);color:#fff}
-.nav a.btn{color:#fff}
-.nav a.btn:hover,.nav a.btn[aria-current="page"]{color:#fff}
 .hdr-actions{display:flex;align-items:center;gap:10px}
 .search-btn{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--sand);border-radius:999px;padding:9px 16px;font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink);font-weight:500;background:#fff;border-bottom:1.5px solid var(--sand)}
 .search-btn:hover{border-color:var(--terra);color:var(--terra-d)}
@@ -1057,13 +1056,13 @@ def footer(rel=""):
   <p class="disc">{disc_text}</p>
   <div class="fbot">
    <span>{copyright}</span>
-   <span><a href="{rel}privacy-policy">Privacy</a> &middot; <a href="{rel}cookie-policy">Cookies</a> &middot; <a href="#" onclick="localStorage.removeItem('hdp-consent');location.reload();return false;">Cookie settings</a> &middot; <a href="{rel}sitemap.xml">Sitemap</a></span>
+   <span><a href="{rel}privacy-policy">Privacy</a> &middot; <a href="{rel}cookie-policy">Cookies</a> &middot; <a href="#" onclick="var b=document.getElementById('consent');if(b){{b.classList.add('show');}}return false;">Cookie settings</a> &middot; <a href="{rel}sitemap.xml">Sitemap</a></span>
   </div>
  </div>
 </footer>
 <script>
 (function(){{var k='hdp-consent';try{{if(!localStorage.getItem(k)){{var b=document.getElementById('consent');if(b)b.classList.add('show');}}}}catch(e){{}}
-function hdp(n){{try{{localStorage.setItem(k,n);}}catch(e){{}}var b=document.getElementById('consent');if(b)b.classList.remove('show');}}}})();
+window.hdp=function(n){{try{{localStorage.setItem(k,n);}}catch(e){{}}var b=document.getElementById('consent');if(b)b.classList.remove('show');}};}})();
 </script>"""
 
 
